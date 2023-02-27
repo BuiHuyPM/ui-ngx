@@ -50,8 +50,7 @@
         "export": "Export",
         "share-via": "Distribuie prin {{provider}}",
         "continue": "Continuă",
-        "discard-changes": "Anulează Schimbări",
-        "done": "Terminat"
+        "discard-changes": "Anulează Schimbări"
     },
     "aggregation": {
         "aggregation": "Agregare",
@@ -1178,7 +1177,8 @@
             "select-file": "Selectează un fişier",
             "configuration": "Importă configurație",
             "column-type": "Selectează tipul de coloane",
-            "creat-entities": "Creează entităţi noi"
+            "creat-entities": "Creează entităţi noi",
+            "done": "Terminat"
         },
         "message": {
             "create-entities": "{{count}} entităţi noi au fost create cu succes",

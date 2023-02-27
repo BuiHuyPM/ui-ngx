@@ -54,8 +54,7 @@
     "share-via": "Compartilhar via {{provider}}",
     "continue": "Continuar",
     "discard-changes": "Descartar alterações",
-    "download": "Download",
-    "done": "Concluído"
+    "download": "Download"
   },
   "aggregation": {
     "aggregation": "Agregação",
@@ -1388,7 +1387,8 @@
       "select-file": "Selecionar um arquivo",
       "configuration": "Importar configuração",
       "column-type": "Selecionar tipos de colunas",
-      "creat-entities": "Criar novas entidades"
+      "creat-entities": "Criar novas entidades",
+      "done": "Concluído"
     },
     "message": {
       "create-entities": "{{count}} novas entidades foram criadas corretamente.",
@@ -1659,7 +1659,9 @@
     "tenant-required": "O locatário é obrigatório",
     "search": "Pesquisar locatários",
     "selected-tenants": "{ count, plural, 1 {1 tenant} other {# tenants} } selecionado(s)",
+    "isolated-tb-core": "Processamento em contêiner isolado do ThingsBoard Core",
     "isolated-tb-rule-engine": "Processamento em contêiner isolado do ThingsBoard Rule Engine",
+    "isolated-tb-core-details": "Exige microsserviço(s) separado(s) para cada locatário isolado",
     "isolated-tb-rule-engine-details": "Exige microsserviço(s) separado(s) para cada locatário isolado"
   },
   "timeinterval": {

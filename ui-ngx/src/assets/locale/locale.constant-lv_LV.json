@@ -49,8 +49,7 @@
         "import": "Importēt",
         "export": "Eksportēt",
         "share-via": "Dalīties caur {{provider}}",
-        "continue": "Turpināt",
-        "done": "Darīts"
+        "continue": "Turpināt"
     },
     "aggregation": {
         "aggregation": "Sakopojums",
@@ -1126,7 +1125,8 @@
             "select-file": "Atlasīt failu",
             "configuration": "Importēt konfigurāciju",
             "column-type": "Atlasīt kolonas tipu",
-            "creat-entities": "Radīt jaunas vienības"
+            "creat-entities": "Radīt jaunas vienības",
+            "done": "Darīts"
         },
         "message": {
             "create-entities": "{{count}} jaunas vienības sekmīgi radītas.",
