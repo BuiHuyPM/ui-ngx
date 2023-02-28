@@ -504,7 +504,7 @@ redis:
 # Check new version updates parameters
 updates:
   # Enable/disable updates checking.
-  enabled: "${UPDATES_ENABLED:true}"
+  enabled: "${UPDATES_ENABLED:false}"
 
 spring.main.allow-circular-references: "true"
 
