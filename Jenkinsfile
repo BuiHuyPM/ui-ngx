@@ -29,14 +29,6 @@ pipeline {
             }
         }
 
-        stage('Build DataEnergyApi') {
-            steps {
-                dir('dataenergy') {
-                    sh 'mvn clean install -DskipTests'
-                }
-            }
-        }
-
         stage('Build') {
             steps {
                 sh 'mvn clean install -DskipTests'
