@@ -84,7 +84,7 @@ pipeline {
 
     post {
         always {
-            sh 'sudo systemctl status thingsboard33.service'
+            sh 'sudo systemctl status thingsboard34.service'
         }
     }
 }
