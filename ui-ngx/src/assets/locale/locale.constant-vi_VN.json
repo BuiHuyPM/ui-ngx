@@ -3282,27 +3282,8 @@
   "language": {
     "language": "Language",
     "locales": {
-      "de_DE": "Deutsch",
-      "fr_FR": "Français",
-      "zh_CN": "简体中文",
-      "zh_TW": "繁體中文",
-      "en_US": "English",
-      "it_IT": "Italiano",
-      "ko_KR": "한국어",
-      "ru_RU": "Русский",
-      "es_ES": "Español",
-      "ja_JA": "日本語",
-      "tr_TR": "Türkçe",
-      "fa_IR": "فارسي",
-      "uk_UA": "Українська",
-      "cs_CZ": "Česky",
-      "vi_VN": "Tiếng Việt",
-      "el_GR": "Ελληνικά",
-      "ro_RO": "Română",
-      "lv_LV": "Latviešu",
-      "ka_GE": "ქართული",
-      "pt_BR": "Português do Brasil",
-      "sl_SI": "Slovenščina"
+        "en_US": "English",
+        "vi_VN": "Tiếng Việt"
     }
   },
   "protocol": {

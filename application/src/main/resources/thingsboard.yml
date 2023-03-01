@@ -504,7 +504,7 @@ redis:
 # Check new version updates parameters
 updates:
   # Enable/disable updates checking.
-  enabled: "${UPDATES_ENABLED:true}"
+  enabled: "${UPDATES_ENABLED:false}"
 
 spring.main.allow-circular-references: "true"
 
@@ -561,9 +561,9 @@ spring:
       ddl-auto: "none"
   datasource:
     driverClassName: "${SPRING_DRIVER_CLASS_NAME:org.postgresql.Driver}"
-    url: "${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/thingsboard}"
+    url: "${SPRING_DATASOURCE_URL:jdbc:postgresql://192.168.31.222:5432/inergy_344}"
     username: "${SPRING_DATASOURCE_USERNAME:postgres}"
-    password: "${SPRING_DATASOURCE_PASSWORD:postgres}"
+    password: "${SPRING_DATASOURCE_PASSWORD:@Ami2021}"
     hikari:
       maximumPoolSize: "${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:16}"
 
