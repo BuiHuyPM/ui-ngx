@@ -54,7 +54,7 @@ pipeline {
                     WantedBy=multi-user.target
                     """
 
-                    sh "echo '${content}' > /etc/systemd/system/thingsboard34.service"
+                    sh "sudo echo '${content}' > /etc/systemd/system/thingsboard34.service"
                 }
             }
         }
