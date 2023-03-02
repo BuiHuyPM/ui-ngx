@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent lab-222
 
     environment {
         MVN_HOME = tool 'Maven3'
@@ -54,7 +54,7 @@ pipeline {
                     WantedBy=multi-user.target
                     """
 
-                    sh "sudo echo '${content}' > /etc/systemd/system/thingsboard34.service"
+                    sh "echo '${content}' > /etc/systemd/system/thingsboard34.service"
                 }
             }
         }
