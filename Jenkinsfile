@@ -1,5 +1,5 @@
 pipeline {
-    agent lab-222
+    agent any
 
     environment {
         MVN_HOME = tool 'Maven3'
