@@ -65,7 +65,7 @@ pipeline {
                     sh 'sudo systemctl stop thingsboard34.service || true'
                     sh 'sudo mkdir /usr/share/thingsboard34/bin || true'
                     sh 'sudo cp ./target/thingsboard-3.4.4-boot.jar /usr/share/thingsboard34/bin/thingsboard.jar || true'
-                    sh 'sudo chmod +x /usr/share/thingsboard33/bin/thingsboard.jar || true'
+                    sh 'sudo chmod +x /usr/share/thingsboard34/bin/thingsboard.jar || true'
                     sh 'sudo systemctl daemon-reload'
                     sh 'sudo systemctl enable thingsboard34.service'
                     sh 'sudo systemctl start thingsboard34.service'
