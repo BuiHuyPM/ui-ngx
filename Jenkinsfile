@@ -48,7 +48,7 @@ pipeline {
                     [Service]
                     User=thingsboard
                     WorkingDirectory=/usr/share/thingsboard34/bin
-                    ExecStart=/usr/share/thingsboard34/bin/thingsboard.jar
+                    ExecStart=/usr/share/thingsboard34/bin/thingsboard.jar --spring.config.additional-location=/usr/share/thingsboard34/
                     SuccessExitStatus=143
                     Restart=on-failure
 
