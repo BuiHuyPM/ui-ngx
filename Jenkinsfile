@@ -16,7 +16,7 @@ pipeline {
             }
         }
 
-        stage('Checkout Inergy Source Code') {
+        stage('Checkout Thingsboard Source Code') {
             steps {
                 checkout([$class: 'GitSCM',
                           branches: [[name: 'develop']],
@@ -37,18 +37,18 @@ pipeline {
             }
         }
 
-        stage('Create Amisofts Inergy System Service') {
+        stage('Create ThingsBoard Service') {
             steps {
                 script {
                     def content = """
                     [Unit]
-                    Description=Amisofts Inergy System
+                    Description=ThingsBoard 3.4.4
                     After=network.target
 
                     [Service]
                     User=thingsboard
-                    WorkingDirectory=/home/amisofts/inergy/bin
-                    ExecStart=/home/amisofts/inergy/bin/inergy.jar --spring.config.additional-location=/home/amisofts/inergy/conf
+                    WorkingDirectory=/usr/share/thingsboard34/bin
+                    ExecStart=/usr/share/thingsboard34/bin/thingsboard.jar --spring.config.additional-location=/usr/share/thingsboard34/
                     SuccessExitStatus=143
                     Restart=on-failure
 
@@ -56,7 +56,7 @@ pipeline {
                     WantedBy=multi-user.target
                     """
 
-                    sh "echo '${content}' > /etc/systemd/system/inergy.service"
+                    sh "echo '${content}' > /etc/systemd/system/thingsboard34.service"
                 }
             }
         }
@@ -65,12 +65,12 @@ pipeline {
             steps {
                 dir('application') {
                     sh 'sudo systemctl daemon-reload'
-                    sh 'sudo systemctl stop inergy.service || true'
-                    sh 'sudo mkdir -p /home/amisofts/inergy/bin || true'
-                    sh 'sudo cp ./target/thingsboard-3.4.4-SNAPSHOT-boot.jar /home/amisofts/inergy/bin/inergy.jar || true'
-                    sh 'sudo chmod +x /home/amisofts/inergy/bin/inergy.jar || true'
-                    sh 'sudo systemctl enable inergy.service'
-                    sh 'sudo systemctl start inergy.service'
+                    sh 'sudo systemctl stop thingsboard34.service || true'
+                    sh 'sudo mkdir -p /usr/share/thingsboard34/bin || true'
+                    sh 'sudo cp ./target/thingsboard-3.4.4-SNAPSHOT-boot.jar /usr/share/thingsboard34/bin/thingsboard.jar || true'
+                    sh 'sudo chmod +x /usr/share/thingsboard34/bin/thingsboard.jar || true'
+                    sh 'sudo systemctl enable thingsboard34.service'
+                    sh 'sudo systemctl start thingsboard34.service'
                 }
             }
         }
@@ -78,7 +78,7 @@ pipeline {
 
     post {
         always {
-            sh 'sudo systemctl status inergy.service'
+            sh 'sudo systemctl status thingsboard34.service'
         }
     }
 }
