@@ -23,8 +23,8 @@
     <version>3.4.4-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Thingsboard</name>
-    <url>https://thingsboard.io</url>
+    <name>Inergy</name>
+    <url>https://inergy.vn</url>
     <inceptionYear>2016</inceptionYear>
 
     <properties>
@@ -32,7 +32,7 @@
         <pkg.disabled>true</pkg.disabled>
         <pkg.process-resources.phase>none</pkg.process-resources.phase>
         <pkg.package.phase>none</pkg.package.phase>
-        <pkg.user>thingsboard</pkg.user>
+        <pkg.user>inergy</pkg.user>
         <pkg.implementationTitle>${project.name}</pkg.implementationTitle>
         <pkg.unixLogFolder>/var/log/${pkg.name}</pkg.unixLogFolder>
         <pkg.installFolder>/usr/share/${pkg.name}</pkg.installFolder>
@@ -153,11 +153,11 @@
     <modules>
         <module>netty-mqtt</module>
         <module>common</module>
-        <module>rule-engine</module>
+<!--        <module>rule-engine</module>-->
         <module>dao</module>
-        <module>transport</module>
-        <module>ui-ngx</module>
-        <module>tools</module>
+<!--        <module>transport</module>-->
+<!--        <module>ui-ngx</module>-->
+<!--        <module>tools</module>-->
         <module>application</module>
 <!--        <module>msa</module>-->
         <module>rest-client</module>

@@ -12,7 +12,7 @@ if %jver% NEQ 110 GOTO JAVA_NOT_INSTALLED
 :JAVA_INSTALLED
 
 @ECHO Java 11 found!
-@ECHO Installing thingsboard ...
+@ECHO Installing Inergy System ...
 
 SET loadDemo=false
 
@@ -23,7 +23,7 @@ if "%1" == "--loadDemo" (
 SET BASE=%~dp0
 SET LOADER_PATH=%BASE%\conf,%BASE%\extensions
 SET SQL_DATA_FOLDER=%BASE%\data\sql
-SET jarfile=%BASE%\lib\thingsboard.jar
+SET jarfile=%BASE%\lib\inergy.jar
 SET installDir=%BASE%\data
 
 PUSHD "%BASE%\conf"
@@ -37,15 +37,15 @@ java -cp "%jarfile%" -Dloader.main=org.thingsboard.server.ThingsboardInstallAppl
                     org.springframework.boot.loader.PropertiesLauncher
 
 if errorlevel 1 (
-   @echo ThingsBoard installation failed!
+   @echo Inergy System installation failed!
    POPD
    exit /b %errorlevel%
 )
 POPD
 
-"%BASE%"thingsboard.exe install
+"%BASE%"inergy.exe install
 
-@ECHO ThingsBoard installed successfully!
+@ECHO Inergy System installed successfully!
 
 GOTO END
 

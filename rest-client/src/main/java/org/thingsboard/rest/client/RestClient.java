@@ -228,7 +228,11 @@ public class RestClient implements ClientHttpRequestInterceptor, Closeable {
     public void refreshToken() {
         Map<String, String> refreshTokenRequest = new HashMap<>();
         refreshTokenRequest.put("refreshToken", refreshToken);
-        ResponseEntity<JsonNode> tokenInfo = restTemplate.postForEntity(baseURL + "/api/auth/token", refreshTokenRequest, JsonNode.class);
+        ResponseEntity<JsonNode> tokenInfo = restTemplate.postForEntity(baseURL + "" +
+                "" +
+                "" +
+                "" +
+                "", refreshTokenRequest, JsonNode.class);
         setTokenInfo(tokenInfo.getBody());
     }
 
