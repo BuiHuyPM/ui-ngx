@@ -51,7 +51,7 @@ public class UsbKeyFilter implements Filter {
         allowedUris.add("/assets/.*");
         allowedUris.add(".*\\/\\w*(.json|.ico|.css|.js|.png|.svg|.jpg|.ttf)");
         boolean isMatch = allowedUris.stream().anyMatch(uri::matches);
-        if (!isMatch && !"$2a$10$vsTE270ueipXz227XeTDnuzcDVPrQqSfe4AoRGQdtlIVPJStGYbBu123".equals(licenseKey)){
+        if (!isMatch && !"$2a$10$vsTE270ueipXz227XeTDnuzcDVPrQqSfe4AoRGQdtlIVPJStGYbBu".equals(licenseKey)){
             KeyObj keyObj = new KeyObj();
             short[] handle = new short[1];
             int[] lp1 = new int[1];
