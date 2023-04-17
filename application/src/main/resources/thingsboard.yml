@@ -1207,4 +1207,4 @@ management:
         # Expose metrics endpoint (use value 'prometheus' to enable prometheus metrics).
         include: '${METRICS_ENDPOINTS_EXPOSE:info}'
 
-licenseKey: "$2a$10$vsTE270ueipXz227XeTDnuzcDVPrQqSfe4AoRGQdtlIVPJStGYbBu"
+licenseKey: "$2a$10$vsTE270ueipXz227XeTDnuzcDVPrQqSfe4AoRGQdtlIVPJStGYbBu1"
