@@ -107,7 +107,6 @@ export class DialogService {
       this.translate.instant('action.close')
     );
   }
-
   forbidden(): Observable<boolean> {
     const observable = this.confirm(
       this.translate.instant('access.access-forbidden'),
@@ -123,7 +122,13 @@ export class DialogService {
     });
     return observable;
   }
-
+  noLicense(): void {
+    this.alert(
+      this.translate.instant('access.no-license'),
+      this.translate.instant('access.no-license-text'),
+      this.translate.instant('action.close')
+    );
+  }
   todo(): Observable<any> {
     const dialogConfig: MatDialogConfig = {
       disableClose: true,

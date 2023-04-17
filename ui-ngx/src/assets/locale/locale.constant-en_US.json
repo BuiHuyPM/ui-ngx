@@ -8,7 +8,9 @@
         "refresh-token-expired": "Session has expired",
         "refresh-token-failed": "Unable to refresh session",
         "permission-denied": "Permission Denied",
-        "permission-denied-text": "You don't have permission to perform this operation!"
+        "permission-denied-text": "You don't have permission to perform this operation!",
+        "no-license": "No license",
+        "no-license-text": "Please insert your license key USB into the server's USB port!"
     },
     "action": {
         "activate": "Activate",
