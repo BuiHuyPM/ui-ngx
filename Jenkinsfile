@@ -16,7 +16,7 @@ pipeline {
             }
         }
 
-        stage('Checkout Thingsboard Source Code') {
+        stage('Checkout Inergy Source Code') {
             steps {
                 checkout([$class: 'GitSCM',
                           branches: [[name: 'develop']],
@@ -67,7 +67,7 @@ pipeline {
                     sh 'sudo systemctl daemon-reload'
                     sh 'sudo systemctl stop inergy.service || true'
                     sh 'sudo mkdir -p /home/amisofts/inergy/bin || true'
-                    sh 'sudo cp ./target/thingsboard-3.4.4-SNAPSHOT-boot.jar /home/amisofts/inergy/bin/inergy.jar || true'
+                    sh 'sudo cp ./target/inergy-3.4.4-SNAPSHOT-boot.jar /home/amisofts/inergy/bin/inergy.jar || true'
                     sh 'sudo chmod +x /home/amisofts/inergy/bin/inergy.jar || true'
                     sh 'sudo systemctl enable inergy.service'
                     sh 'sudo systemctl start inergy.service'
