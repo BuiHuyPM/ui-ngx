@@ -1,6 +1,5 @@
 package org.thingsboard.server.config;
 
-import Key.KeyObj;
 import com.google.gson.Gson;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -11,7 +10,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import org.thingsboard.server.utils.HardwareUtils;
+import org.thingsboard.server.utils.AmiCode;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -47,19 +46,8 @@ public class UsbKeyFilter implements Filter {
         allowedUris.add(".*\\/\\w*(.json|.ico|.css|.js|.png|.svg|.jpg|.ttf)");
         boolean isMatch = allowedUris.stream().anyMatch(uri::matches);
         if (!isMatch && !"xxxxxxxx-xxxx-Bxxx-Axxx-xxxxxxxxxxxx".equals(licenseKey)) {
-            KeyObj keyObj = new KeyObj();
-            short[] handle = new short[1];
-            int[] lp1 = new int[1];
-            int[] lp2 = new int[2];
-            long result = keyObj.UniKey_Find(handle, lp1, lp2);
-            String hacAddress = HardwareUtils.getMACAddress();
-            String licenseUsb = String.valueOf(lp1[0]);
-            String prefixKey = "h-u-n-g-d-z-a-i";
-
-            String key = prefixKey + hacAddress + licenseUsb;
-            String uuid = UUID.nameUUIDFromBytes(key.getBytes()).toString();
-
-            if (result != keyObj.SUCCESS || !uuid.equals(licenseKey)) {
+            String code = AmiCode.GetUsbKey();
+            if (code == null || !code.equals(licenseKey)) {
                 res.setStatus(HttpServletResponse.SC_PAYMENT_REQUIRED);
                 String contentType = req.getContentType();
                 if (!Objects.equals(contentType, "application/json")) {

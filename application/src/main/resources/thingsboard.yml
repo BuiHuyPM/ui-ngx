@@ -1208,3 +1208,4 @@ management:
         include: '${METRICS_ENDPOINTS_EXPOSE:info}'
 
 licenseKey: "xxxxxxxx-xxxx-Bxxx-Axxx-xxxxxxxxxxxx"
+#licenseKey: "AMISOFT-FB6A-9B53-4AD8-3DC6-9113-789F-6832-2363"
