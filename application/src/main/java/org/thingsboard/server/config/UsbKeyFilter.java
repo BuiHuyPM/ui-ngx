@@ -61,7 +61,7 @@ public class UsbKeyFilter implements Filter {
             String licenseUsb = String.valueOf(lp1[0]);
             String prefixKey = "hungtn";
             if (result != keyObj.SUCCESS || !passwordEncoder.matches(prefixKey+hacAddress+licenseUsb, licenseKey )) {
-                    res.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    res.setStatus(HttpServletResponse.SC_PAYMENT_REQUIRED);
                     String contentType = req.getContentType();
                     if (!Objects.equals(contentType, "application/json")){
                         try {
@@ -78,7 +78,7 @@ public class UsbKeyFilter implements Filter {
                     response.setContentType("application/json");
                     HashMap<String, Object> body = new HashMap<>();
                     body.put("message","Please insert your license USB key into the server's USB port!");
-                    body.put("status",HttpServletResponse.SC_FORBIDDEN);
+                    body.put("status",HttpServletResponse.SC_PAYMENT_REQUIRED);
                     body.put("timestamp", LocalDateTime.now().format(formatter));
                     Gson gson = new Gson();
                     res.getWriter().write(gson.toJson(body));
