@@ -48,8 +48,7 @@ pipeline {
                     [Service]
                     User=inergy
                     WorkingDirectory=/home/amisofts/inergy/bin
-                    ExecStartPre=source /home/amisofts/inergy/conf/inergy.conf
-                    ExecStart=/home/amisofts/inergy/bin/inergy.jar --spring.config.additional-location=/home/amisofts/inergy/
+                    ExecStart="source /home/amisofts/inergy/inergy.conf && /home/amisofts/inergy/bin/inergy.jar --spring.config.additional-location=/home/amisofts/inergy/"
                     SuccessExitStatus=143
                     Restart=on-failure
 
