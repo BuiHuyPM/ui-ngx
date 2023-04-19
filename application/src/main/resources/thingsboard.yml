@@ -1207,5 +1207,4 @@ management:
         # Expose metrics endpoint (use value 'prometheus' to enable prometheus metrics).
         include: '${METRICS_ENDPOINTS_EXPOSE:info}'
 
-licenseKey: "xxxxxxxx-xxxx-Bxxx-Axxx-xxxxxxxxxxxx"
-#licenseKey: "AMISOFT-FB6A-9B53-4AD8-3DC6-9113-789F-6832-2363"
+licenseKey: '${INERGY_LICENSE_KEY:xxxxxxxx-xxxx-Bxxx-Axxx-xxxxxxxxxxxx}'
