@@ -23,7 +23,7 @@ import java.util.*;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class UsbKeyFilter implements Filter {
-    @Value("${licenseKey}")
+    @Value("${licenseKey:}")
     private String licenseKey;
 
     @Autowired
