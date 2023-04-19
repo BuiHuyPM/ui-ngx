@@ -48,7 +48,7 @@ pipeline {
                     [Service]
                     User=inergy
                     WorkingDirectory=/home/amisofts/inergy/bin
-                    ExecStart="source /home/amisofts/inergy/inergy.conf && /home/amisofts/inergy/bin/inergy.jar --spring.config.additional-location=/home/amisofts/inergy/"
+                    ExecStart=source /home/amisofts/inergy/inergy.conf && /home/amisofts/inergy/bin/inergy.jar --spring.config.additional-location=/home/amisofts/inergy/
                     SuccessExitStatus=143
                     Restart=on-failure
 
@@ -64,10 +64,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 dir('application') {
-                    sh 'sudo systemctl daemon-reload'
                     sh 'sudo systemctl stop inergy.service || true'
+                    sh 'sudo systemctl daemon-reload'
                     sh 'sudo mkdir -p /home/amisofts/inergy/bin || true'
                     sh 'sudo cp ./target/inergy-3.4.4-SNAPSHOT-boot.jar /home/amisofts/inergy/bin/inergy.jar || true'
+                    sh 'sudo cp ./KeyJava.so /home/amisofts/inergy/'
+                    sh 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH;/home/amisofts/inergy/lib'
 //                     sh 'sudo cp -r ./conf/* /home/amisofts/inergy/ || true'
                     sh 'sudo chmod +x /home/amisofts/inergy/bin/inergy.jar || true'
                     sh 'sudo systemctl enable inergy.service'
