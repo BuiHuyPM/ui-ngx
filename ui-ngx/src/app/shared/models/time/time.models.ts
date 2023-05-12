@@ -72,7 +72,9 @@ export enum AggregationType {
   AVG = 'AVG',
   SUM = 'SUM',
   COUNT = 'COUNT',
-  NONE = 'NONE'
+  DELTA = 'DELTA',
+  NONE = 'NONE',
+  MinMax= 'MinMax',
 }
 
 export const aggregationTranslations = new Map<AggregationType, string>(
@@ -82,6 +84,8 @@ export const aggregationTranslations = new Map<AggregationType, string>(
     [AggregationType.AVG, 'aggregation.avg'],
     [AggregationType.SUM, 'aggregation.sum'],
     [AggregationType.COUNT, 'aggregation.count'],
+    [AggregationType.DELTA, 'aggregation.delta'],
+    [AggregationType.MinMax, 'aggregation.minMax'],
     [AggregationType.NONE, 'aggregation.none'],
   ]
 );

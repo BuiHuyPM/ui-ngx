@@ -196,7 +196,7 @@
         </tb-timeinterval>
       </div>
       <div formGroupName="history"
-           *ngIf="aggregation && timewindowForm.get('aggregation.type').value !== aggregationTypes.NONE &&
+           *ngIf="aggregation && ( timewindowForm.get('aggregation.type').value !== aggregationTypes.NONE && timewindowForm.get('aggregation.type').value !== aggregationTypes.MinMax ) &&
            timewindow.selectedTab === timewindowTypes.HISTORY" class="mat-content mat-padding" fxLayout="column">
         <tb-timeinterval
           formControlName="interval"
