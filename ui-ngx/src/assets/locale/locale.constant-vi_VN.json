@@ -73,6 +73,8 @@
         "avg": "Trung bình",
         "sum": "Tổng",
         "count": "Đếm",
+        "delta": "Delta",
+        "minMax": "MinMax",
         "none": "Mặc định"
     },
     "admin": {

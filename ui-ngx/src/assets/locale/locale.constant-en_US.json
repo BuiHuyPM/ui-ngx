@@ -77,6 +77,8 @@
         "avg": "Average",
         "sum": "Sum",
         "count": "Count",
+        "delta": "Delta",
+        "minMax": "MinMax",
         "none": "None"
     },
     "admin": {

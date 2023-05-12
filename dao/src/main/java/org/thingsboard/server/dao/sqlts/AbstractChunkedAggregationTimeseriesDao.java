@@ -114,6 +114,15 @@ public abstract class AbstractChunkedAggregationTimeseriesDao extends AbstractSq
     public ListenableFuture<ReadTsKvQueryResult> findAllAsync(TenantId tenantId, EntityId entityId, ReadTsKvQuery query) {
         if (query.getAggregation() == Aggregation.NONE) {
             return Futures.immediateFuture(findAllAsyncWithLimit(entityId, query));
+        } else if (query.getAggregation() == Aggregation.MinMax) {
+            List<ListenableFuture<Optional<TsKvEntity>>> futures = new ArrayList<>();
+            long startPeriod = query.getStartTs();
+            long endPeriod = Math.max(query.getStartTs() + 1, query.getEndTs());
+            long interval = query.getInterval();
+            int timesInterval = (int) ((endPeriod - startPeriod) / interval);
+            futures.add(findAndAggregateAsync(entityId, query.getKey(), startPeriod, endPeriod, startPeriod, Aggregation.MIN));
+            futures.add(findAndAggregateAsync(entityId, query.getKey(), startPeriod, endPeriod, startPeriod + timesInterval * interval, Aggregation.MAX));
+            return getReadTsKvQueryResultFuture(query, Futures.allAsList(futures));
         } else {
             List<ListenableFuture<Optional<TsKvEntity>>> futures = new ArrayList<>();
             long startPeriod = query.getStartTs();
@@ -182,6 +191,24 @@ public abstract class AbstractChunkedAggregationTimeseriesDao extends AbstractSq
                 return tsKvRepository.findSum(entityId.getId(), keyId, startTs, endTs);
             case COUNT:
                 return tsKvRepository.findCount(entityId.getId(), keyId, startTs, endTs);
+            case DELTA:
+                TsKvEntity older = tsKvRepository.findNumericMax(entityId.getId(), keyId, startTs-(endTs-startTs), startTs);
+                TsKvEntity newer = tsKvRepository.findNumericMax(entityId.getId(), keyId, startTs, endTs);
+                TsKvEntity tsKvEntity = new TsKvEntity();
+                tsKvEntity.setKey(newer.getKey());
+                tsKvEntity.setAggValuesLastTs(newer.getAggValuesLastTs());
+                if (newer.getDoubleValue() != null){
+                    double newDoubleVal = newer.getDoubleValue();
+                    double oldDoubleVal = older.getDoubleValue() == null ? 0  : older.getDoubleValue();
+                    double deltaDouble = newDoubleVal - oldDoubleVal;
+                    tsKvEntity.setDoubleValue( deltaDouble );
+                } else if (newer.getLongValue() != null) {
+                    long newLongVal = newer.getLongValue();
+                    long oldLongVal = older.getLongValue() == null ? 0  : older.getLongValue();
+                    long deltaLong = newLongVal - oldLongVal;
+                    tsKvEntity.setLongValue( deltaLong );
+                }
+                return tsKvEntity;
             default:
                 throw new IllegalArgumentException("Not supported aggregation type: " + aggregation);
         }
