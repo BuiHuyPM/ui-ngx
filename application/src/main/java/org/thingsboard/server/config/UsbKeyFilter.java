@@ -10,6 +10,9 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.thingsboard.server.common.data.AdminSettings;
+import org.thingsboard.server.common.data.id.TenantId;
+import org.thingsboard.server.dao.settings.AdminSettingsService;
 import org.thingsboard.server.utils.AmiCode;
 
 import javax.servlet.*;
@@ -27,7 +30,7 @@ public class UsbKeyFilter implements Filter {
     private String licenseKey;
 
     @Autowired
-    private Configuration freemarkerConfig;
+    private AdminSettingsService adminSettingsService;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -40,27 +43,28 @@ public class UsbKeyFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
         List<String> allowedUris = new ArrayList<>();
+        allowedUris.add("/api/license");
         allowedUris.add("/api/v1/.*");
         allowedUris.add("/static/.*");
         allowedUris.add("/assets/.*");
+        allowedUris.add("/");
         allowedUris.add(".*\\/\\w*(.json|.ico|.css|.js|.png|.svg|.jpg|.ttf)");
         boolean isMatch = allowedUris.stream().anyMatch(uri::matches);
-        if (!isMatch && !"xxxxxxxx-xxxx-Bxxx-Axxx-xxxxxxxxxxxx".equals(licenseKey)) {
-            String code = AmiCode.GetUsbKey();
-            if (code == null || !code.equals(licenseKey)) {
-                res.setStatus(HttpServletResponse.SC_PAYMENT_REQUIRED);
-                String contentType = req.getContentType();
-                if (!Objects.equals(contentType, "application/json")) {
-                    try {
-                        Template template = freemarkerConfig.getTemplate("no_license.ftl");
-                        response.setContentType("text/html");
-                        res.getWriter().write(FreeMarkerTemplateUtils.processTemplateIntoString(template, new HashMap<String, String>()));
-                        res.getWriter().flush();
-                        return;
-                    } catch (TemplateException ignored) {
-
-                    }
+        if (!isMatch) {
+            AdminSettings adminSettings = adminSettingsService.findAdminSettingsByKey(TenantId.SYS_TENANT_ID, AmiCode.key);
+            boolean hasLicense = true;
+            if (adminSettings == null){
+                hasLicense = false;
+            }else{
+                boolean isHardKey = adminSettings.getJsonValue().get("isHardKey").asBoolean();
+                String licenseKey = adminSettings.getJsonValue().get("licenseKey").asText();
+                String code = isHardKey ? AmiCode.GetUsbKey() : AmiCode.GetSoftKey();
+                if (code == null || !code.equals(licenseKey)){
+                    hasLicense = false;
                 }
+            }
+            if (!hasLicense) {
+                res.setStatus(HttpServletResponse.SC_PAYMENT_REQUIRED);
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 response.setContentType("application/json");
                 HashMap<String, Object> body = new HashMap<>();

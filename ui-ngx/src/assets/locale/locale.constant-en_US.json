@@ -10,7 +10,7 @@
         "permission-denied": "Permission Denied",
         "permission-denied-text": "You don't have permission to perform this operation!",
         "no-license": "No license",
-        "no-license-text": "Please insert your license key USB into the server's USB port!"
+        "no-license-text": "Please insert your license key USB into the server's USB port or enter license key"
     },
     "action": {
         "activate": "Activate",
@@ -18,6 +18,7 @@
         "save": "Save",
         "saveAs": "Save as",
         "cancel": "Cancel",
+        "reload": "Reload",
         "ok": "OK",
         "delete": "Delete",
         "add": "Add",
@@ -41,6 +42,7 @@
         "back": "Back",
         "run": "Run",
         "sign-in": "Sign in!",
+        "insert-key": "Insert key!",
         "edit": "Edit",
         "view": "View",
         "create": "Create",
@@ -85,6 +87,9 @@
         "outgoing-mail-settings": "Outgoing Mail Server Settings",
         "system-settings": "System Settings",
         "test-mail-sent": "Test mail was successfully sent!",
+        "license-key": "License key",
+        "license-key-required": "License key is required.",
+        "is-hard-key": "Use USB key",
         "base-url": "Base URL",
         "base-url-required": "Base URL is required.",
         "prohibit-different-url": "Prohibit to use hostname from the client request headers",

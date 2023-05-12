@@ -54,7 +54,7 @@ export class GeneralSettingsComponent extends PageComponent implements OnInit, H
   buildGeneralServerSettingsForm() {
     this.generalSettings = this.fb.group({
       baseUrl: ['', [Validators.required]],
-      prohibitDifferentUrl: ['',[]]
+      prohibitDifferentUrl: ['', []]
     });
   }
 

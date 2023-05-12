@@ -44,7 +44,10 @@ export interface MailServerSettings {
   proxyUser: string;
   proxyPassword: string;
 }
-
+export interface LicenseSettings {
+  licenseKey: string;
+  isHardKey: string;
+}
 export interface GeneralSettings {
   baseUrl: string;
 }

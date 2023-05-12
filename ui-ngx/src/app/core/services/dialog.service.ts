@@ -30,6 +30,8 @@ import {
 import { ConfirmDialogComponent } from '@shared/components/dialog/confirm-dialog.component';
 import { AlertDialogComponent } from '@shared/components/dialog/alert-dialog.component';
 import { TodoDialogComponent } from '@shared/components/dialog/todo-dialog.component';
+import {Router} from '@angular/router';
+import {logger} from 'codelyzer/util/logger';
 
 @Injectable(
   {
@@ -41,7 +43,8 @@ export class DialogService {
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {
   }
 
@@ -122,12 +125,8 @@ export class DialogService {
     });
     return observable;
   }
-  noLicense(): void {
-    this.alert(
-      this.translate.instant('access.no-license'),
-      this.translate.instant('access.no-license-text'),
-      this.translate.instant('action.close')
-    );
+  async noLicense(): Promise<void> {
+    await this.router.navigate(['/insert-license']);
   }
   todo(): Observable<any> {
     const dialogConfig: MatDialogConfig = {

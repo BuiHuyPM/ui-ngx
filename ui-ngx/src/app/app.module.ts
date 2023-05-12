@@ -21,6 +21,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from '@core/core.module';
 import { LoginModule } from '@modules/login/login.module';
+import { NoLicenseModule } from '@modules/no-license/no-license.module';
 import { HomeModule } from '@home/home.module';
 
 import { AppComponent } from './app.component';
@@ -53,6 +54,7 @@ export class PageNotFoundRoutingModule { }
     AppRoutingModule,
     CoreModule,
     LoginModule,
+    NoLicenseModule,
     HomeModule,
     DashboardRoutingModule,
     PageNotFoundRoutingModule

@@ -10,7 +10,7 @@
         "permission-denied": "Quyền truy cập bị từ chối",
         "permission-denied-text": "Bạn không có quyền thực hiện thao tác này!",
         "no-license": "Không có bản quyền",
-        "no-license-text": "Vui lòng cắm usb bản quyền vào cổng usb trên máy chủ!"
+        "no-license-text": "Vui lòng cắm usb bản quyền vào cổng usb trên máy chủ hoặc nhập key bản quyền vào hệ thống!"
     },
     "action": {
         "activate": "Kích hoạt",
@@ -18,6 +18,7 @@
         "save": "Lưu",
         "saveAs": "Lưu vào",
         "cancel": "Hủy",
+        "reload": "Tải lại",
         "ok": "Đồng ý",
         "delete": "Xóa",
         "add": "Thêm",
@@ -41,6 +42,7 @@
         "back": "Quay lại",
         "run": "Chạy",
         "sign-in": "Đăng nhập!",
+        "insert-key": "Nhập key",
         "edit": "Chỉnh sửa",
         "view": "Xem",
         "create": "Khởi tạo",
@@ -81,6 +83,9 @@
         "outgoing-mail-settings": "Cài đặt máy chủ hệ thống Thư gửi đi",
         "system-settings": "Cấu hình hệ thống",
         "test-mail-sent": "Gửi thành công Thư Test!",
+        "license-key": "Mã bản quyền",
+        "license-key-required": "Mã bản quyền Là bắt buộc.",
+        "is-hard-key": "Sử dụng USB bản quyền",
         "base-url": "URL cơ sở",
         "base-url-required": " URL cở sở là bắt buộc.",
         "prohibit-different-url": "Cấm sử dụng tên máy chủ từ các tiêu đề yêu cầu của khách hàng",
