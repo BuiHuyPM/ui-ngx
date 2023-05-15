@@ -25,10 +25,7 @@ import java.util.*;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class UsbKeyFilter implements Filter {
-    @Value("${licenseKey:}")
-    private String licenseKey;
-
+public class LicenseFilter implements Filter {
     @Autowired
     private AdminSettingsService adminSettingsService;
 
@@ -48,7 +45,7 @@ public class UsbKeyFilter implements Filter {
         allowedUris.add("/static/.*");
         allowedUris.add("/assets/.*");
         allowedUris.add("/");
-        allowedUris.add(".*\\/\\w*(.json|.ico|.css|.js|.png|.svg|.jpg|.ttf)");
+        allowedUris.add(".*/[a-zA-Z0-9.\\-]+(.json|.ico|.css|.js|.png|.svg|.jpg|.ttf)");
         boolean isMatch = allowedUris.stream().anyMatch(uri::matches);
         if (!isMatch) {
             AdminSettings adminSettings = adminSettingsService.findAdminSettingsByKey(TenantId.SYS_TENANT_ID, AmiCode.key);

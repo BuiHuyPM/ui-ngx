@@ -20,6 +20,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.thingsboard.server.utils.HardwareUtils;
 
 import java.util.Arrays;
 
@@ -33,6 +34,7 @@ public class ThingsboardServerApplication {
     private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "thingsboard";
 
     public static void main(String[] args) {
+        showHardAddress();
         SpringApplication.run(ThingsboardServerApplication.class, updateArguments(args));
     }
 
@@ -44,5 +46,14 @@ public class ThingsboardServerApplication {
             return modifiedArgs;
         }
         return args;
+    }
+
+    private static void showHardAddress(){
+        try {
+            String hacAddress = HardwareUtils.getMACAddress();
+            System.out.println("Application run on server: "+hacAddress);
+        }catch (Exception ex){
+            System.out.println("Can't not get MAC address. error:"+ex.getMessage());
+        }
     }
 }
