@@ -10,35 +10,34 @@ import java.util.UUID;
 
 public class AmiCode {
     public static final String key = "license-key";
+
+    public static String GetUsbKey() throws SocketException, UnknownHostException {
+        String hacAddress = HardwareUtils.getMACAddress();
+        return GetUsbKey(hacAddress);
+    }
     public static String GetUsbKey(String hacAddress) throws SocketException, UnknownHostException {
         KeyObj keyObj = new KeyObj();
         short[] handle = new short[1];
         int[] lp1 = new int[1];
         int[] lp2 = new int[2];
         long ret = keyObj.UniKey_Find(handle, lp1, lp2);
-        return ret == keyObj.SUCCESS ? Encode(lp1[0],hacAddress) : null;
+        int usbKey = lp1[0];
+        return ret == keyObj.SUCCESS ? Encode(usbKey,hacAddress) : null;
     }
-    public static String GetUsbKey() throws SocketException, UnknownHostException {
-        KeyObj keyObj = new KeyObj();
-        short[] handle = new short[1];
-        int[] lp1 = new int[1];
-        int[] lp2 = new int[2];
-        long ret = keyObj.UniKey_Find(handle, lp1, lp2);
-        return ret == keyObj.SUCCESS ? Encode(lp1[0]) : null;
-    }
+
     public static String GetSoftKey(String hacAddress) throws SocketException, UnknownHostException {
         return Encode(1047893,hacAddress);
     }
     public static String GetSoftKey() throws SocketException, UnknownHostException {
         return Encode(1047893);
     }
-    private static String Encode(int usbKey) throws SocketException, UnknownHostException {
+    public static String Encode(int secretKey) throws SocketException, UnknownHostException {
         String hacAddress = HardwareUtils.getMACAddress();
-        return Encode(usbKey,hacAddress);
+        return Encode(secretKey,hacAddress);
     }
 
-    private static String Encode(int usbKey,String hacAddress) {
-        String licenseUsb = String.valueOf(usbKey);
+    public static String Encode(int secretKey,String hacAddress) {
+        String licenseUsb = String.valueOf(secretKey);
         String prefixKey = "h-u-n-g-d-z-a-i";
         String key = prefixKey + hacAddress + licenseUsb;
         String uuid = UUID.nameUUIDFromBytes(key.getBytes()).toString();
