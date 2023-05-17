@@ -18,13 +18,13 @@ public class LicenseTest {
     int usbSecretKey = 344897635;
 
     @Test
-    public void HMC_Address_Test() throws SocketException, UnknownHostException {
+    public void HMC_Address_Test() throws SocketException {
         String MACAddress =  HardwareUtils.getMACAddress();
         assertThat(MACAddress).isEqualTo(hacAddress);
     }
 
     @Test
-    public void UsbKey_Test() throws SocketException, UnknownHostException {
+    public void UsbKey_Test() {
         String usbKey = AmiCode.GetUsbKey("20230516",hacAddress);
         String usbKey2 = AmiCode.Encode("20230516",usbSecretKey,hacAddress);
         System.out.println("UsbKey:"+usbKey);
