@@ -11,15 +11,19 @@ public class FilterTest {
 
     @Test
     public void allowedUrl() {
-        String uri = "/580ad9a21db-974f16223.css";
+        String uri = "/api/v2/dasdas";
         List<String> allowedUris = new ArrayList<>();
-        allowedUris.add("/api/v1/.*");
-        allowedUris.add("/static/.*");
-        allowedUris.add("/assets/.*");
-        allowedUris.add("/webjars/.*");
-        allowedUris.add("/swagger-ui/.*");
-        allowedUris.add(".*/[a-zA-Z0-9.\\-]+(.json|.ico|.css|.js|.png|.svg|.jpg|.ttf)");
+        allowedUris.add("/api(?!/v1/).*");
         boolean isMatch = allowedUris.stream().anyMatch(uri::matches);
         assertThat(isMatch).isTrue();
+    }
+
+    @Test
+    public void alloweAdUrl() {
+        String uri = "/api/v1/dasdas";
+        List<String> allowedUris = new ArrayList<>();
+        allowedUris.add("/api(?!/v1/).*");
+        boolean isMatch = allowedUris.stream().anyMatch(uri::matches);
+        assertThat(isMatch).isFalse();
     }
 }

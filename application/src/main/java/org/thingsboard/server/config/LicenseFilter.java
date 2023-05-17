@@ -43,14 +43,9 @@ public class LicenseFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
         List<String> allowedUris = new ArrayList<>();
-        allowedUris.add("/api/license");
-        allowedUris.add("/api/v1/.*");
-        allowedUris.add("/static/.*");
-        allowedUris.add("/assets/.*");
-        allowedUris.add("/");
-        allowedUris.add(".*/[a-zA-Z0-9.\\-]+(.json|.ico|.css|.js|.png|.svg|.jpg|.ttf)");
+        allowedUris.add("/api(?!/v1/).*");
         boolean isMatch = allowedUris.stream().anyMatch(uri::matches);
-        if (!isMatch) {
+        if (isMatch) {
             AdminSettings adminSettings = adminSettingsService.findAdminSettingsByKey(TenantId.SYS_TENANT_ID, AmiCode.key);
             boolean hasLicense = true;
             if (adminSettings == null){

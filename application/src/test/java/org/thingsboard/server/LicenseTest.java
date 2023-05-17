@@ -14,7 +14,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class LicenseTest {
-    String hacAddress = "02-42-0F-F4-AD-F5";
+    String prefix = "20230618";
+    String hacAddress = "4C-D9-8F-C4-BC-A0";
     int usbSecretKey = 344897635;
 
     @Test
@@ -25,15 +26,15 @@ public class LicenseTest {
 
     @Test
     public void UsbKey_Test() {
-        String usbKey = AmiCode.GetUsbKey("20230516",hacAddress);
-        String usbKey2 = AmiCode.Encode("20230516",usbSecretKey,hacAddress);
+        String usbKey = AmiCode.GetUsbKey(prefix,hacAddress);
+        String usbKey2 = AmiCode.Encode(prefix,usbSecretKey,hacAddress);
         System.out.println("UsbKey:"+usbKey);
         assertThat(usbKey).isEqualTo(usbKey2);
     }
     @Test
     public void softKey_Test() throws SocketException {
-        String softKey = AmiCode.GetSoftKey("20230518");
-        String softKey2 = AmiCode.GetSoftKey("20230518",hacAddress);
+        String softKey = AmiCode.GetSoftKey(prefix);
+        String softKey2 = AmiCode.GetSoftKey(prefix,hacAddress);
         System.out.println("softKey:"+softKey);
         System.out.println("softKey2:"+softKey2);
         assertThat(softKey).isEqualTo(softKey2);
