@@ -15,11 +15,7 @@ public class HardwareUtils {
         {
             NetworkInterface network = networkInterfaces.nextElement();
             byte[] mac = network.getHardwareAddress();
-            if(mac == null)
-            {
-                System.out.println("null mac");
-            }
-            else
+            if(mac != null)
             {
                 String[] hexadecimal = new String[mac.length];
                 for (int i = 0; i < mac.length; i++) {
