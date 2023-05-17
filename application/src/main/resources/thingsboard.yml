@@ -549,8 +549,6 @@ spring.jpa.properties.hibernate.order_by.default_null_ordering: "${SPRING_JPA_PR
 
 # SQL DAO Configuration
 spring:
-  mvc:
-    static-path-pattern: /static/**
   data:
     jpa:
       repositories:
