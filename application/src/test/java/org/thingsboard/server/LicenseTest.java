@@ -25,7 +25,7 @@ public class LicenseTest {
 
     @Test
     public void UsbKey_Test() throws SocketException, UnknownHostException {
-        String usbKey = AmiCode.GetUsbKey(hacAddress);
+        String usbKey = AmiCode.GetUsbKey("20230516",hacAddress);
         String usbKey2 = AmiCode.Encode("20230516",usbSecretKey,hacAddress);
         System.out.println("UsbKey:"+usbKey);
         assertThat(usbKey).isEqualTo(usbKey2);
