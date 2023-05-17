@@ -4,57 +4,82 @@ import Key.KeyObj;
 
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 public class AmiCode {
     public static final String key = "license-key";
+    private static final int secretKey = 1047893;
 
-    public static String GetUsbKey(String pattern) throws SocketException, UnknownHostException {
+    public static String GetUsbKey(String prefix) throws SocketException {
         String hacAddress = HardwareUtils.getMACAddress();
-        return GetUsbKey(pattern,hacAddress);
+        return GetUsbKey(prefix, hacAddress);
     }
-    public static String GetUsbKey(String pattern,String hacAddress) throws SocketException, UnknownHostException {
+
+    public static String GetUsbKey(String prefix, String hacAddress) {
         KeyObj keyObj = new KeyObj();
         short[] handle = new short[1];
         int[] lp1 = new int[1];
         int[] lp2 = new int[2];
         long ret = keyObj.UniKey_Find(handle, lp1, lp2);
         int usbKey = lp1[0];
-        return ret == keyObj.SUCCESS ? Encode(usbKey,pattern,hacAddress) : null;
+        return ret == keyObj.SUCCESS ? Encode(prefix, usbKey, hacAddress) : null;
     }
 
-    public static String GetSoftKey(String pattern,String hacAddress) throws SocketException, UnknownHostException {
-        return Encode(1047893,pattern,hacAddress);
+    public static String GetSoftKey(String prefix) throws SocketException {
+        return Encode(prefix, secretKey);
     }
-    public static String GetSoftKey(String pattern) throws SocketException, UnknownHostException {
-        return Encode(1047893,pattern);
+
+    public static String GetSoftKey(String prefix, String hacAddress) {
+        return Encode(prefix, secretKey, hacAddress);
     }
-    public static String Encode(int secretKey,String pattern) throws SocketException, UnknownHostException {
+
+    public static String Encode(String prefix, int secretKey) throws SocketException {
         String hacAddress = HardwareUtils.getMACAddress();
-        return Encode(secretKey,pattern,hacAddress);
+        return Encode(prefix, secretKey, hacAddress);
     }
 
-    public static String Encode(int secretKey,String pattern,String hacAddress) {
+    public static String Encode(String prefix, int secretKey, String hacAddress) {
         String licenseUsb = String.valueOf(secretKey);
-        DateTimeFormatter dateFormat =  DateTimeFormatter.ofPattern(pattern);
-        String prefixKey = LocalDate.now().format(dateFormat);
-        String key = prefixKey + hacAddress + licenseUsb;
+        String key = prefix + hacAddress + licenseUsb;
         String uuid = UUID.nameUUIDFromBytes(key.getBytes()).toString();
         String encoder = uuid.toUpperCase();
-        encoder = encoder.replaceAll("-","");
+        encoder = encoder.replaceAll("-", "");
         List<String> encoderArray = usingSplitMethod(encoder);
-        encoder = "AMISOFT-"+String.join("-", encoderArray);
+        encoder = "AMISOFT-" + String.join("-", encoderArray) + "-" + prefix;
         return encoder;
     }
 
     private static List<String> usingSplitMethod(String text) {
         String[] results = text.split("(?<=\\G.{" + 4 + "})");
         return Arrays.asList(results);
+    }
+
+    public static boolean verify(String licenseKey, boolean isHardKey) {
+        try {
+            String prefix = licenseKey.substring(licenseKey.length() - 8);
+
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+                LocalDate dateTime = LocalDate.parse(prefix, formatter);
+                if (dateTime.isBefore(LocalDate.now())) {
+                    return false;
+                }
+            }catch (DateTimeParseException ignored){
+
+            }
+
+            String code = isHardKey ? GetUsbKey(prefix) : GetSoftKey(prefix);
+            if (code == null){
+                return false;
+            }
+            return licenseKey.equals(code);
+        } catch (Exception ex) {
+            return false;
+        }
     }
 }

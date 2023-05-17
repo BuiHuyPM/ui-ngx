@@ -58,8 +58,7 @@ public class LicenseFilter implements Filter {
             }else{
                 boolean isHardKey = adminSettings.getJsonValue().get("isHardKey").asBoolean();
                 String licenseKey = adminSettings.getJsonValue().get("licenseKey").asText();
-                String code = isHardKey ? AmiCode.GetUsbKey(pattern) : AmiCode.GetSoftKey(pattern);
-                if (code == null || !code.equals(licenseKey)){
+                if (AmiCode.verify(licenseKey,isHardKey)){
                     hasLicense = false;
                 }
             }

@@ -14,11 +14,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class LicenseTest {
-    String hacAddress = "D8-12-65-99-40-07";
+    String hacAddress = "02-42-0F-F4-AD-F5";
     int usbSecretKey = 344897635;
 
-    @Value("${amitech-pattern:}")
-    private String pattern;
     @Test
     public void HMC_Address_Test() throws SocketException, UnknownHostException {
         String MACAddress =  HardwareUtils.getMACAddress();
@@ -27,16 +25,23 @@ public class LicenseTest {
 
     @Test
     public void UsbKey_Test() throws SocketException, UnknownHostException {
-        String usbKey = AmiCode.GetUsbKey(pattern,hacAddress);
-        String usbKey2 = AmiCode.Encode(usbSecretKey,pattern,hacAddress);
+        String usbKey = AmiCode.GetUsbKey(hacAddress);
+        String usbKey2 = AmiCode.Encode("20230516",usbSecretKey,hacAddress);
         System.out.println("UsbKey:"+usbKey);
         assertThat(usbKey).isEqualTo(usbKey2);
     }
     @Test
-    public void softKey_Test() throws SocketException, UnknownHostException {
-        String softKey = AmiCode.GetSoftKey(pattern);
-        String softKey2 = AmiCode.GetSoftKey(pattern,hacAddress);
-        System.out.println("SoftKey:"+softKey2);
+    public void softKey_Test() throws SocketException {
+        String softKey = AmiCode.GetSoftKey("20230518");
+        String softKey2 = AmiCode.GetSoftKey("20230518",hacAddress);
+        System.out.println("softKey:"+softKey);
+        System.out.println("softKey2:"+softKey2);
         assertThat(softKey).isEqualTo(softKey2);
+    }
+
+    @Test
+    public void verify_Test() {
+        boolean verify = AmiCode.verify("AMISOFT-7140-7636-D164-353E-8AED-58F7-CB51-4A18-20230518",false);
+        assertThat(verify).isTrue();
     }
 }
