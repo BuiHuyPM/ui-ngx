@@ -1,6 +1,7 @@
 package org.thingsboard.server.utils;
 
 import Key.KeyObj;
+import org.thingsboard.server.common.data.StringUtils;
 
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -50,7 +51,10 @@ public class AmiCode {
         String encoder = uuid.toUpperCase();
         encoder = encoder.replaceAll("-", "");
         List<String> encoderArray = usingSplitMethod(encoder);
-        encoder = "AMISOFT-" + String.join("-", encoderArray) + "-" + prefix;
+        String[] prefixes = prefix.split("(?<=\\G.{" + 2 + "})");
+        String prefix1 = prefixes[0] + prefixes[2] + "-";
+        String prefix2 = "-" + prefixes[1] + prefixes[3];
+        encoder = "AMISOFT-" + prefix1 + String.join("-", encoderArray) + prefix2;
         return encoder;
     }
 
@@ -61,20 +65,24 @@ public class AmiCode {
 
     public static boolean verify(String licenseKey, boolean isHardKey) {
         try {
-            String prefix = licenseKey.substring(licenseKey.length() - 8);
-
+            String[] prefixes = new String[4];
+            prefixes[0] = licenseKey.substring(8 , 10);
+            prefixes[2] = licenseKey.substring(10 , 12);
+            prefixes[1] = licenseKey.substring(licenseKey.length()-4,licenseKey.length()-2);
+            prefixes[3] = licenseKey.substring(licenseKey.length() - 2);
+            String prefix = StringUtils.join(prefixes, "");
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
                 LocalDate dateTime = LocalDate.parse(prefix, formatter);
                 if (dateTime.isBefore(LocalDate.now())) {
                     return false;
                 }
-            }catch (DateTimeParseException ignored){
+            } catch (DateTimeParseException ignored) {
 
             }
 
             String code = isHardKey ? GetUsbKey(prefix) : GetSoftKey(prefix);
-            if (code == null){
+            if (code == null) {
                 return false;
             }
             return licenseKey.equals(code);
