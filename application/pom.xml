@@ -26,9 +26,9 @@
     <artifactId>application</artifactId>
     <packaging>jar</packaging>
 
-    <name>ThingsBoard Server Application</name>
-    <url>https://thingsboard.io</url>
-    <description>Open-source IoT Platform - Device management, data collection, processing and visualization
+    <name>Amisofts Inergy Server Application</name>
+    <url>https://inergy.vn</url>
+    <description>AmiSofts Inergy Server
     </description>
 
     <properties>
@@ -42,7 +42,7 @@
         <pkg.win.dist>${project.build.directory}/windows</pkg.win.dist>
         <pkg.copyInstallScripts>true</pkg.copyInstallScripts>
         <pkg.implementationTitle>InergySystem</pkg.implementationTitle>
-        <pkg.mainClass>org.thingsboard.server.ThingsboardServerApplication</pkg.mainClass>
+        <pkg.mainClass>vn.inergy.server.InergyServerApplication</pkg.mainClass>
     </properties>
 
     <dependencies>

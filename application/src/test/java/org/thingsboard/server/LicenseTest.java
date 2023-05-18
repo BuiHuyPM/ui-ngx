@@ -1,20 +1,15 @@
 package org.thingsboard.server;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.thingsboard.server.utils.AmiCode;
 import org.thingsboard.server.utils.HardwareUtils;
 
 import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LicenseTest {
-    String hacAddress = "02-42-0F-F4-AD-F5";
+    String hacAddress = "4C-D9-8F-C4-BC-A0";
     int usbSecretKey = 344897635;
 
     @Test
@@ -32,8 +27,8 @@ public class LicenseTest {
     }
     @Test
     public void softKey_Test() throws SocketException {
-        String softKey = AmiCode.GetSoftKey("20230518");
-        String softKey2 = AmiCode.GetSoftKey("20230518",hacAddress);
+        String softKey = AmiCode.GetSoftKey("20230618");
+        String softKey2 = AmiCode.GetSoftKey("20230618",hacAddress);
         System.out.println("softKey:"+softKey);
         System.out.println("softKey2:"+softKey2);
         assertThat(softKey).isEqualTo(softKey2);
