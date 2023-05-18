@@ -120,8 +120,12 @@ public abstract class AbstractChunkedAggregationTimeseriesDao extends AbstractSq
             long endPeriod = Math.max(query.getStartTs() + 1, query.getEndTs());
             long interval = query.getInterval();
             int timesInterval = (int) ((endPeriod - startPeriod) / interval);
-            futures.add(findAndAggregateAsync(entityId, query.getKey(), startPeriod, endPeriod, startPeriod, Aggregation.MIN));
-            futures.add(findAndAggregateAsync(entityId, query.getKey(), startPeriod, endPeriod, startPeriod + timesInterval * interval, Aggregation.MAX));
+            long lastSt = startPeriod + timesInterval * interval - interval/2;
+            long tsMin =  startPeriod + interval / 2;
+            long tsMax = lastSt + (endPeriod - lastSt) / 2;
+
+            futures.add(findAndAggregateAsync(entityId, query.getKey(), startPeriod, endPeriod, tsMin, Aggregation.MIN));
+            futures.add(findAndAggregateAsync(entityId, query.getKey(), startPeriod, endPeriod, tsMax, Aggregation.MAX));
             return getReadTsKvQueryResultFuture(query, Futures.allAsList(futures));
         } else {
             List<ListenableFuture<Optional<TsKvEntity>>> futures = new ArrayList<>();
