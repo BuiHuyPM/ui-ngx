@@ -37,7 +37,7 @@ public class LicenseTest {
 
     @Test
     public void verify_Test() {
-        boolean verify = AmiCode.verify("AMISOFT-2005-7140-7636-D164-353E-8AED-58F7-CB51-4A18-2318",false);
+        boolean verify = AmiCode.verify("AMISOFT-2006-8561-C91D-E46B-31CC-BAAE-65E1-6684-850B-2318",false);
         assertThat(verify).isTrue();
     }
 }

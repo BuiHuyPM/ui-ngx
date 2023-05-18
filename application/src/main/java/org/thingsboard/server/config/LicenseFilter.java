@@ -46,7 +46,7 @@ public class LicenseFilter implements Filter {
             }else{
                 boolean isHardKey = adminSettings.getJsonValue().get("isHardKey").asBoolean();
                 String licenseKey = adminSettings.getJsonValue().get("licenseKey").asText();
-                if (AmiCode.verify(licenseKey,isHardKey)){
+                if (!AmiCode.verify(licenseKey,isHardKey)){
                     hasLicense = false;
                 }
             }
