@@ -192,6 +192,13 @@ export class TimewindowPanelComponent extends PageComponent implements OnInit {
     const aggType = this.timewindowForm.get('aggregation.type').value;
     if (aggType !== AggregationType.NONE) {
       this.timewindowForm.get('aggregation.limit').clearValidators();
+      if (aggType === AggregationType.MinMax) {
+        const fixedTimewindow = this.timewindowForm.get('history.fixedTimewindow').value;
+        const start = fixedTimewindow.startTimeMs;
+        const stop = fixedTimewindow.endTimeMs;
+        this.timewindowForm.get('history.interval').setValue(stop - start );
+        this.timewindowForm.get('aggregation.limit').clearValidators();
+      }
     } else {
       this.timewindowForm.get('aggregation.limit').setValidators([Validators.min(this.minDatapointsLimit()),
         Validators.max(this.maxDatapointsLimit())]);

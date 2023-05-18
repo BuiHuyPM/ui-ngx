@@ -1,15 +1,10 @@
 package org.thingsboard.server.config;
 
 import com.google.gson.Gson;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.thingsboard.server.common.data.AdminSettings;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.dao.settings.AdminSettingsService;
@@ -21,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -29,8 +26,6 @@ public class LicenseFilter implements Filter {
     @Autowired
     private AdminSettingsService adminSettingsService;
 
-    @Value("${amitech-pattern:}")
-    private String pattern;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -42,15 +37,8 @@ public class LicenseFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
-        List<String> allowedUris = new ArrayList<>();
-        allowedUris.add("/api/license");
-        allowedUris.add("/api/v1/.*");
-        allowedUris.add("/static/.*");
-        allowedUris.add("/assets/.*");
-        allowedUris.add("/");
-        allowedUris.add(".*/[a-zA-Z0-9.\\-]+(.json|.ico|.css|.js|.png|.svg|.jpg|.ttf)");
-        boolean isMatch = allowedUris.stream().anyMatch(uri::matches);
-        if (!isMatch) {
+        boolean isMatch = uri.matches("/api/(?!v1/)(?!license$).*");
+        if (isMatch) {
             AdminSettings adminSettings = adminSettingsService.findAdminSettingsByKey(TenantId.SYS_TENANT_ID, AmiCode.key);
             boolean hasLicense = true;
             if (adminSettings == null){
