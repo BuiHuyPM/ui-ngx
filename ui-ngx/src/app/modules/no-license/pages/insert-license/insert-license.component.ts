@@ -30,6 +30,16 @@ export class InsertLicenseComponent extends PageComponent implements OnInit, Has
       (adminSettings) => {
         this.adminSettings = adminSettings;
         this.generalSettings.reset(this.adminSettings.jsonValue);
+      },
+      () => {
+        this.adminSettings = {
+          key: 'license-key',
+          jsonValue: {
+            licenseKey: '',
+            isHardKey: ''
+          }
+        };
+        this.generalSettings.reset(this.adminSettings.jsonValue);
       }
     );
   }
