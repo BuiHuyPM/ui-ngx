@@ -27,8 +27,6 @@ public class LicenseFilter implements Filter {
     @Autowired
     private AdminSettingsService adminSettingsService;
 
-    @Value("${amitech-pattern:}")
-    private String pattern;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
