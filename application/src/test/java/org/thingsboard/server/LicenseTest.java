@@ -1,17 +1,12 @@
 package org.thingsboard.server;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.thingsboard.server.utils.AmiCode;
 import org.thingsboard.server.utils.HardwareUtils;
 
 import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LicenseTest {
     String prefix = "20230618";
