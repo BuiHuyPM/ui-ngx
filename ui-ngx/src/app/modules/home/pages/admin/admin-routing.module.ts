@@ -37,6 +37,7 @@ import { RepositoryAdminSettingsComponent } from '@home/pages/admin/repository-a
 import { AutoCommitAdminSettingsComponent } from '@home/pages/admin/auto-commit-admin-settings.component';
 import { TwoFactorAuthSettingsComponent } from '@home/pages/admin/two-factor-auth-settings.component';
 import { LicenseSettingsComponent } from '@home/pages/admin/license-settings/license-settings.component';
+import {AssetFilesComponent} from '@home/pages/admin/asset-files/asset-files.component';
 
 @Injectable()
 export class OAuth2LoginProcessingUrlResolver implements Resolve<string> {
@@ -277,6 +278,19 @@ const routes: Routes = [
           breadcrumb: {
             label: 'admin.license-settings',
             icon: 'lock_open'
+          }
+        }
+      },
+      {
+        path: 'asset-files',
+        component: AssetFilesComponent,
+        canDeactivate: [ConfirmOnExitGuard],
+        data: {
+          auth: [Authority.SYS_ADMIN],
+          title: 'admin.assetFiles',
+          breadcrumb: {
+            label: 'admin.assetFiles',
+            icon: 'folder'
           }
         }
       },

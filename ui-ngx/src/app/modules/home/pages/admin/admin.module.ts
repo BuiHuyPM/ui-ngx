@@ -33,6 +33,7 @@ import { RepositoryAdminSettingsComponent } from '@home/pages/admin/repository-a
 import { AutoCommitAdminSettingsComponent } from '@home/pages/admin/auto-commit-admin-settings.component';
 import { TwoFactorAuthSettingsComponent } from '@home/pages/admin/two-factor-auth-settings.component';
 import { LicenseSettingsComponent } from './license-settings/license-settings.component';
+import { AssetFilesComponent } from './asset-files/asset-files.component';
 
 @NgModule({
   declarations:
@@ -49,7 +50,8 @@ import { LicenseSettingsComponent } from './license-settings/license-settings.co
       RepositoryAdminSettingsComponent,
       AutoCommitAdminSettingsComponent,
       TwoFactorAuthSettingsComponent,
-      LicenseSettingsComponent
+      LicenseSettingsComponent,
+      AssetFilesComponent
     ],
   imports: [
     CommonModule,

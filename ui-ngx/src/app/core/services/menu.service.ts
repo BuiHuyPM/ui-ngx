@@ -163,6 +163,13 @@ export class MenuService {
           },
           {
             id: guid(),
+            name: 'admin.assetFiles',
+            type: 'link',
+            path: '/settings/asset-files',
+            icon: 'folder'
+          },
+          {
+            id: guid(),
             name: 'admin.queues',
             type: 'link',
             path: '/settings/queues',

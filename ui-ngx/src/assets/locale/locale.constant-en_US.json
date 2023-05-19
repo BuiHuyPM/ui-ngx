@@ -93,6 +93,7 @@
         "license-key": "License key",
         "license-key-required": "License key is required.",
         "license-expiration-time": "License expiration time",
+        "assetFiles": "Asset files",
         "is-hard-key": "Use USB key",
         "base-url": "Base URL",
         "base-url-required": "Base URL is required.",
