@@ -1,8 +1,8 @@
 package org.thingsboard.server;
 
 import org.junit.jupiter.api.Test;
-import org.thingsboard.server.utils.AmiCode;
-import org.thingsboard.server.utils.HardwareUtils;
+import vn.inergy.server.utils.AmiCode;
+import vn.inergy.server.utils.HardwareUtils;
 
 import java.net.SocketException;
 

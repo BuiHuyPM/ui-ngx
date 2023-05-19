@@ -34,7 +34,8 @@ import java.util.Arrays;
         "org.thingsboard.server.common.stats",
         "org.thingsboard.server.common.transport.config.ssl",
         "org.thingsboard.server.cache",
-        "org.thingsboard.server.springfox"
+        "org.thingsboard.server.springfox",
+        "vn.inergy.server"
 })
 public class InergyInstallApplication {
 

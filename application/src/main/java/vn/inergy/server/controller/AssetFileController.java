@@ -1,16 +1,14 @@
-package org.thingsboard.server.controller;
+package vn.inergy.server.controller;
 
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
-import org.thingsboard.server.common.data.id.AssetId;
-import org.thingsboard.server.model.assetFiles.FileDTO;
+import org.thingsboard.server.controller.BaseController;
+import vn.inergy.server.model.assetFiles.FileDTO;
 import org.thingsboard.server.queue.util.TbCoreComponent;
-import org.thingsboard.server.service.assetFiles.AssetFileService;
-import org.thingsboard.server.service.security.permission.Operation;
+import vn.inergy.server.service.assetFiles.AssetFileService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

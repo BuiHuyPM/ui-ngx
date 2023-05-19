@@ -1,4 +1,4 @@
-package org.thingsboard.server.config;
+package vn.inergy.server.config;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.thingsboard.server.common.data.AdminSettings;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.dao.settings.AdminSettingsService;
-import org.thingsboard.server.utils.AmiCode;
+import vn.inergy.server.utils.AmiCode;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)

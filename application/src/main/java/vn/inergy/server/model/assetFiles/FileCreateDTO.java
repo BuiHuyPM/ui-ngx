@@ -1,4 +1,4 @@
-package org.thingsboard.server.model.assetFiles;
+package vn.inergy.server.model.assetFiles;
 
 import lombok.Data;
 

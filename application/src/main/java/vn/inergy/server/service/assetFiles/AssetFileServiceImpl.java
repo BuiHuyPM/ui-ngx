@@ -1,9 +1,9 @@
-package org.thingsboard.server.service.assetFiles;
+package vn.inergy.server.service.assetFiles;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
-import org.thingsboard.server.model.assetFiles.FileDTO;
+import vn.inergy.server.model.assetFiles.FileDTO;
 
 import java.io.File;
 import java.io.IOException;

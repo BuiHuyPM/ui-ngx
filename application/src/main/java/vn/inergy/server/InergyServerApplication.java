@@ -1,12 +1,12 @@
 /**
  * Copyright © 2016-2023 The Thingsboard Authors
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,25 +20,25 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.thingsboard.server.utils.HardwareUtils;
+import vn.inergy.server.utils.HardwareUtils;
 
 import java.util.Arrays;
 
 @SpringBootConfiguration
 @EnableAsync
 @EnableScheduling
-@ComponentScan({"org.thingsboard.server", "org.thingsboard.script"})
+@ComponentScan({"org.thingsboard.server", "org.thingsboard.script", "vn.inergy.server"})
 public class InergyServerApplication {
 
     private static final String SPRING_CONFIG_NAME_KEY = "--spring.config.name";
-    private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "thingsboard";
+    private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "inergy";
 
     public static void main(String[] args) {
-        showHardAddress();
         SpringApplication.run(InergyServerApplication.class, updateArguments(args));
     }
 
     private static String[] updateArguments(String[] args) {
+        showHardAddress();
         if (Arrays.stream(args).noneMatch(arg -> arg.startsWith(SPRING_CONFIG_NAME_KEY))) {
             String[] modifiedArgs = new String[args.length + 1];
             System.arraycopy(args, 0, modifiedArgs, 0, args.length);
@@ -48,12 +48,12 @@ public class InergyServerApplication {
         return args;
     }
 
-    private static void showHardAddress(){
+    private static void showHardAddress() {
         try {
             String hacAddress = HardwareUtils.getMACAddress();
-            System.out.println("Application run on server: "+hacAddress);
-        }catch (Exception ex){
-            System.out.println("Can't not get MAC address. error:"+ex.getMessage());
+            System.out.println("Application run on server: " + hacAddress);
+        } catch (Exception ex) {
+            System.out.println("Can't not get MAC address. error:" + ex.getMessage());
         }
     }
 }

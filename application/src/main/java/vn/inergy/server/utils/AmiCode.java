@@ -1,10 +1,9 @@
-package org.thingsboard.server.utils;
+package vn.inergy.server.utils;
 
 import Key.KeyObj;
 import org.thingsboard.server.common.data.StringUtils;
 
 import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -63,24 +62,31 @@ public class AmiCode {
         return Arrays.asList(results);
     }
 
+    public static String getPrefix(String licenseKey){
+        String[] prefixes = new String[4];
+        prefixes[0] = licenseKey.substring(8 , 10);
+        prefixes[2] = licenseKey.substring(10 , 12);
+        prefixes[1] = licenseKey.substring(licenseKey.length()-4,licenseKey.length()-2);
+        prefixes[3] = licenseKey.substring(licenseKey.length() - 2);
+        return StringUtils.join(prefixes, "");
+    }
+
+    public static LocalDate preFixToLocalDate(String prefix){
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+            return LocalDate.parse(prefix, formatter);
+        } catch (DateTimeParseException ignored) {
+            return null;
+        }
+    }
+
     public static boolean verify(String licenseKey, boolean isHardKey) {
         try {
-            String[] prefixes = new String[4];
-            prefixes[0] = licenseKey.substring(8 , 10);
-            prefixes[2] = licenseKey.substring(10 , 12);
-            prefixes[1] = licenseKey.substring(licenseKey.length()-4,licenseKey.length()-2);
-            prefixes[3] = licenseKey.substring(licenseKey.length() - 2);
-            String prefix = StringUtils.join(prefixes, "");
-            try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-                LocalDate dateTime = LocalDate.parse(prefix, formatter);
-                if (dateTime.isBefore(LocalDate.now())) {
-                    return false;
-                }
-            } catch (DateTimeParseException ignored) {
-
+            String prefix = getPrefix(licenseKey);
+            LocalDate dateTime = preFixToLocalDate(prefix);
+            if (dateTime != null && dateTime.isBefore(LocalDate.now())) {
+                return false;
             }
-
             String code = isHardKey ? GetUsbKey(prefix) : GetSoftKey(prefix);
             if (code == null) {
                 return false;

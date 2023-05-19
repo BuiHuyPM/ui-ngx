@@ -329,7 +329,7 @@ public abstract class BaseController {
      * }
      * */
     @Deprecated
-    ThingsboardException handleException(Exception exception) {
+    protected ThingsboardException handleException(Exception exception) {
         return handleException(exception, true);
     }
 
@@ -369,11 +369,11 @@ public abstract class BaseController {
         handleThingsboardException(thingsboardException, response);
     }
 
-    <T> T checkNotNull(T reference) throws ThingsboardException {
+    protected <T> T checkNotNull(T reference) throws ThingsboardException {
         return checkNotNull(reference, "Requested item wasn't found!");
     }
 
-    <T> T checkNotNull(T reference, String notFoundMessage) throws ThingsboardException {
+    protected  <T> T checkNotNull(T reference, String notFoundMessage) throws ThingsboardException {
         if (reference == null) {
             throw new ThingsboardException(notFoundMessage, ThingsboardErrorCode.ITEM_NOT_FOUND);
         }

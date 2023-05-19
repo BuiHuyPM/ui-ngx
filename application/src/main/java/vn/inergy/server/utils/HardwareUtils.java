@@ -1,4 +1,4 @@
-package org.thingsboard.server.utils;
+package vn.inergy.server.utils;
 
 
 import java.net.NetworkInterface;

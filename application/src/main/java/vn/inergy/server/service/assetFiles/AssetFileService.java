@@ -1,7 +1,7 @@
-package org.thingsboard.server.service.assetFiles;
+package vn.inergy.server.service.assetFiles;
 
 
-import org.thingsboard.server.model.assetFiles.FileDTO;
+import vn.inergy.server.model.assetFiles.FileDTO;
 
 import java.util.List;
 
