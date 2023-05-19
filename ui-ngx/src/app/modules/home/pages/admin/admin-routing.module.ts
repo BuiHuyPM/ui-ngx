@@ -36,6 +36,7 @@ import { QueuesTableConfigResolver } from '@home/pages/admin/queue/queues-table-
 import { RepositoryAdminSettingsComponent } from '@home/pages/admin/repository-admin-settings.component';
 import { AutoCommitAdminSettingsComponent } from '@home/pages/admin/auto-commit-admin-settings.component';
 import { TwoFactorAuthSettingsComponent } from '@home/pages/admin/two-factor-auth-settings.component';
+import { LicenseSettingsComponent } from '@home/pages/admin/license-settings/license-settings.component';
 
 @Injectable()
 export class OAuth2LoginProcessingUrlResolver implements Resolve<string> {
@@ -265,7 +266,20 @@ const routes: Routes = [
             icon: 'settings_backup_restore'
           }
         }
-      }
+      },
+      {
+        path: 'license-settings',
+        component: LicenseSettingsComponent,
+        canDeactivate: [ConfirmOnExitGuard],
+        data: {
+          auth: [Authority.SYS_ADMIN],
+          title: 'admin.license-settings',
+          breadcrumb: {
+            label: 'admin.license-settings',
+            icon: 'lock_open'
+          }
+        }
+      },
     ]
   }
 ];

@@ -47,6 +47,7 @@ export interface MailServerSettings {
 export interface LicenseSettings {
   licenseKey: string;
   isHardKey: string;
+  expirationTime?: string;
 }
 export interface GeneralSettings {
   baseUrl: string;

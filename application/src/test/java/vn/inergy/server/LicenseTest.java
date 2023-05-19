@@ -1,4 +1,4 @@
-package org.thingsboard.server;
+package vn.inergy.server;
 
 import org.junit.jupiter.api.Test;
 import vn.inergy.server.utils.AmiCode;
@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LicenseTest {
     String prefix = "20230618";
+//    String prefix = "GNUHTAHN";
     String hacAddress = "4C-D9-8F-C4-BC-A0";
     int usbSecretKey = 344897635;
 
@@ -37,7 +38,7 @@ public class LicenseTest {
 
     @Test
     public void verify_Test() {
-        boolean verify = AmiCode.verify("AMISOFT-2006-8561-C91D-E46B-31CC-BAAE-65E1-6684-850B-2318",false);
+        boolean verify = AmiCode.verify("AMISOFT-GNTA-AC90-2260-879D-3C2C-BFF8-39D4-6384-8329-UHHN",false);
         assertThat(verify).isTrue();
     }
 }

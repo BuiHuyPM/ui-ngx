@@ -1,0 +1,13 @@
+:host mat-card.settings-card {
+  margin: 8px;
+}
+@media screen and (min-width: 960px) and (max-width: 1279px) {
+  :host mat-card.settings-card {
+    width: 80%;
+  }
+}
+@media screen and (min-width: 1280px) {
+  :host mat-card.settings-card {
+    width: 60%;
+  }
+}

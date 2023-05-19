@@ -1,4 +1,4 @@
-package org.thingsboard.server;
+package vn.inergy.server;
 
 import org.junit.jupiter.api.Test;
 

@@ -108,7 +108,7 @@ export class MenuService {
         name: 'admin.system-settings',
         type: 'toggle',
         path: '/settings',
-        height: '320px',
+        height: '360px',
         icon: 'settings',
         pages: [
           {
@@ -167,6 +167,13 @@ export class MenuService {
             type: 'link',
             path: '/settings/queues',
             icon: 'swap_calls'
+          },
+          {
+            id: guid(),
+            name: 'admin.license-settings',
+            type: 'link',
+            path: '/settings/license-settings',
+            icon: 'lock_open'
           },
         ]
       }
@@ -246,6 +253,11 @@ export class MenuService {
             name: 'admin.queues',
             icon: 'swap_calls',
             path: '/settings/queues'
+          },
+          {
+            name: 'admin.license-settings',
+            icon: 'lock_open',
+            path: '/settings/license-settings'
           },
         ]
       }
