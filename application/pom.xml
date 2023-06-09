@@ -365,14 +365,14 @@
                 <directory>${project.basedir}/src/main/resources</directory>
                 <filtering>true</filtering>
                 <includes>
-                    <include>thingsboard.yml</include>
+                    <include>inergy.yml</include>
                 </includes>
             </resource>
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
                 <filtering>false</filtering>
                 <excludes>
-                    <exclude>thingsboard.yml</exclude>
+                    <exclude>inergy.yml</exclude>
                 </excludes>
             </resource>
         </resources>

@@ -22,16 +22,16 @@ public class AssetFileServiceImpl implements AssetFileService {
     public AssetFileServiceImpl(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
-
-    @Override
-    public boolean createRoot() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:static");
-        File file = new File(resource.getFile(), "assetFiles");
-        if (!file.exists()) {
-            return file.mkdirs();
-        }
-        return true;
-    }
+//
+//    @Override
+//    public boolean createRoot() throws Exception {
+//        Resource resource = resourceLoader.getResource("classpath:static");
+//        File file = new File(resource.getFile(), "assetFiles");
+//        if (!file.exists()) {
+//            return file.mkdirs();
+//        }
+//        return true;
+//    }
 
     @Override
     public List<FileDTO> get(String folder) throws Exception {

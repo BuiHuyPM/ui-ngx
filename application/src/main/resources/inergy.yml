@@ -561,7 +561,7 @@ spring:
       ddl-auto: "none"
   datasource:
     driverClassName: "${SPRING_DRIVER_CLASS_NAME:org.postgresql.Driver}"
-    url: "${SPRING_DATASOURCE_URL:jdbc:postgresql://192.168.31.222:5432/inergy_db_new}"
+    url: "${SPRING_DATASOURCE_URL:jdbc:postgresql://192.168.31.222:5432/inergy_tkv}"
     username: "${SPRING_DATASOURCE_USERNAME:postgres}"
     password: "${SPRING_DATASOURCE_PASSWORD:@Ami2021}"
     hikari:

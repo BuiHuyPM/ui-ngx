@@ -35,12 +35,12 @@ import java.util.Arrays;
         "org.thingsboard.server.common.transport.config.ssl",
         "org.thingsboard.server.cache",
         "org.thingsboard.server.springfox",
-        "vn.inergy.server"
+        "vn.inergy.server.service.assetFiles",
 })
 public class InergyInstallApplication {
 
     private static final String SPRING_CONFIG_NAME_KEY = "--spring.config.name";
-    private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "thingsboard";
+    private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "inergy";
 
     public static void main(String[] args) {
         try {

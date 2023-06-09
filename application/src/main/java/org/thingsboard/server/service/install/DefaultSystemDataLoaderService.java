@@ -82,7 +82,7 @@ import org.thingsboard.server.common.data.tenant.profile.DefaultTenantProfileCon
 import org.thingsboard.server.common.data.tenant.profile.TenantProfileData;
 import org.thingsboard.server.common.data.tenant.profile.TenantProfileQueueConfiguration;
 import org.thingsboard.server.common.data.widget.WidgetsBundle;
-import vn.inergy.server.service.assetFiles.AssetFileService;
+import vn.inergy.server.service.assetFiles.install.AssetFile;
 import org.thingsboard.server.service.security.auth.jwt.settings.JwtSettingsService;
 import org.thingsboard.server.dao.attributes.AttributesService;
 import org.thingsboard.server.dao.customer.CustomerService;
@@ -123,7 +123,7 @@ public class DefaultSystemDataLoaderService implements SystemDataLoaderService {
     private InstallScripts installScripts;
 
     @Autowired
-    private AssetFileService assetFileService;
+    private AssetFile assetFileInstall;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -678,7 +678,7 @@ public class DefaultSystemDataLoaderService implements SystemDataLoaderService {
     @Override
     public void createFolder() {
         try {
-            boolean isCreated = assetFileService.createRoot();
+            boolean isCreated = assetFileInstall.createRoot();
             if (!isCreated){
                 log.error("Can't create Root folder for asset files");
             }
