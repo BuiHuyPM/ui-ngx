@@ -7,8 +7,10 @@
   </div>
   <div class="body">
     <h1 class="h1">{{'access.no-license' | translate }}</h1>
-    <p class="desc">{{'access.no-license-text' | translate }}</p>
-    <form [formGroup]="generalSettings" (ngSubmit)="save()">
+    <p *ngIf="this.fistSetup == true" class="desc">{{'access.no-license-setup' | translate }}</p>
+    <p *ngIf="this.fistSetup == false && !this.generalSettings.get('isHardKey').value" class="desc">{{'access.no-license-soft' | translate }}</p>
+    <p *ngIf="this.fistSetup == false && this.generalSettings.get('isHardKey').value" class="desc">{{'access.no-license-hard' | translate }}</p>
+    <form *ngIf="this.fistSetup != null && (this.fistSetup == true || !this.generalSettings.get('isHardKey').value)" [formGroup]="generalSettings" (ngSubmit)="save()">
       <fieldset [disabled]="isLoading$ | async">
         <mat-form-field class="mat-block">
           <mat-label translate>admin.license-key</mat-label>
@@ -17,7 +19,7 @@
             {{ 'admin.license-key-required' | translate }}
           </mat-error>
         </mat-form-field>
-        <tb-checkbox formControlName="isHardKey" style="display: block; padding-bottom: 16px;">
+        <tb-checkbox *ngIf="this.fistSetup" formControlName="isHardKey" style="display: block; padding-bottom: 16px;">
           {{ 'admin.is-hard-key' | translate }}
         </tb-checkbox>
         <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="end center" mat-dialog-actions style="width: 100%;" class="layout-wrap">
