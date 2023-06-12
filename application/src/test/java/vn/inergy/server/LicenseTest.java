@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LicenseTest {
 //    String prefix = "20230618";
     String prefix = "GNUHTAHN";
-    String hacAddress = "A2-F7-B6-00-22-D5";
+    String hacAddress = "02-42-58-3D-73-8E";
     int usbSecretKey = 344897635;
 
     @Test
@@ -25,6 +25,7 @@ public class LicenseTest {
         String usbKey = AmiCode.GetUsbKey(prefix,hacAddress);
         String usbKey2 = AmiCode.Encode(prefix,usbSecretKey,hacAddress);
         System.out.println("UsbKey:"+usbKey);
+        System.out.println("usbKey2:"+usbKey2);
         assertThat(usbKey).isEqualTo(usbKey2);
     }
     @Test

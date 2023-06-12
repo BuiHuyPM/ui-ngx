@@ -10,7 +10,9 @@
         "permission-denied": "Permission Denied",
         "permission-denied-text": "You don't have permission to perform this operation!",
         "no-license": "No license",
-        "no-license-text": "Please insert your license key USB into the server's USB port or enter license key"
+        "no-license-setup": "Please insert your license key USB into the server's USB port and enter license key",
+        "no-license-soft": "Please insert your license key USB into the server's USB port",
+        "no-license-hard": "Please enter license key"
     },
     "action": {
         "activate": "Activate",

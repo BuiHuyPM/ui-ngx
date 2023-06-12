@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PageComponent} from '@shared/components/page.component';
 import {HasConfirmForm} from '@core/guards/confirm-on-exit.guard';
@@ -13,9 +13,11 @@ import {LicenseService} from '@core/http/license.service';
   templateUrl: './insert-license.component.html',
   styleUrls: ['./insert-license.component.scss']
 })
-export class InsertLicenseComponent extends PageComponent implements OnInit, HasConfirmForm{
+export class InsertLicenseComponent extends PageComponent implements OnInit, HasConfirmForm {
   generalSettings: FormGroup;
   adminSettings: AdminSettings<LicenseSettings>;
+  fistSetup: null | boolean = null;
+
   constructor(
     protected store: Store<AppState>,
     private router: Router,
@@ -28,10 +30,12 @@ export class InsertLicenseComponent extends PageComponent implements OnInit, Has
     this.buildGeneralServerSettingsForm();
     this.licenseService.getLicense().subscribe(
       (adminSettings) => {
+        this.fistSetup = false;
         this.adminSettings = adminSettings;
         this.generalSettings.reset(this.adminSettings.jsonValue);
       },
       () => {
+        this.fistSetup = true;
         this.adminSettings = {
           key: 'license-key',
           jsonValue: {

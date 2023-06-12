@@ -10,7 +10,9 @@
         "permission-denied": "Quyền truy cập bị từ chối",
         "permission-denied-text": "Bạn không có quyền thực hiện thao tác này!",
         "no-license": "Không có bản quyền",
-        "no-license-text": "Vui lòng cắm usb bản quyền vào cổng usb trên máy chủ hoặc nhập key bản quyền vào hệ thống!"
+        "no-license-setup": "Vui lòng cắm usb bản quyền vào cổng usb trên máy chủ và nhập key bản quyền vào hệ thống!",
+        "no-license-soft": "Vui lòng nhập key bản quyền vào hệ thống!",
+        "no-license-hard": "Vui lòng cắm usb bản quyền vào cổng usb trên máy chủ!"
     },
     "action": {
         "activate": "Kích hoạt",
