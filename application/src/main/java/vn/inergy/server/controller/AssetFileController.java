@@ -3,6 +3,7 @@ package vn.inergy.server.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
 import org.thingsboard.server.controller.BaseController;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @TbCoreComponent
 @RequestMapping({"api/assetFiles/**", "api/assetFiles"})
+@PreAuthorize("hasAuthority('SYS_ADMIN')")
 public class AssetFileController extends BaseController {
     private final AssetFileService assetFileService;
 

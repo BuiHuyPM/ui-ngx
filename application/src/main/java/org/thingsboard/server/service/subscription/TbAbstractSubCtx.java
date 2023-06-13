@@ -329,7 +329,7 @@ public abstract class TbAbstractSubCtx<T extends EntityCountQuery> {
         @Getter
         private final String sourceAttribute;
     }
-
+    //anh9ok 2
     public void sendWsMsg(CmdUpdate update) {
         wsLock.lock();
         try {

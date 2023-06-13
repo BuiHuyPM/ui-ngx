@@ -36,7 +36,7 @@ public class LicenseFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
         boolean isMatch = uri.matches("/api/(?!v1/)(?!license$).*");
-        if (isMatch) {
+        if (isMatch && false) {
             AdminSettings adminSettings = adminSettingsService.findAdminSettingsByKey(TenantId.SYS_TENANT_ID, AmiCode.key);
             boolean hasLicense = true;
             if (adminSettings == null){

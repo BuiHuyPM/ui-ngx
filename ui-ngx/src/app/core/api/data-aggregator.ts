@@ -27,8 +27,8 @@ import {
   getTime,
   SubscriptionTimewindow
 } from '@shared/models/time/time.models';
-import { UtilsService } from '@core/services/utils.service';
-import { deepClone, isDefinedAndNotNull, isNumber, isNumeric } from '@core/utils';
+import {UtilsService} from '@core/services/utils.service';
+import {deepClone, isDefinedAndNotNull, isNumber, isNumeric} from '@core/utils';
 import Timeout = NodeJS.Timeout;
 
 export declare type onAggregatedData = (data: IndexedSubscriptionData, detectChanges: boolean) => void;
@@ -64,13 +64,17 @@ class AggDataMap {
     this.map.forEach(callback, thisArg);
   }
 
+  keys() {
+    return [...this.map.keys()];
+  }
+
   size(): number {
     return this.map.size;
   }
 }
 
 class AggregationMap {
-  aggMap: {[id: number]: AggDataMap} = {};
+  aggMap: { [id: number]: AggDataMap } = {};
 
   detectRangeChanged(): boolean {
     let changed = false;
@@ -92,6 +96,8 @@ class AggregationMap {
 }
 
 declare type AggFunction = (aggData: AggData, value?: any) => void;
+declare type MinMaxAggFunction = (aggDataMap: AggDataMap, value?: any) => void;
+declare type DeltaAggFunction = (aggDataMap: AggDataMap, ts: number, value?: any) => void;
 
 const avg: AggFunction = (aggData: AggData, value?: any) => {
   aggData.count++;
@@ -110,7 +116,44 @@ const min: AggFunction = (aggData: AggData, value?: any) => {
     aggData.aggValue = value;
   }
 };
-
+const delta: DeltaAggFunction = (aggDataMap: AggDataMap, ts: number, value?: any) => {
+  // console.log('delta', ts);
+  if (isNumber(value)) {
+    const aggData = aggDataMap.get(ts);
+    console.log(ts, aggData);
+    if (aggData) {
+      aggData.count = value;
+      aggData.aggValue = value - aggData.sum;
+    } else {
+      const keys = aggDataMap.keys();
+      const aggDataOld = aggDataMap.get(keys.pop());
+      const aggDataNew = {
+        count: value,
+        sum: (aggDataOld?.count || value),
+        aggValue: value - (aggDataOld?.count || 0)
+      };
+      aggDataMap.set(ts, aggDataNew);
+    }
+  }
+};
+const minMax: MinMaxAggFunction = (aggDataMap: AggDataMap, value?: any) => {
+  const keys = aggDataMap.keys();
+  if (keys.length === 2 && isNumber(value)) {
+    const aggDataMin = aggDataMap.get(keys[0]);
+    const aggDataMax = aggDataMap.get(keys[1]);
+    if (aggDataMin.aggValue > value) {
+      aggDataMin.aggValue = value;
+    }
+    if (aggDataMax.aggValue < value) {
+      aggDataMax.aggValue = value;
+    }
+  } else if (keys.length === 1 && isNumber(value)) {
+    const aggDataMax = aggDataMap.get(keys[0]);
+    if (aggDataMax.aggValue < value) {
+      aggDataMax.aggValue = value;
+    }
+  }
+};
 const max: AggFunction = (aggData: AggData, value?: any) => {
   if (isNumber(value)) {
     aggData.aggValue = Math.max(aggData.aggValue, value);
@@ -156,7 +199,7 @@ export class DataAggregator {
 
   private dataBuffer: IndexedSubscriptionData = [];
   private data: IndexedSubscriptionData;
-  private readonly lastPrevKvPairData: {[id: number]: [number, any]};
+  private readonly lastPrevKvPairData: { [id: number]: [number, any] };
 
   private aggregationMap: AggregationMap;
 
@@ -172,6 +215,7 @@ export class DataAggregator {
   private startTs: number;
   private endTs: number;
   private elapsed: number;
+
 
   private static convertValue(val: string, noAggregation: boolean): any {
     if (val && isNumeric(val) && (!noAggregation || noAggregation && Number(val).toString() === val)) {
@@ -419,6 +463,8 @@ export class DataAggregator {
       const aggType = aggKey.agg;
       const isCount = aggType === AggregationType.COUNT;
       const noAggregation = aggType === AggregationType.NONE;
+      const minMaxAggregation = aggType === AggregationType.MinMax;
+      const deltaAggregation = aggType === AggregationType.DELTA;
       let aggKeyData = this.aggregationMap.aggMap[id];
       if (!aggKeyData) {
         aggKeyData = new AggDataMap();
@@ -432,7 +478,11 @@ export class DataAggregator {
           Math.floor((timestamp - this.startTs) / this.subsTw.aggregation.interval) *
           this.subsTw.aggregation.interval + this.subsTw.aggregation.interval / 2);
         let aggData = aggKeyData.get(aggTimestamp);
-        if (!aggData) {
+        if (minMaxAggregation) {
+          minMax(aggKeyData, value);
+        } else if (deltaAggregation) {
+          delta(aggKeyData, aggTimestamp, value);
+        } else if (!aggData) {
           aggData = {
             count: isDefinedAndNotNull(kvPair[2]) ? kvPair[2] : 1,
             sum: value,

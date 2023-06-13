@@ -23,6 +23,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -258,7 +259,7 @@ public class DefaultTelemetryWebSocketService implements TelemetryWebSocketServi
         }
     }
 
-    private void handleWsEntityCountCmd(TelemetryWebSocketSessionRef sessionRef, EntityCountCmd cmd) {
+    private void handleWsEntityCountCmd(@NotNull TelemetryWebSocketSessionRef sessionRef, EntityCountCmd cmd) {
         String sessionId = sessionRef.getSessionId();
         log.debug("[{}] Processing: {}", sessionId, cmd);
 
@@ -291,7 +292,7 @@ public class DefaultTelemetryWebSocketService implements TelemetryWebSocketServi
     public void sendWsMsg(String sessionId, TelemetrySubscriptionUpdate update) {
         sendWsMsg(sessionId, update.getSubscriptionId(), update);
     }
-
+    //anh9ok 1
     @Override
     public void sendWsMsg(String sessionId, CmdUpdate update) {
         sendWsMsg(sessionId, update.getCmdId(), update);
