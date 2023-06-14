@@ -206,11 +206,13 @@ public abstract class AbstractChunkedAggregationTimeseriesDao extends AbstractSq
                     double oldDoubleVal = older.getDoubleValue() == null ? 0  : older.getDoubleValue();
                     double deltaDouble = newDoubleVal - oldDoubleVal;
                     tsKvEntity.setDoubleValue( deltaDouble );
+                    tsKvEntity.setAggValuesCount((long) newDoubleVal);
                 } else if (newer.getLongValue() != null) {
                     long newLongVal = newer.getLongValue();
                     long oldLongVal = older.getLongValue() == null ? 0  : older.getLongValue();
                     long deltaLong = newLongVal - oldLongVal;
                     tsKvEntity.setLongValue( deltaLong );
+                    tsKvEntity.setAggValuesCount(newLongVal);
                 }
                 return tsKvEntity;
             default:
