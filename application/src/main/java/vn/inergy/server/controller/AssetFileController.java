@@ -11,14 +11,14 @@ import vn.inergy.server.model.assetFiles.FileDTO;
 import org.thingsboard.server.queue.util.TbCoreComponent;
 import vn.inergy.server.service.assetFiles.AssetFileService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
 @RestController
 @TbCoreComponent
-@RequestMapping({"api/assetFiles/**", "api/assetFiles"})
+@RequestMapping("api/assetFiles/{*file}")
 @PreAuthorize("hasAuthority('SYS_ADMIN')")
+
 public class AssetFileController extends BaseController {
     private final AssetFileService assetFileService;
 
@@ -27,20 +27,18 @@ public class AssetFileController extends BaseController {
     }
 
     @GetMapping
-    public List<FileDTO> get(HttpServletRequest request) throws ThingsboardException {
+    public List<FileDTO> get(@PathVariable() String file) throws ThingsboardException {
         try {
-            String path = getPathFromUri(request);
-            return assetFileService.get(path);
+            return assetFileService.get(file);
         } catch (Exception e) {
             throw handleException(e);
         }
     }
 
     @PostMapping
-    public FileDTO upload(HttpServletRequest request, @RequestBody FileDTO file) throws ThingsboardException {
+    public FileDTO upload(@PathVariable String file, @RequestBody FileDTO fileDto) throws ThingsboardException {
         try {
-            String path = getPathFromUri(request);
-            return assetFileService.upload(path, file);
+            return assetFileService.upload(file, fileDto);
         } catch (Exception e) {
             throw handleException(e);
         }
@@ -48,22 +46,11 @@ public class AssetFileController extends BaseController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(HttpServletRequest request) throws Exception {
+    public void delete(@PathVariable String file) throws Exception {
         try {
-            String path = getPathFromUri(request);
-            assetFileService.delete(path);
+            assetFileService.delete(file);
         } catch (Exception e) {
             throw handleException(e);
         }
-    }
-
-    private String getPathFromUri(HttpServletRequest request) throws Exception {
-        String uri = request.getRequestURI();
-        String path = uri.replace("/api/assetFiles", "");
-        boolean isNotValid = path.matches("(../)+");
-        if (isNotValid) {
-            throw new Exception("Path is not valid");
-        }
-        return path;
     }
 }

@@ -22,19 +22,10 @@ public class AssetFileServiceImpl implements AssetFileService {
     public AssetFileServiceImpl(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
-//
-//    @Override
-//    public boolean createRoot() throws Exception {
-//        Resource resource = resourceLoader.getResource("classpath:static");
-//        File file = new File(resource.getFile(), "assetFiles");
-//        if (!file.exists()) {
-//            return file.mkdirs();
-//        }
-//        return true;
-//    }
 
     @Override
-    public List<FileDTO> get(String folder) throws Exception {
+    public List<FileDTO> get(String folderR) throws Exception {
+        String folder = beautify(folderR);
         Resource resource = resourceLoader.getResource("classpath:" + root + folder);
         if (!resource.exists()) {
             throw new Exception("Folder is not exists");
@@ -64,7 +55,8 @@ public class AssetFileServiceImpl implements AssetFileService {
     }
 
     @Override
-    public FileDTO upload(String folder, FileDTO fileDTO) throws Exception {
+    public FileDTO upload(String folderR, FileDTO fileDTO) throws Exception {
+        String folder = beautify(folderR);
         Resource resource = resourceLoader.getResource("classpath:" + root + folder);
         if (!resource.exists()) {
             throw new Exception("File is not exists");
@@ -96,7 +88,8 @@ public class AssetFileServiceImpl implements AssetFileService {
     }
 
     @Override
-    public void delete(String folder) throws Exception {
+    public void delete(String folderR) throws Exception {
+        String folder = beautify(folderR);
         Resource rootResource = resourceLoader.getResource("classpath:" + root);
         Resource resource = resourceLoader.getResource("classpath:" + root + folder);
         if (rootResource.equals(resource)) {
@@ -110,6 +103,12 @@ public class AssetFileServiceImpl implements AssetFileService {
         Files.walk(Paths.get(file.getPath())).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
     }
 
+    public String beautify(String folder){
+        if (!folder.startsWith("/")){
+            return "/"+folder;
+        }
+        return folder;
+    }
     private boolean allowEx(String name) {
         return name.matches("^.*(.jpg|.JPG|.gif|.GIF|.doc|.DOC|.pdf|.PDF|.css|.js|.html|.xlsx.|xls)$");
     }
