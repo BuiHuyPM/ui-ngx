@@ -14,29 +14,29 @@
 /// limitations under the License.
 ///
 
-import { Injectable, NgModule } from '@angular/core';
-import { Resolve, RouterModule, Routes } from '@angular/router';
+import {Injectable, NgModule} from '@angular/core';
+import {Resolve, RouterModule, Routes, UrlMatchResult, UrlSegment} from '@angular/router';
 
-import { MailServerComponent } from '@modules/home/pages/admin/mail-server.component';
-import { ConfirmOnExitGuard } from '@core/guards/confirm-on-exit.guard';
-import { Authority } from '@shared/models/authority.enum';
-import { GeneralSettingsComponent } from '@modules/home/pages/admin/general-settings.component';
-import { SecuritySettingsComponent } from '@modules/home/pages/admin/security-settings.component';
-import { OAuth2SettingsComponent } from '@home/pages/admin/oauth2-settings.component';
-import { Observable } from 'rxjs';
-import { OAuth2Service } from '@core/http/oauth2.service';
-import { SmsProviderComponent } from '@home/pages/admin/sms-provider.component';
-import { HomeSettingsComponent } from '@home/pages/admin/home-settings.component';
-import { EntitiesTableComponent } from '@home/components/entity/entities-table.component';
-import { ResourcesLibraryTableConfigResolver } from '@home/pages/admin/resource/resources-library-table-config.resolve';
-import { EntityDetailsPageComponent } from '@home/components/entity/entity-details-page.component';
-import { entityDetailsPageBreadcrumbLabelFunction } from '@home/pages/home-pages.models';
-import { BreadCrumbConfig } from '@shared/components/breadcrumb';
-import { QueuesTableConfigResolver } from '@home/pages/admin/queue/queues-table-config.resolver';
-import { RepositoryAdminSettingsComponent } from '@home/pages/admin/repository-admin-settings.component';
-import { AutoCommitAdminSettingsComponent } from '@home/pages/admin/auto-commit-admin-settings.component';
-import { TwoFactorAuthSettingsComponent } from '@home/pages/admin/two-factor-auth-settings.component';
-import { LicenseSettingsComponent } from '@home/pages/admin/license-settings/license-settings.component';
+import {MailServerComponent} from '@modules/home/pages/admin/mail-server.component';
+import {ConfirmOnExitGuard} from '@core/guards/confirm-on-exit.guard';
+import {Authority} from '@shared/models/authority.enum';
+import {GeneralSettingsComponent} from '@modules/home/pages/admin/general-settings.component';
+import {SecuritySettingsComponent} from '@modules/home/pages/admin/security-settings.component';
+import {OAuth2SettingsComponent} from '@home/pages/admin/oauth2-settings.component';
+import {Observable} from 'rxjs';
+import {OAuth2Service} from '@core/http/oauth2.service';
+import {SmsProviderComponent} from '@home/pages/admin/sms-provider.component';
+import {HomeSettingsComponent} from '@home/pages/admin/home-settings.component';
+import {EntitiesTableComponent} from '@home/components/entity/entities-table.component';
+import {ResourcesLibraryTableConfigResolver} from '@home/pages/admin/resource/resources-library-table-config.resolve';
+import {EntityDetailsPageComponent} from '@home/components/entity/entity-details-page.component';
+import {entityDetailsPageBreadcrumbLabelFunction} from '@home/pages/home-pages.models';
+import {BreadCrumbConfig} from '@shared/components/breadcrumb';
+import {QueuesTableConfigResolver} from '@home/pages/admin/queue/queues-table-config.resolver';
+import {RepositoryAdminSettingsComponent} from '@home/pages/admin/repository-admin-settings.component';
+import {AutoCommitAdminSettingsComponent} from '@home/pages/admin/auto-commit-admin-settings.component';
+import {TwoFactorAuthSettingsComponent} from '@home/pages/admin/two-factor-auth-settings.component';
+import {LicenseSettingsComponent} from '@home/pages/admin/license-settings/license-settings.component';
 import {AssetFilesComponent} from '@home/pages/admin/asset-files/asset-files.component';
 
 @Injectable()
@@ -283,16 +283,31 @@ const routes: Routes = [
       },
       {
         path: 'asset-files',
-        component: AssetFilesComponent,
-        canDeactivate: [ConfirmOnExitGuard],
-        data: {
-          auth: [Authority.SYS_ADMIN],
-          title: 'admin.assetFiles',
-          breadcrumb: {
-            label: 'admin.assetFiles',
-            icon: 'folder'
+        children: [
+          {
+            matcher: (segments, group, route) => {
+              const folder = segments.reduce((previousValue, currentValue) => previousValue + '/' + currentValue.path, '');
+              const urlSegment = new UrlSegment(folder, {});
+              const url: UrlMatchResult = {
+                consumed: segments,
+                posParams: {
+                  folder: urlSegment
+                }
+              };
+              return url;
+            },
+            component: AssetFilesComponent,
+            canDeactivate: [ConfirmOnExitGuard],
+            data: {
+              breadcrumb: {
+                label: 'admin.assetFiles',
+                icon: 'folder'
+              },
+              auth: [Authority.SYS_ADMIN],
+              title: 'admin.assetFiles',
+            }
           }
-        }
+        ]
       },
     ]
   }
@@ -307,4 +322,5 @@ const routes: Routes = [
     QueuesTableConfigResolver
   ]
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {
+}

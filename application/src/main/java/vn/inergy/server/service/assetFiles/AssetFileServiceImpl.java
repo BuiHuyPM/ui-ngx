@@ -7,6 +7,7 @@ import vn.inergy.server.model.assetFiles.FileDTO;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,16 +41,18 @@ public class AssetFileServiceImpl implements AssetFileService {
                     path = path.replace("//", "/");
                     Boolean isFolder = file.isDirectory();
                     Long lastModified = fileResource.lastModified();
-                    String data = null;
+                    String data = "";
                     if (!isFolder) {
                         byte[] fileContent = Files.readAllBytes(Paths.get(file.getPath()));
-                        data = Base64.getEncoder().encodeToString(fileContent);
+                        String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+                        data += "data:"+mimeType+";base64,";
+                        data += Base64.getEncoder().encodeToString(fileContent);
                     }
                     return new FileDTO(name, path, isFolder, data, lastModified);
-                } catch (IOException ignored) {
+                } catch (Exception ignored) {
                     return null;
                 }
-            }).filter(Objects::nonNull).collect(Collectors.toList());
+            }).filter(Objects::nonNull).sorted(FileDTO.fileDTOComparator()).collect(Collectors.toList());
         }
         return new ArrayList<>();
     }

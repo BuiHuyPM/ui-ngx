@@ -9,7 +9,7 @@ import {AdminSettings, AssetFile, LicenseSettings} from '@shared/models/settings
   providedIn: 'root'
 })
 export class AssetFilesService {
-  private baseUrl = 'api/assetFiles/';
+  private baseUrl = '/api/assetFiles';
 
   constructor(
     private http: HttpClient
@@ -22,7 +22,7 @@ export class AssetFilesService {
   public create(path: string, file: AssetFile, config?: RequestConfig): Observable<AssetFile> {
     return this.http.post<AssetFile>(this.baseUrl + path, file, defaultHttpOptionsFromConfig(config));
   }
-  public delete(path: string, file: AssetFile, config?: RequestConfig): Observable<void> {
+  public delete(path: string, config?: RequestConfig): Observable<void> {
     return this.http.delete<void>(this.baseUrl + path, defaultHttpOptionsFromConfig(config));
   }
 }

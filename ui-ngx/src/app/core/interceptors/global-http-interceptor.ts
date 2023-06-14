@@ -57,6 +57,7 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
       const config = this.getInterceptorConfig(req);
       this.updateLoadingState(config, true);
       let observable$: Observable<HttpEvent<any>>;
+
       if (this.isTokenBasedAuthEntryPoint(req.url)) {
         if (!AuthService.getJwtToken() && !this.authService.refreshTokenPending()) {
           observable$ = this.handleResponseError(req, next, new HttpErrorResponse({error: {message: 'Unauthorized!'}, status: 401}));

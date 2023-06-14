@@ -117,10 +117,8 @@ const min: AggFunction = (aggData: AggData, value?: any) => {
   }
 };
 const delta: DeltaAggFunction = (aggDataMap: AggDataMap, ts: number, value?: any) => {
-  // console.log('delta', ts);
   if (isNumber(value)) {
     const aggData = aggDataMap.get(ts);
-    console.log(ts, aggData);
     if (aggData) {
       aggData.count = value;
       aggData.aggValue = value - aggData.sum;
