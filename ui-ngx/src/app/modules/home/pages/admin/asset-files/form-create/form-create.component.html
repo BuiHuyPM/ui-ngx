@@ -17,7 +17,7 @@
                    *ngIf="!data.isFolder"
                    [readAsBinary]="true"
                    [contentConvertFunction]="convertToBase64File"
-                   [multipleFile]="false"
+                   [multipleFile]="true"
                    [allowedExtensions]="'png,jpg,svg,webp,gif,doc,docx,json,pdf,css,js,html,md,xlsx,xls,ttf,woff,otf,woff2'"
                    dropLabel="{{'resource.drop-file' | translate}}"
                    [existingFileName]="assetFileFormGroup.get('fileName')?.value"

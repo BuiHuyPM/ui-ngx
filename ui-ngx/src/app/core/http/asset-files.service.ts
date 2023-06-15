@@ -19,8 +19,8 @@ export class AssetFilesService {
   public get(path: string, config?: RequestConfig): Observable<AssetFile[]> {
     return this.http.get<AssetFile[]>(this.baseUrl + path, defaultHttpOptionsFromConfig(config));
   }
-  public create(path: string, file: AssetFile, config?: RequestConfig): Observable<AssetFile> {
-    return this.http.post<AssetFile>(this.baseUrl + path, file, defaultHttpOptionsFromConfig(config));
+  public create(path: string, files: AssetFile[], config?: RequestConfig): Observable<void> {
+    return this.http.post<void>(this.baseUrl + path, files, defaultHttpOptionsFromConfig(config));
   }
   public delete(path: string, config?: RequestConfig): Observable<void> {
     return this.http.delete<void>(this.baseUrl + path, defaultHttpOptionsFromConfig(config));

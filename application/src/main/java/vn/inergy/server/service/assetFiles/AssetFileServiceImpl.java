@@ -61,36 +61,34 @@ public class AssetFileServiceImpl implements AssetFileService {
     }
 
     @Override
-    public FileDTO upload(String folderR, FileDTO fileDTO) throws Exception {
+    public void upload(String folderR, List<FileDTO> fileDTOs) throws Exception {
         String folder = beautify(folderR);
         Resource resource = resourceLoader.getResource("classpath:" + root + folder);
         if (!resource.exists()) {
             throw new Exception("folder is not exists");
         }
+        for (FileDTO fileDTO : fileDTOs) {
+            File file = new File(resource.getFile(), fileDTO.getName());
 
-        File file = new File(resource.getFile(), fileDTO.getName());
-
-        if (file.exists()) {
-            throw new Exception("File " + fileDTO.getName() + " is really exists");
-        }
-        if (!fileDTO.getIsFolder() && !allowEx(fileDTO.getName())) {
-            throw new Exception("File " + fileDTO.getName() + " is not allow. Only files are allowed to upload: .png, jpg, svg, webp, gif, doc, docx, json, pdf, css, js, html, md, xlsx, xls, ttf, woff, otf, woff2");
-        }
-
-        boolean isCreated = fileDTO.getIsFolder() ? file.mkdirs() : file.createNewFile();
-
-        if (isCreated) {
-            if (!fileDTO.getIsFolder()) {
-                String base64String = fileDTO.getData();
-                byte[] decodedBytes = Base64.getDecoder().decode(base64String.getBytes(StandardCharsets.UTF_8));
-                Files.write(Paths.get(file.getPath()), decodedBytes);
+            if (file.exists()) {
+                throw new Exception("File " + fileDTO.getName() + " is really exists");
             }
-            Resource newResource = resourceLoader.getResource("file:" + file.getPath());
-            fileDTO.setLastModified(newResource.lastModified());
-            fileDTO.setPath(folder + "/" + fileDTO.getName());
-            return fileDTO;
+            if (!fileDTO.getIsFolder() && !allowEx(fileDTO.getName())) {
+                throw new Exception("File " + fileDTO.getName() + " is not allow. Only files are allowed to upload: .png, jpg, svg, webp, gif, doc, docx, json, pdf, css, js, html, md, xlsx, xls, ttf, woff, otf, woff2");
+            }
+
+            boolean isCreated = fileDTO.getIsFolder() ? file.mkdirs() : file.createNewFile();
+
+            if (isCreated) {
+                if (!fileDTO.getIsFolder()) {
+                    String base64String = fileDTO.getData();
+                    byte[] decodedBytes = Base64.getDecoder().decode(base64String.getBytes(StandardCharsets.UTF_8));
+                    Files.write(Paths.get(file.getPath()), decodedBytes);
+                }
+                continue;
+            }
+            throw new Exception("Can't create folder");
         }
-        throw new Exception("Can't create folder");
     }
 
     @Override

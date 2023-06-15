@@ -1,8 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Store} from '@ngrx/store';
+import {TranslateService} from '@ngx-translate/core';
 import {AppState} from '@core/core.state';
 import {ActionNotificationShow} from '@core/notification/notification.actions';
 import {AssetFilesService} from '@core/http/asset-files.service';
@@ -31,7 +31,8 @@ export class FormCreateComponent implements OnInit {
     private fb: FormBuilder,
     public translate: TranslateService,
     private assetFilesService: AssetFilesService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
   }
@@ -39,22 +40,36 @@ export class FormCreateComponent implements OnInit {
   onCancel(): void {
     this.dialogRef.close(false);
   }
+
   convertToBase64File(data: string): string {
     return window.btoa(data);
   }
 
   onSubmit(): void {
     const formData = this.assetFileFormGroup.value;
-    const assetFile: AssetFile = {
-      name: formData.fileName,
-      path: '',
-      data: formData.fileAttach,
-      isFolder: this.data.isFolder
-    };
-    this.assetFilesService.create(this.data.folder, assetFile).subscribe(() => {
+    const assetFiles: AssetFile[] = [];
+    if (Array.isArray(formData.fileName)) {
+      formData.fileName.forEach((name: string, index) => {
+        assetFiles.push({
+          name: name || '',
+          path: '',
+          data: formData.fileAttach?.[index] || null,
+          isFolder: this.data.isFolder
+        });
+      });
+    } else {
+      assetFiles.push({
+        name: formData.fileName,
+        path: '',
+        data: formData.fileAttach,
+        isFolder: this.data.isFolder
+      });
+    }
+
+    this.assetFilesService.create(this.data.folder, assetFiles).subscribe(() => {
       this.store.dispatch(new ActionNotificationShow(
         {
-          message: this.translate.instant(assetFile.isFolder ? 'asset-file.create-folder-successful' : 'asset-file.upload-file-successful'),
+          message: this.translate.instant(this.data.isFolder ? 'asset-file.create-folder-successful' : 'asset-file.upload-file-successful'),
           type: 'success',
           duration: 750,
         }));
