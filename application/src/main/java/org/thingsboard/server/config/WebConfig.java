@@ -26,7 +26,7 @@ import java.io.IOException;
 @Controller
 public class WebConfig {
 
-    @RequestMapping(value = {"/assets", "/assets/", "/{path:^(?!api$)(?!assets$)(?!static$)(?!webjars$)(?!swagger-ui$)[^\\.]*}/**"})
+    @RequestMapping(value = {"/assets", "/assets/", "/{path:^(?!api$)(?!assets$)(?!assetFiles$)(?!static$)(?!webjars$)(?!swagger-ui$)[^\\.]*}/**"})
     public String redirect() {
         return "forward:/index.html";
     }
