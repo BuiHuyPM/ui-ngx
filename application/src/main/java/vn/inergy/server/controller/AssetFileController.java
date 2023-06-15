@@ -36,9 +36,10 @@ public class AssetFileController extends BaseController {
     }
 
     @PostMapping
-    public FileDTO upload(@PathVariable String file, @RequestBody FileDTO fileDto) throws ThingsboardException {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void upload(@PathVariable String file, @RequestBody List<FileDTO> fileDto) throws ThingsboardException {
         try {
-            return assetFileService.upload(file, fileDto);
+            assetFileService.upload(file, fileDto);
         } catch (Exception e) {
             throw handleException(e);
         }

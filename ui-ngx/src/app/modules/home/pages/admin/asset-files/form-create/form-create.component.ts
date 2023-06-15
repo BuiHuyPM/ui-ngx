@@ -74,6 +74,8 @@ export class FormCreateComponent implements OnInit {
           duration: 750,
         }));
       this.dialogRef.close(true);
+    }, () => {
+      this.dialogRef.close(true);
     });
   }
 

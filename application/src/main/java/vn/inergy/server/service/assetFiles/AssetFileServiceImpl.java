@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+import org.thingsboard.server.common.data.exception.ThingsboardErrorCode;
+import org.thingsboard.server.common.data.exception.ThingsboardException;
 import vn.inergy.server.model.assetFiles.FileDTO;
 
 import java.io.File;
@@ -67,27 +69,33 @@ public class AssetFileServiceImpl implements AssetFileService {
         if (!resource.exists()) {
             throw new Exception("folder is not exists");
         }
+        List<String> errors = new ArrayList<>();
         for (FileDTO fileDTO : fileDTOs) {
             File file = new File(resource.getFile(), fileDTO.getName());
 
             if (file.exists()) {
-                throw new Exception("File " + fileDTO.getName() + " is really exists");
+                errors.add("File " + fileDTO.getName() + " is really exists");
+                continue;
             }
             if (!fileDTO.getIsFolder() && !allowEx(fileDTO.getName())) {
-                throw new Exception("File " + fileDTO.getName() + " is not allow. Only files are allowed to upload: .png, jpg, svg, webp, gif, doc, docx, json, pdf, css, js, html, md, xlsx, xls, ttf, woff, otf, woff2");
+                errors.add("File " + fileDTO.getName() + " is not allow. Only files are allowed to upload: .png, jpg, svg, webp, gif, doc, docx, json, pdf, css, js, html, md, xlsx, xls, ttf, woff, otf, woff2");
+                continue;
             }
 
             boolean isCreated = fileDTO.getIsFolder() ? file.mkdirs() : file.createNewFile();
 
-            if (isCreated) {
-                if (!fileDTO.getIsFolder()) {
-                    String base64String = fileDTO.getData();
-                    byte[] decodedBytes = Base64.getDecoder().decode(base64String.getBytes(StandardCharsets.UTF_8));
-                    Files.write(Paths.get(file.getPath()), decodedBytes);
-                }
+            if (!isCreated) {
+                errors.add((fileDTO.getIsFolder()?"Cannot create ":"Cannot upload ") + fileDTO.getName());
                 continue;
             }
-            throw new Exception("Can't create folder");
+            if (!fileDTO.getIsFolder()) {
+                String base64String = fileDTO.getData();
+                byte[] decodedBytes = Base64.getDecoder().decode(base64String.getBytes(StandardCharsets.UTF_8));
+                Files.write(Paths.get(file.getPath()), decodedBytes);
+            }
+        }
+        if (errors.size() > 0){
+            throw new ThingsboardException("ERRORS: - " +  String.join(", - ",errors), ThingsboardErrorCode.BAD_REQUEST_PARAMS);
         }
     }
 

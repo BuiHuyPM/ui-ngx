@@ -8,7 +8,7 @@ import java.util.List;
 public interface AssetFileService {
     List<FileDTO> get(String path) throws Exception;
 
-    FileDTO upload(String path, FileDTO fileCreateDTO) throws Exception;
+    void upload(String path, List<FileDTO> fileDTOs) throws Exception;
 
     void delete(String path) throws Exception;
 }
