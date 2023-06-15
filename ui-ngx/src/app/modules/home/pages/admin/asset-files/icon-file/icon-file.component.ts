@@ -23,7 +23,7 @@ export class IconFileComponent implements OnInit {
 
   isDoc(): boolean {
     const fileName = this.fileName.toLowerCase();
-    return !this.isFolder && (fileName.endsWith('.json') || fileName.endsWith('.doc') || fileName.endsWith('.docx') || fileName.endsWith('.xlsx') || fileName.endsWith('.xls'));
+    return !this.isFolder && (fileName.endsWith('.txt') || fileName.endsWith('.json') || fileName.endsWith('.doc') || fileName.endsWith('.docx') || fileName.endsWith('.xlsx') || fileName.endsWith('.xls'));
   }
   isPdf(): boolean {
     const fileName = this.fileName.toLowerCase();
