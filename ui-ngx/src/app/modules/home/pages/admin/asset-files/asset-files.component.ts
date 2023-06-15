@@ -1,27 +1,25 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {AdminSettings, AssetFile, LicenseSettings} from '@shared/models/settings.models';
+import {FormBuilder} from '@angular/forms';
+import {AssetFile} from '@shared/models/settings.models';
 import {Store} from '@ngrx/store';
 import {AppState} from '@core/core.state';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {PageComponent} from '@shared/components/page.component';
-import {HasConfirmForm} from '@core/guards/confirm-on-exit.guard';
 import {AssetFilesService} from '@core/http/asset-files.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatCheckboxChange} from '@angular/material/checkbox';
-import {AttributeScope} from '@shared/models/telemetry/telemetry.models';
 import {DialogService} from '@core/services/dialog.service';
 import {TranslateService} from '@ngx-translate/core';
-import {forkJoin, Observable} from 'rxjs';
+import {forkJoin} from 'rxjs';
+import {FormCreateComponent} from '@home/pages/admin/asset-files/form-create/form-create.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'tb-asset-files',
   templateUrl: './asset-files.component.html',
   styleUrls: ['./asset-files.component.scss', '../settings-card.scss']
 })
-export class AssetFilesComponent extends PageComponent implements OnInit, HasConfirmForm {
-  generalSettings: FormGroup;
-  adminSettings: AdminSettings<LicenseSettings>;
+export class AssetFilesComponent extends PageComponent implements OnInit{
   assetFiles: AssetFile[] = [];
   dataSource: MatTableDataSource<AssetFile>;
   displayedColumns: string[] = ['checkbox', 'name', 'path', 'lastModified', 'action'];
@@ -30,6 +28,7 @@ export class AssetFilesComponent extends PageComponent implements OnInit, HasCon
   constructor(
     protected store: Store<AppState>,
     private router: Router,
+    private dialog: MatDialog,
     public translate: TranslateService,
     private dialogService: DialogService,
     private assetFilesService: AssetFilesService,
@@ -44,7 +43,6 @@ export class AssetFilesComponent extends PageComponent implements OnInit, HasCon
   }
 
   ngOnInit(): void {
-    this.buildGeneralServerSettingsForm();
     this.fetchFolder();
   }
 
@@ -52,6 +50,8 @@ export class AssetFilesComponent extends PageComponent implements OnInit, HasCon
     const routeParams = this.route.snapshot.paramMap;
     const folder = routeParams.get('folder') || '';
     const isRoot = !folder;
+    this.checkList.clear();
+    this.dataSource = new MatTableDataSource<AssetFile>([]);
     this.assetFilesService.get(folder).subscribe(
       (assetFiles) => {
         const af = [...assetFiles];
@@ -72,29 +72,6 @@ export class AssetFilesComponent extends PageComponent implements OnInit, HasCon
     );
   }
 
-  confirmForm(): FormGroup {
-    return this.generalSettings;
-  }
-
-  save() {
-    // this.adminSettings.jsonValue = {...this.adminSettings.jsonValue, ...this.generalSettings.value};
-    // this.assetFilesService.saveLicense(this.adminSettings).subscribe(
-    //   async (adminSettings) => {
-    //     this.adminSettings = adminSettings;
-    //     this.generalSettings.reset(this.adminSettings.jsonValue);
-    //   }
-    // );
-  }
-
-  private buildGeneralServerSettingsForm() {
-    // this.generalSettings = this.fb.group({
-    //   licenseKey: ['', [Validators.required]],
-    //   isHardKey: ['', []],
-    //   expirationTime: [null, []]
-    // });
-  }
-
-
   onClickFolder($event: MouseEvent, row: AssetFile) {
     if (row.isFolder) {
       this.router.navigateByUrl('/settings/asset-files' + row.path);
@@ -104,7 +81,6 @@ export class AssetFilesComponent extends PageComponent implements OnInit, HasCon
   }
 
   checkAll($event: MatCheckboxChange) {
-    console.log($event);
     if ($event.checked) {
       this.assetFiles.forEach(value => {
         this.checkList.add(value.path);
@@ -147,6 +123,10 @@ export class AssetFilesComponent extends PageComponent implements OnInit, HasCon
         this.translate.instant('action.yes'),
         true
       ).subscribe(async (result) => {
+        if (!result){
+          return false;
+        }
+
         const ob = [];
         for (const path of this.checkList) {
           ob.push(this.assetFilesService.delete(path));
@@ -156,5 +136,19 @@ export class AssetFilesComponent extends PageComponent implements OnInit, HasCon
         });
       });
     }
+  }
+
+  openAddNew() {
+    const routeParams = this.route.snapshot.paramMap;
+    const folder = routeParams.get('folder') || '';
+    this.dialog.open(FormCreateComponent, {
+      data: {folder},
+      disableClose: true,
+      panelClass: ['tb-dialog', 'tb-fullscreen-dialog']
+    }).afterClosed().subscribe((value) => {
+      if (value){
+        this.fetchFolder();
+      }
+    });
   }
 }

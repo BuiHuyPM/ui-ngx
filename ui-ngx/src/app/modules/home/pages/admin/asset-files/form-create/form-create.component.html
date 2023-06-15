@@ -1,0 +1,38 @@
+<form style="min-width: 480px" [formGroup]="assetFileFormGroup" (ngSubmit)="onSubmit()">
+  <mat-toolbar color="primary">
+    <h2 *ngIf="assetFileFormGroup.get('isFolder').value">{{ 'asset-file.create-folder' | translate }}</h2>
+    <h2 *ngIf="!assetFileFormGroup.get('isFolder').value">{{ 'asset-file.upload-file' | translate }}</h2>
+    <span fxFlex></span>
+    <button mat-icon-button (click)="onCancel()" type="button">
+      <mat-icon class="material-icons">close</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-progress-bar color="warn" mode="indeterminate" *ngIf="isLoading$" ></mat-progress-bar>
+  <div mat-dialog-content>
+    <mat-slide-toggle formControlName="isFolder">{{'asset-file.create-folder' | translate}}</mat-slide-toggle>
+    <mat-form-field *ngIf="assetFileFormGroup.get('isFolder').value" appearance="legacy" class="mat-block">
+      <mat-label>{{ 'asset-file.folder-name' | translate }}</mat-label>
+      <input matInput formControlName="fileName" type="text" />
+    </mat-form-field>
+    <tb-file-input formControlName="fileAttach" required
+                   *ngIf="!assetFileFormGroup.get('isFolder').value"
+                   [readAsBinary]="true"
+                   [contentConvertFunction]="convertToBase64File"
+                   [multipleFile]="false"
+                   dropLabel="{{'resource.drop-file' | translate}}"
+                   [existingFileName]="assetFileFormGroup.get('fileName')?.value"
+                   (fileNameChanged)="assetFileFormGroup?.get('fileName').patchValue($event)">
+    </tb-file-input>
+    <fieldset [disabled]="isLoading$">
+      <div fxFlex fxLayout="column">
+        <div fxLayout="row">
+          <tb-error [error]="assetFileFormGroup.hasError('noEntityMatched') ? translate.instant('alias.entity-filter-no-entity-matched') : ''"></tb-error>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div mat-dialog-actions fxLayoutAlign="end center">
+    <button [disabled]="isLoading$" mat-button color="primary" (click)="onCancel()" cdkFocusInitial type="button">{{ 'action.cancel' | translate }}</button>
+    <button [disabled]="isLoading$ || !assetFileFormGroup.valid" mat-raised-button color="primary" type="submit">{{ 'action.save' | translate }}</button>
+  </div>
+</form>

@@ -1,12 +1,12 @@
 package vn.inergy.server.service.assetFiles;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import vn.inergy.server.model.assetFiles.FileDTO;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -19,6 +19,9 @@ import java.util.stream.Collectors;
 public class AssetFileServiceImpl implements AssetFileService {
     private final String root = "static/assetFiles";
     private final ResourceLoader resourceLoader;
+
+    @Value("${asset-file.allow:^.*(.png|.jpg|.svg|.webp|.gif|.doc|.docx|.json|.pdf|.css|.js|.html|.md|.xlsx.|xls|.ttf|.woff|.otf|.woff2)$}")
+    private String allowRegex;
 
     public AssetFileServiceImpl(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
@@ -62,7 +65,7 @@ public class AssetFileServiceImpl implements AssetFileService {
         String folder = beautify(folderR);
         Resource resource = resourceLoader.getResource("classpath:" + root + folder);
         if (!resource.exists()) {
-            throw new Exception("File is not exists");
+            throw new Exception("folder is not exists");
         }
 
         File file = new File(resource.getFile(), fileDTO.getName());
@@ -113,6 +116,6 @@ public class AssetFileServiceImpl implements AssetFileService {
         return folder;
     }
     private boolean allowEx(String name) {
-        return name.matches("^.*(.jpg|.JPG|.gif|.GIF|.doc|.DOC|.pdf|.PDF|.css|.js|.html|.xlsx.|xls)$");
+        return name.toLowerCase().matches(allowRegex);
     }
 }

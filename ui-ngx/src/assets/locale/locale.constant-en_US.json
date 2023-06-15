@@ -4807,5 +4807,19 @@
             "en_US": "English",
             "vi_VN": "Tiếng Việt"
         }
+    },
+    "asset-file": {
+        "asset-files": "Asset files",
+        "asset-file": "Asset file",
+        "name": "Name",
+        "path": "Path",
+        "lastModified": "Last modified",
+        "create-folder": "Create folder",
+        "upload-file": "Upload file",
+        "file-name": "File name",
+        "folder-name": "Folder name",
+        "noEntities": "No file or folder",
+        "create-folder-successful": "Folder creation successful",
+        "upload-file-successful": "File upload successful"
     }
 }

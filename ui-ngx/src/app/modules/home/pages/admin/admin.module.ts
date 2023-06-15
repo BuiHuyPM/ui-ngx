@@ -34,6 +34,8 @@ import { AutoCommitAdminSettingsComponent } from '@home/pages/admin/auto-commit-
 import { TwoFactorAuthSettingsComponent } from '@home/pages/admin/two-factor-auth-settings.component';
 import { LicenseSettingsComponent } from './license-settings/license-settings.component';
 import { AssetFilesComponent } from './asset-files/asset-files.component';
+import { FormCreateComponent } from './asset-files/form-create/form-create.component';
+import { IconFileComponent } from './asset-files/icon-file/icon-file.component';
 
 @NgModule({
   declarations:
@@ -51,7 +53,9 @@ import { AssetFilesComponent } from './asset-files/asset-files.component';
       AutoCommitAdminSettingsComponent,
       TwoFactorAuthSettingsComponent,
       LicenseSettingsComponent,
-      AssetFilesComponent
+      AssetFilesComponent,
+      FormCreateComponent,
+      IconFileComponent
     ],
   imports: [
     CommonModule,

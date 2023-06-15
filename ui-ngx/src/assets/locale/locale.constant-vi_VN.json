@@ -3452,5 +3452,19 @@
             "addFuel": "Thêm năng lượng",
             "totalEnergyConsumptionConvertedToTOE": "Tổng năng lượng tiêu thụ quy đổi ra TOE"
         }
+    },
+    "asset-file": {
+        "asset-files": "Asset files",
+        "asset-file": "Asset file",
+        "name": "Tên",
+        "path": "Đường dẫn",
+        "lastModified": "Chỉnh sửa lúc",
+        "create-folder": "Tao thư mục",
+        "upload-file": "Tải file lên",
+        "file-name": "Tên file",
+        "folder-name": "Tên thư mục",
+        "noEntities": "Không có thư mục hay file nào",
+        "create-folder-successful": "Tạo folder thành công",
+        "upload-file-successful": "Tải file lên thành công"
     }
 }
