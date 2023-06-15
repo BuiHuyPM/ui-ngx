@@ -17,14 +17,14 @@ export class FormCreateComponent implements OnInit {
   isLoading$ = false;
   assetFileFormGroup = this.fb.group({
     fileAttach: [''],
-    fileName: ['', Validators.required],
-    isFolder: [true, Validators.required],
+    fileName: ['', Validators.required]
   });
 
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: {
+    @Inject(MAT_DIALOG_DATA) public data: {
       folder: string;
+      isFolder: boolean;
     },
     @Inject(Store) private store: Store<AppState>,
     private dialogRef: MatDialogRef<FormCreateComponent>,
@@ -45,12 +45,11 @@ export class FormCreateComponent implements OnInit {
 
   onSubmit(): void {
     const formData = this.assetFileFormGroup.value;
-    console.log(formData);
     const assetFile: AssetFile = {
       name: formData.fileName,
       path: '',
       data: formData.fileAttach,
-      isFolder: formData.isFolder
+      isFolder: this.data.isFolder
     };
     this.assetFilesService.create(this.data.folder, assetFile).subscribe(() => {
       this.store.dispatch(new ActionNotificationShow(

@@ -204,7 +204,7 @@ export class FileInputComponent extends PageComponent implements AfterViewInit, 
         }
         resolve({fileContent, fileName, files});
       };
-      reader.onerror = () => {
+      reader.onerror = (ev) => {
         resolve({fileContent: null, fileName: null, files: null});
       };
       if (this.readAsBinary) {

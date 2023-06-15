@@ -74,7 +74,7 @@ public class AssetFileServiceImpl implements AssetFileService {
             throw new Exception("File " + fileDTO.getName() + " is really exists");
         }
         if (!fileDTO.getIsFolder() && !allowEx(fileDTO.getName())) {
-            throw new Exception("File " + fileDTO.getName() + " is not allow. Only files are allowed to upload: jpg, gif, doc, pdf, css, js, html, xlsx, xls");
+            throw new Exception("File " + fileDTO.getName() + " is not allow. Only files are allowed to upload: .png, jpg, svg, webp, gif, doc, docx, json, pdf, css, js, html, md, xlsx, xls, ttf, woff, otf, woff2");
         }
 
         boolean isCreated = fileDTO.getIsFolder() ? file.mkdirs() : file.createNewFile();

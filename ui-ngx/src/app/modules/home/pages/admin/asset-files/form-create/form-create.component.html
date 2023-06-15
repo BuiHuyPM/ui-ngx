@@ -1,7 +1,7 @@
 <form style="min-width: 480px" [formGroup]="assetFileFormGroup" (ngSubmit)="onSubmit()">
   <mat-toolbar color="primary">
-    <h2 *ngIf="assetFileFormGroup.get('isFolder').value">{{ 'asset-file.create-folder' | translate }}</h2>
-    <h2 *ngIf="!assetFileFormGroup.get('isFolder').value">{{ 'asset-file.upload-file' | translate }}</h2>
+    <h2 *ngIf="data.isFolder">{{ 'asset-file.create-folder' | translate }}</h2>
+    <h2 *ngIf="!data.isFolder">{{ 'asset-file.upload-file' | translate }}</h2>
     <span fxFlex></span>
     <button mat-icon-button (click)="onCancel()" type="button">
       <mat-icon class="material-icons">close</mat-icon>
@@ -9,13 +9,12 @@
   </mat-toolbar>
   <mat-progress-bar color="warn" mode="indeterminate" *ngIf="isLoading$" ></mat-progress-bar>
   <div mat-dialog-content>
-    <mat-slide-toggle formControlName="isFolder">{{'asset-file.create-folder' | translate}}</mat-slide-toggle>
-    <mat-form-field *ngIf="assetFileFormGroup.get('isFolder').value" appearance="legacy" class="mat-block">
+    <mat-form-field *ngIf="data.isFolder" appearance="legacy" class="mat-block">
       <mat-label>{{ 'asset-file.folder-name' | translate }}</mat-label>
       <input matInput formControlName="fileName" type="text" />
     </mat-form-field>
     <tb-file-input formControlName="fileAttach" required
-                   *ngIf="!assetFileFormGroup.get('isFolder').value"
+                   *ngIf="!data.isFolder"
                    [readAsBinary]="true"
                    [contentConvertFunction]="convertToBase64File"
                    [multipleFile]="false"

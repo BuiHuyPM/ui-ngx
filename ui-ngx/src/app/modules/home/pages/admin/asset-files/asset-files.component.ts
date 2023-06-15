@@ -19,7 +19,7 @@ import {MatDialog} from '@angular/material/dialog';
   templateUrl: './asset-files.component.html',
   styleUrls: ['./asset-files.component.scss', '../settings-card.scss']
 })
-export class AssetFilesComponent extends PageComponent implements OnInit{
+export class AssetFilesComponent extends PageComponent implements OnInit {
   assetFiles: AssetFile[] = [];
   dataSource: MatTableDataSource<AssetFile>;
   displayedColumns: string[] = ['checkbox', 'name', 'path', 'lastModified', 'action'];
@@ -115,7 +115,7 @@ export class AssetFilesComponent extends PageComponent implements OnInit{
   }
 
   multiRemove() {
-    if (this.checkList.size > 0){
+    if (this.checkList.size > 0) {
       this.dialogService.confirm(
         this.translate.instant('attribute.delete-attributes-title', {count: this.checkList.size}),
         this.translate.instant('attribute.delete-attributes-text'),
@@ -123,7 +123,7 @@ export class AssetFilesComponent extends PageComponent implements OnInit{
         this.translate.instant('action.yes'),
         true
       ).subscribe(async (result) => {
-        if (!result){
+        if (!result) {
           return false;
         }
 
@@ -138,15 +138,16 @@ export class AssetFilesComponent extends PageComponent implements OnInit{
     }
   }
 
-  openAddNew() {
+
+  openAddNew($event: MouseEvent, isFolder: boolean) {
     const routeParams = this.route.snapshot.paramMap;
     const folder = routeParams.get('folder') || '';
     this.dialog.open(FormCreateComponent, {
-      data: {folder},
+      data: {folder, isFolder},
       disableClose: true,
       panelClass: ['tb-dialog', 'tb-fullscreen-dialog']
     }).afterClosed().subscribe((value) => {
-      if (value){
+      if (value) {
         this.fetchFolder();
       }
     });
