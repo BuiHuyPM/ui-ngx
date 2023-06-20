@@ -120,14 +120,14 @@ const delta: DeltaAggFunction = (aggDataMap: AggDataMap, ts: number, value?: any
   if (isNumber(value)) {
     const aggData = aggDataMap.get(ts);
     if (aggData) {
+      aggData.aggValue += value - aggData.count;
       aggData.count = value;
-      aggData.aggValue = value - aggData.sum;
     } else {
       const keys = aggDataMap.keys();
       const aggDataOld = aggDataMap.get(keys.pop());
       const aggDataNew = {
         count: value,
-        sum: (aggDataOld?.count || value),
+        sum: value,
         aggValue: value - (aggDataOld?.count || 0)
       };
       aggDataMap.set(ts, aggDataNew);
