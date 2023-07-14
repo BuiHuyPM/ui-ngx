@@ -9,13 +9,13 @@ import java.net.SocketException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LicenseTest {
-//    String prefix = "20230618";
+//    String prefix = "20230715";
     String prefix = "GNUHTAHN";
-    String hacAddress = "02-42-58-3D-73-8E";
+    String hacAddress = "E6-6C-80-98-36-0F";
     int usbSecretKey = 344897635;
 
     @Test
-    public void HMC_Address_Test() throws SocketException {
+    public void HMC_Address_Test() throws Exception {
         String MACAddress =  HardwareUtils.getMACAddress();
         assertThat(MACAddress).isEqualTo(hacAddress);
     }
@@ -29,7 +29,7 @@ public class LicenseTest {
         assertThat(usbKey).isEqualTo(usbKey2);
     }
     @Test
-    public void softKey_Test() throws SocketException {
+    public void softKey_Test() throws Exception {
         String softKey = AmiCode.GetSoftKey(prefix);
         String softKey2 = AmiCode.GetSoftKey(prefix,hacAddress);
         System.out.println("softKey:"+softKey);

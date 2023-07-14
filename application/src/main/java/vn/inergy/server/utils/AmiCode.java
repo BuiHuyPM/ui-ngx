@@ -15,7 +15,7 @@ public class AmiCode {
     public static final String key = "license-key";
     private static final int secretKey = 1047893;
 
-    public static String GetUsbKey(String prefix) throws SocketException {
+    public static String GetUsbKey(String prefix) throws Exception {
         String hacAddress = HardwareUtils.getMACAddress();
         return GetUsbKey(prefix, hacAddress);
     }
@@ -30,7 +30,7 @@ public class AmiCode {
         return ret == keyObj.SUCCESS ? Encode(prefix, usbKey, hacAddress) : null;
     }
 
-    public static String GetSoftKey(String prefix) throws SocketException {
+    public static String GetSoftKey(String prefix) throws Exception {
         return Encode(prefix, secretKey);
     }
 
@@ -38,14 +38,14 @@ public class AmiCode {
         return Encode(prefix, secretKey, hacAddress);
     }
 
-    public static String Encode(String prefix, int secretKey) throws SocketException {
+    public static String Encode(String prefix, int secretKey) throws Exception {
         String hacAddress = HardwareUtils.getMACAddress();
         return Encode(prefix, secretKey, hacAddress);
     }
 
     public static String Encode(String prefix, int secretKey, String hacAddress) {
         String licenseUsb = String.valueOf(secretKey);
-        String key = prefix + hacAddress + licenseUsb;
+        String key = prefix + "hacAddress" + licenseUsb;
         String uuid = UUID.nameUUIDFromBytes(key.getBytes()).toString();
         String encoder = uuid.toUpperCase();
         encoder = encoder.replaceAll("-", "");
