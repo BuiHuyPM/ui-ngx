@@ -9,9 +9,10 @@ import java.net.SocketException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LicenseTest {
-//    String prefix = "20230715";
-    String prefix = "GNUHTAHN";
-    String hacAddress = "E6-6C-80-98-36-0F";
+    String prefix = "20230915";
+//    String prefix = "GNUHTAHN";
+//    String hacAddress = "E6-6C-80-98-36-0F";
+    String hacAddress = "4C-D9-8F-C4-BC-A0";
     int usbSecretKey = 344897635;
 
     @Test

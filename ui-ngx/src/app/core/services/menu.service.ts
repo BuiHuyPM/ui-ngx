@@ -336,13 +336,13 @@ export class MenuService {
           }
         ]
       },
-      {
-        id: guid(),
-        name: 'ota-update.ota-updates',
-        type: 'link',
-        path: '/otaUpdates',
-        icon: 'memory'
-      },
+      // {
+      //   id: guid(),
+      //   name: 'ota-update.ota-updates',
+      //   type: 'link',
+      //   path: '/otaUpdates',
+      //   icon: 'memory'
+      // },
       {
         id: guid(),
         name: 'entity-view.entity-views',
@@ -353,30 +353,30 @@ export class MenuService {
     );
     if (authState.edgesSupportEnabled) {
       sections.push(
-        {
-          id: guid(),
-          name: 'edge.edge-instances',
-          type: 'link',
-          path: '/edgeInstances',
-          icon: 'router'
-        },
-        {
-          id: guid(),
-          name: 'edge.management',
-          type: 'toggle',
-          path: '/edgeManagement',
-          height: '40px',
-          icon: 'settings_input_antenna',
-          pages: [
-            {
-              id: guid(),
-              name: 'edge.rulechain-templates',
-              type: 'link',
-              path: '/edgeManagement/ruleChains',
-              icon: 'settings_ethernet'
-            }
-          ]
-        }
+        // {
+        //   id: guid(),
+        //   name: 'edge.edge-instances',
+        //   type: 'link',
+        //   path: '/edgeInstances',
+        //   icon: 'router'
+        // },
+        // {
+        //   id: guid(),
+        //   name: 'edge.management',
+        //   type: 'toggle',
+        //   path: '/edgeManagement',
+        //   height: '40px',
+        //   icon: 'settings_input_antenna',
+        //   pages: [
+        //     {
+        //       id: guid(),
+        //       name: 'edge.rulechain-templates',
+        //       type: 'link',
+        //       path: '/edgeManagement/ruleChains',
+        //       icon: 'settings_ethernet'
+        //     }
+        //   ]
+        // }
       );
     }
     sections.push(
@@ -510,11 +510,11 @@ export class MenuService {
             isMdiIcon: true,
             path: '/profiles/deviceProfiles'
           },
-          {
-            name: 'ota-update.ota-updates',
-            icon: 'memory',
-            path: '/otaUpdates'
-          }
+          // {
+          //   name: 'ota-update.ota-updates',
+          //   icon: 'memory',
+          //   path: '/otaUpdates'
+          // }
         ]
       },
       {
@@ -529,23 +529,23 @@ export class MenuService {
       }
     );
     if (authState.edgesSupportEnabled) {
-      homeSections.push(
-        {
-          name: 'edge.management',
-          places: [
-            {
-              name: 'edge.edge-instances',
-              icon: 'router',
-              path: '/edgeInstances'
-            },
-            {
-              name: 'edge.rulechain-templates',
-              icon: 'settings_ethernet',
-              path: '/edgeManagement/ruleChains'
-            }
-          ]
-        }
-      );
+      // homeSections.push(
+      //   {
+      //     name: 'edge.management',
+      //     places: [
+      //       // {
+      //       //   name: 'edge.edge-instances',
+      //       //   icon: 'router',
+      //       //   path: '/edgeInstances'
+      //       // },
+      //       // {
+      //       //   name: 'edge.rulechain-templates',
+      //       //   icon: 'settings_ethernet',
+      //       //   path: '/edgeManagement/ruleChains'
+      //       // }
+      //     ]
+      //   }
+      // );
     }
     homeSections.push(
       {
@@ -651,13 +651,13 @@ export class MenuService {
     );
     if (authState.edgesSupportEnabled) {
       sections.push(
-        {
-          id: guid(),
-          name: 'edge.edge-instances',
-          type: 'link',
-          path: '/edgeInstances',
-          icon: 'router'
-        }
+        // {
+        //   id: guid(),
+        //   name: 'edge.edge-instances',
+        //   type: 'link',
+        //   path: '/edgeInstances',
+        //   icon: 'router'
+        // }
       );
     }
     sections.push(
@@ -711,11 +711,11 @@ export class MenuService {
         {
           name: 'edge.management',
           places: [
-            {
-              name: 'edge.edge-instances',
-              icon: 'settings_input_antenna',
-              path: '/edgeInstances'
-            }
+            // {
+            //   name: 'edge.edge-instances',
+            //   icon: 'settings_input_antenna',
+            //   path: '/edgeInstances'
+            // }
           ]
         }
       );

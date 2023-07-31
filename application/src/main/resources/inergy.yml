@@ -561,9 +561,9 @@ spring:
       ddl-auto: "none"
   datasource:
     driverClassName: "${SPRING_DRIVER_CLASS_NAME:org.postgresql.Driver}"
-    url: "${SPRING_DATASOURCE_URL:jdbc:postgresql://192.168.31.222:5432/inergy_tkv}"
-    username: "${SPRING_DATASOURCE_USERNAME:postgres}"
-    password: "${SPRING_DATASOURCE_PASSWORD:@Ami2021}"
+    url: "jdbc:postgresql://192.168.31.222:5432/inergy_344"
+    username: "postgres"
+    password: "@Ami2021"
     hikari:
       maximumPoolSize: "${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:16}"
 
@@ -1206,3 +1206,5 @@ management:
         include: '${METRICS_ENDPOINTS_EXPOSE:info}'
 
 amitech-pattern: 'yyyyMM'
+asset-file:
+  allow: '^.*(.png|.jpg|.svg|.webp|.gif|.doc|.docx|.json|.pdf|.css|.js|.html|.md|.xlsx|.xls|.ttf|.woff|.otf|.woff2|.txt)$'

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {AssetFile} from '@shared/models/settings.models';
 import {Store} from '@ngrx/store';
@@ -10,7 +10,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import {DialogService} from '@core/services/dialog.service';
 import {TranslateService} from '@ngx-translate/core';
-import {forkJoin} from 'rxjs';
+import {forkJoin, Subscription} from 'rxjs';
 import {FormCreateComponent} from '@home/pages/admin/asset-files/form-create/form-create.component';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -19,11 +19,12 @@ import {MatDialog} from '@angular/material/dialog';
   templateUrl: './asset-files.component.html',
   styleUrls: ['./asset-files.component.scss', '../settings-card.scss']
 })
-export class AssetFilesComponent extends PageComponent implements OnInit {
+export class AssetFilesComponent extends PageComponent implements OnInit, OnDestroy {
   assetFiles: AssetFile[] = [];
   dataSource: MatTableDataSource<AssetFile>;
   displayedColumns: string[] = ['checkbox', 'name', 'path', 'lastModified', 'action'];
   public checkList: Set<string> = new Set<string>([]);
+  private subscription: Subscription;
 
   constructor(
     protected store: Store<AppState>,
@@ -35,7 +36,7 @@ export class AssetFilesComponent extends PageComponent implements OnInit {
     public fb: FormBuilder,
     private route: ActivatedRoute) {
     super(store);
-    router.events.subscribe((ev) => {
+    this.subscription = this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
         this.fetchFolder();
       }
@@ -44,6 +45,12 @@ export class AssetFilesComponent extends PageComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchFolder();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription != null) {
+      this.subscription.unsubscribe();
+    }
   }
 
   public fetchFolder(): void {
