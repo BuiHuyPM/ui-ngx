@@ -751,7 +751,7 @@ transport:
   # Local CoAP transport parameters
   coap:
     # Enable/disable coap transport protocol.
-    enabled: "${COAP_ENABLED:true}"
+    enabled: "${COAP_ENABLED:false}"
     bind_address: "${COAP_BIND_ADDRESS:0.0.0.0}"
     bind_port: "${COAP_BIND_PORT:5683}"
     timeout: "${COAP_TIMEOUT:10000}"
@@ -799,7 +799,7 @@ transport:
   # Local LwM2M transport parameters
   lwm2m:
     # Enable/disable lvm2m transport protocol.
-    enabled: "${LWM2M_ENABLED:true}"
+    enabled: "${LWM2M_ENABLED:false}"
     dtls:
       # RFC7925_RETRANSMISSION_TIMEOUT_IN_MILLISECONDS = 9000
       retransmission_timeout: "${LWM2M_DTLS_RETRANSMISSION_TIMEOUT_MS:9000}"
@@ -905,7 +905,7 @@ transport:
   #      - key: "PROTOCOL_STAGE_THREAD_COUNT"
   #        value: "${LWM2M_PROTOCOL_STAGE_THREAD_COUNT:4}"
   snmp:
-    enabled: "${SNMP_ENABLED:true}"
+    enabled: "${SNMP_ENABLED:false}"
     response_processing:
       # parallelism level for executor (workStealingPool) that is responsible for handling responses from SNMP devices
       parallelism_level: "${SNMP_RESPONSE_PROCESSING_PARALLELISM_LEVEL:20}"
@@ -917,7 +917,7 @@ transport:
 
 # Edges parameters
 edges:
-  enabled: "${EDGES_ENABLED:true}"
+  enabled: "${EDGES_ENABLED:false}"
   rpc:
     port: "${EDGES_RPC_PORT:7070}"
     client_max_keep_alive_time_sec: "${EDGES_RPC_CLIENT_MAX_KEEP_ALIVE_TIME_SEC:300}"

@@ -485,8 +485,7 @@ public class DefaultMailService implements MailService {
         }
     }
 
-    private String mergeTemplateIntoString(String templateLocation,
-                                           Map<String, Object> model) throws ThingsboardException {
+    private String mergeTemplateIntoString(String templateLocation, Map<String, Object> model) throws ThingsboardException {
         try {
             Template template = freemarkerConfig.getTemplate(templateLocation);
             return FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
