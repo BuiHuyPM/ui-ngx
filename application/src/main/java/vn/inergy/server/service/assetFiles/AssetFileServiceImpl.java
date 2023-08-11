@@ -22,7 +22,7 @@ public class AssetFileServiceImpl implements AssetFileService {
     private final String root = "static/assetFiles";
     private final ResourceLoader resourceLoader;
 
-    @Value("${asset-file.allow:^.*(.png|.jpg|.svg|.webp|.gif|.doc|.docx|.json|.pdf|.css|.js|.html|.md|.xlsx|.xls|.ttf|.woff|.otf|.woff2)$}")
+    @Value("${asset-file.allow:^.*(.png|.jpg|.svg|.webp|.gif|.doc|.docx|.json|.pdf|.css|.js|.html|.md|.xlsx|.xls|.ttf|.woff|.ftl|.otf|.woff2)$}")
     private String allowRegex;
 
     public AssetFileServiceImpl(ResourceLoader resourceLoader) {

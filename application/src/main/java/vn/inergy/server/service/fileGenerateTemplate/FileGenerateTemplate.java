@@ -8,5 +8,5 @@ import java.io.IOException;
 public interface FileGenerateTemplate {
     byte[] generate(FileGenerateDTO fileGenerateDTO) throws Exception;
 
-    String getFile(FileGenerateDTO fileGenerateDTO);
+    String getFileName(FileGenerateDTO fileGenerateDTO) throws Exception;
 }

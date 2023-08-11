@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.thingsboard.server.queue.util.TbCoreComponent;
@@ -29,10 +30,10 @@ public class FileGenerateController {
     }
 
     @PostMapping
-    public ResponseEntity<byte[]> generate(FileGenerateDTO fileGenerateDTO) throws Exception {
+    public ResponseEntity<byte[]> generate(@RequestBody FileGenerateDTO fileGenerateDTO) throws Exception {
         byte[] bytes = fileGenerateTemplate.generate(fileGenerateDTO);
         HttpHeaders header = new HttpHeaders();
-        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileGenerateTemplate.getFile(fileGenerateDTO));
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileGenerateTemplate.getFileName(fileGenerateDTO));
         header.add("Cache-Control", "no-cache, no-store, must-revalidate");
         header.add("Pragma", "no-cache");
         header.add("Expires", "0");

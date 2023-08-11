@@ -10,7 +10,8 @@ import java.util.Map;
 @Data
 public class FileGenerateDTO {
     @NotNull
-    MultipartFile template;
+    String path;
 
-    String vars;
+    @NotNull
+    Map<String, Object> vars;
 }
