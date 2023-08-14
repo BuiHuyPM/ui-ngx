@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 import org.thingsboard.server.common.data.exception.ThingsboardErrorCode;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
 import vn.inergy.server.model.assetFiles.FileDTO;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -19,7 +21,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class AssetFileServiceImpl implements AssetFileService {
-    private final String root = "static/assetFiles";
+    public static final String uploadPath = "uploads";
+    private final String root = uploadPath+"/assetFiles";
     private final ResourceLoader resourceLoader;
 
     @Value("${asset-file.allow:^.*(.png|.jpg|.svg|.webp|.gif|.doc|.docx|.json|.pdf|.css|.js|.html|.md|.xlsx|.xls|.ttf|.woff|.ftl|.otf|.woff2)$}")
@@ -32,15 +35,15 @@ public class AssetFileServiceImpl implements AssetFileService {
     @Override
     public List<FileDTO> get(String folderR) throws Exception {
         String folder = beautify(folderR);
-        Resource resource = resourceLoader.getResource("classpath:" + root + folder);
+        Resource resource = resourceLoader.getResource( ResourceUtils.FILE_URL_PREFIX + root + folder);
         if (!resource.exists()) {
-            throw new Exception("Folder is not exists");
+            throw new Exception("Folder is not exists:"+root+folder);
         }
         File[] listOfFiles = resource.getFile().listFiles();
         if (listOfFiles != null) {
             return Arrays.stream(listOfFiles).map(file -> {
                 try {
-                    Resource fileResource = resourceLoader.getResource("file:" + file.getPath());
+                    Resource fileResource = resourceLoader.getResource(ResourceUtils.FILE_URL_PREFIX + file.getPath());
                     String name = file.getName();
                     String path = folder + "/" + file.getName();
                     path = path.replace("//", "/");
@@ -65,9 +68,9 @@ public class AssetFileServiceImpl implements AssetFileService {
     @Override
     public void upload(String folderR, List<FileDTO> fileDTOs) throws Exception {
         String folder = beautify(folderR);
-        Resource resource = resourceLoader.getResource("classpath:" + root + folder);
+        Resource resource = resourceLoader.getResource(ResourceUtils.FILE_URL_PREFIX + root + folder);
         if (!resource.exists()) {
-            throw new Exception("folder is not exists");
+            throw new Exception("Folder is not exists:"+root+folder);
         }
         List<String> errors = new ArrayList<>();
         for (FileDTO fileDTO : fileDTOs) {
@@ -102,14 +105,14 @@ public class AssetFileServiceImpl implements AssetFileService {
     @Override
     public void delete(String folderR) throws Exception {
         String folder = beautify(folderR);
-        Resource rootResource = resourceLoader.getResource("classpath:" + root);
-        Resource resource = resourceLoader.getResource("classpath:" + root + folder);
+        Resource rootResource = resourceLoader.getResource(ResourceUtils.FILE_URL_PREFIX + root);
+        Resource resource = resourceLoader.getResource(ResourceUtils.FILE_URL_PREFIX + root + folder);
         if (rootResource.equals(resource)) {
             throw new Exception("Folder is root can not delete");
         }
 
         if (!resource.exists()) {
-            throw new Exception("Folder is not exists");
+            throw new Exception("Folder is not exists:"+root+folder);
         }
         File file = resource.getFile();
         Files.walk(Paths.get(file.getPath())).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);

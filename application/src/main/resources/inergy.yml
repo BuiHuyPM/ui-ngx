@@ -566,7 +566,9 @@ spring:
     password: "@Ami2021"
     hikari:
       maximumPoolSize: "${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:16}"
-
+  web:
+    resources:
+      static-locations: classpath:/static/,file:/uploads/
 # Audit log parameters
 audit-log:
   # Enable/disable audit log functionality.

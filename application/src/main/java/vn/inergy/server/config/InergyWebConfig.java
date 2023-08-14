@@ -18,4 +18,5 @@ public class InergyWebConfig implements WebMvcConfigurer {
     public void configurePathMatch(PathMatchConfigurer configurer) {
         configurer.setPatternParser(new PathPatternParser());
     }
+
 }

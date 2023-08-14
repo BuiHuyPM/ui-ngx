@@ -13,8 +13,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.util.ResourceUtils;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import vn.inergy.server.model.fileGenerate.FileGenerateDTO;
+import vn.inergy.server.service.assetFiles.AssetFileServiceImpl;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -63,7 +65,7 @@ public class BaseFileGenerateTemplate implements FileGenerateTemplate {
         return originalFilename;
     }
     public File getFile(String path) throws Exception {
-        String local = "classpath:static";
+        String local = ResourceUtils.FILE_URL_PREFIX+ AssetFileServiceImpl.uploadPath;
         if (!path.startsWith("/")){
             local += "/";
         }
