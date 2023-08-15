@@ -8,6 +8,7 @@ import org.springframework.util.ResourceUtils;
 import org.thingsboard.server.common.data.exception.ThingsboardErrorCode;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
 import vn.inergy.server.model.assetFiles.FileDTO;
+import vn.inergy.server.service.assetFiles.config.AssetConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,8 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class AssetFileServiceImpl implements AssetFileService {
-    public static final String uploadPath = "uploads";
-    private final String root = uploadPath+"/assetFiles";
+    private final String root = AssetConfig.folderPath + AssetConfig.assetFiles;
     private final ResourceLoader resourceLoader;
 
     @Value("${asset-file.allow:^.*(.png|.jpg|.svg|.webp|.gif|.doc|.docx|.json|.pdf|.css|.js|.html|.md|.xlsx|.xls|.ttf|.woff|.ftl|.otf|.woff2)$}")
@@ -35,9 +35,9 @@ public class AssetFileServiceImpl implements AssetFileService {
     @Override
     public List<FileDTO> get(String folderR) throws Exception {
         String folder = beautify(folderR);
-        Resource resource = resourceLoader.getResource( ResourceUtils.FILE_URL_PREFIX + root + folder);
+        Resource resource = resourceLoader.getResource(ResourceUtils.FILE_URL_PREFIX + root + folder);
         if (!resource.exists()) {
-            throw new Exception("Folder is not exists:"+root+folder);
+            throw new Exception("Folder is not exists:" + root + folder);
         }
         File[] listOfFiles = resource.getFile().listFiles();
         if (listOfFiles != null) {
@@ -53,7 +53,7 @@ public class AssetFileServiceImpl implements AssetFileService {
                     if (!isFolder) {
                         byte[] fileContent = Files.readAllBytes(Paths.get(file.getPath()));
                         String mimeType = URLConnection.guessContentTypeFromName(file.getName());
-                        data += "data:"+mimeType+";base64,";
+                        data += "data:" + mimeType + ";base64,";
                         data += Base64.getEncoder().encodeToString(fileContent);
                     }
                     return new FileDTO(name, path, isFolder, data, lastModified);
@@ -70,7 +70,7 @@ public class AssetFileServiceImpl implements AssetFileService {
         String folder = beautify(folderR);
         Resource resource = resourceLoader.getResource(ResourceUtils.FILE_URL_PREFIX + root + folder);
         if (!resource.exists()) {
-            throw new Exception("Folder is not exists:"+root+folder);
+            throw new Exception("Folder is not exists:" + root + folder);
         }
         List<String> errors = new ArrayList<>();
         for (FileDTO fileDTO : fileDTOs) {
@@ -88,7 +88,7 @@ public class AssetFileServiceImpl implements AssetFileService {
             boolean isCreated = fileDTO.getIsFolder() ? file.mkdirs() : file.createNewFile();
 
             if (!isCreated) {
-                errors.add((fileDTO.getIsFolder()?"Cannot create ":"Cannot upload ") + fileDTO.getName());
+                errors.add((fileDTO.getIsFolder() ? "Cannot create " : "Cannot upload ") + fileDTO.getName());
                 continue;
             }
             if (!fileDTO.getIsFolder()) {
@@ -97,8 +97,8 @@ public class AssetFileServiceImpl implements AssetFileService {
                 Files.write(Paths.get(file.getPath()), decodedBytes);
             }
         }
-        if (errors.size() > 0){
-            throw new ThingsboardException("ERRORS: - " +  String.join(", - ",errors), ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+        if (errors.size() > 0) {
+            throw new ThingsboardException("ERRORS: - " + String.join(", - ", errors), ThingsboardErrorCode.BAD_REQUEST_PARAMS);
         }
     }
 
@@ -112,18 +112,19 @@ public class AssetFileServiceImpl implements AssetFileService {
         }
 
         if (!resource.exists()) {
-            throw new Exception("Folder is not exists:"+root+folder);
+            throw new Exception("Folder is not exists:" + root + folder);
         }
         File file = resource.getFile();
         Files.walk(Paths.get(file.getPath())).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
     }
 
-    public String beautify(String folder){
-        if (!folder.startsWith("/")){
-            return "/"+folder;
+    public String beautify(String folder) {
+        if (!folder.startsWith("/")) {
+            return "/" + folder;
         }
         return folder;
     }
+
     private boolean allowEx(String name) {
         return name.toLowerCase().matches(allowRegex);
     }

@@ -4,13 +4,9 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-@Getter
+
 public class AssetConfig {
-    @Value("${asset.folderPath:static}")
-    String folderPath;
+   public static final  String folderPath = "uploads";
 
-    @Value("${asset.folderName:assetFiles}")
-    String folderName;
-
+    public static final  String assetFiles = "/assetFiles";
 }

@@ -16,7 +16,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.util.ResourceUtils;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import vn.inergy.server.model.fileGenerate.FileGenerateDTO;
-import vn.inergy.server.service.assetFiles.AssetFileServiceImpl;
+import vn.inergy.server.service.assetFiles.config.AssetConfig;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -60,21 +60,24 @@ public class BaseFileGenerateTemplate implements FileGenerateTemplate {
         File file = getFile(fileGenerateDTO.getPath());
         String originalFilename = file.getName();
         if (originalFilename.endsWith(".ftl")) {
-            return originalFilename.replace(".ftl",".pdf");
+            return originalFilename.replace(".ftl", ".pdf");
         }
         return originalFilename;
     }
+
     public File getFile(String path) throws Exception {
-        String local = ResourceUtils.FILE_URL_PREFIX+ AssetFileServiceImpl.uploadPath;
-        if (!path.startsWith("/")){
+        String uploadPath = AssetConfig.folderPath + AssetConfig.assetFiles;
+        String local = ResourceUtils.FILE_URL_PREFIX + uploadPath;
+        if (!path.startsWith("/")) {
             local += "/";
         }
-        Resource resource = resourceLoader.getResource( local + path);
+        Resource resource = resourceLoader.getResource(local + path);
         if (!resource.exists()) {
             throw new Exception("File not found");
         }
         return resource.getFile();
     }
+
     public byte[] excel(File file, Map<String, Object> vars) throws IOException {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         Context context = new Context();
