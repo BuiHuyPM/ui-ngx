@@ -38,7 +38,6 @@ public class InergyServerApplication {
     }
 
     private static String[] updateArguments(String[] args) {
-        showHardAddress();
         if (Arrays.stream(args).noneMatch(arg -> arg.startsWith(SPRING_CONFIG_NAME_KEY))) {
             String[] modifiedArgs = new String[args.length + 1];
             System.arraycopy(args, 0, modifiedArgs, 0, args.length);
@@ -46,14 +45,5 @@ public class InergyServerApplication {
             return modifiedArgs;
         }
         return args;
-    }
-
-    private static void showHardAddress() {
-        try {
-            String hacAddress = HardwareUtils.getMACAddress();
-            System.out.println("Application run on server: " + hacAddress);
-        } catch (Exception ex) {
-            System.out.println("Can't not get MAC address. error:" + ex.getMessage());
-        }
     }
 }
