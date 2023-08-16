@@ -97,7 +97,7 @@ public class AssetFileServiceImpl implements AssetFileService {
                 Files.write(Paths.get(file.getPath()), decodedBytes);
             }
         }
-        if (errors.size() > 0) {
+        if (!errors.isEmpty()) {
             throw new ThingsboardException("ERRORS: - " + String.join(", - ", errors), ThingsboardErrorCode.BAD_REQUEST_PARAMS);
         }
     }
@@ -118,11 +118,19 @@ public class AssetFileServiceImpl implements AssetFileService {
         Files.walk(Paths.get(file.getPath())).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
     }
 
-    public String beautify(String folder) {
+    public String beautify(String folder) throws Exception {
+        if (validDotDot((folder))){
+            throw new Exception("Folder is not valid: "+folder);
+        }
+
         if (!folder.startsWith("/")) {
             return "/" + folder;
         }
         return folder;
+    }
+
+    public boolean validDotDot(String folder){
+        return !folder.matches(".*\\.\\./.*");
     }
 
     private boolean allowEx(String name) {
