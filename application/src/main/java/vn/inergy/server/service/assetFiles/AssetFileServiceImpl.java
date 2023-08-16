@@ -128,18 +128,18 @@ public class AssetFileServiceImpl implements AssetFileService {
     }
 
     public String beautify(String folder) throws Exception {
-        if (validDotDot((folder))){
+        String folderBeautify = folder;
+        if (!folderBeautify.startsWith("/")) {
+            folderBeautify = "/" + folderBeautify;
+        }
+        if (validDotDot((folderBeautify))){
             throw new Exception("Folder is not valid: "+folder);
         }
-
-        if (!folder.startsWith("/")) {
-            return "/" + folder;
-        }
-        return folder;
+        return folderBeautify;
     }
 
     public boolean validDotDot(String folder){
-        return !folder.matches(".*\\.\\./.*");
+        return folder.matches(".*\\.\\./.*");
     }
 
     private boolean allowEx(String name) {

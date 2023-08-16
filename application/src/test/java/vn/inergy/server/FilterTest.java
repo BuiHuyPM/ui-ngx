@@ -29,7 +29,7 @@ public class FilterTest {
         assertThat(isMatch).isFalse();
     }  @Test
     public void dotdot() {
-        boolean isMatch = "file/file.jsx".matches(".*\\.\\./.*");
+        boolean isMatch = "/".matches(".*\\.\\./.*");
         assertThat(isMatch).isTrue();
     }
 }

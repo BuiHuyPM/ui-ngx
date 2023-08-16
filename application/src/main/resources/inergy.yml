@@ -568,7 +568,7 @@ spring:
       maximumPoolSize: "${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:16}"
   web:
     resources:
-      static-locations: classpath:/static/,classpath:/public/,classpath:/resources/,classpath:/META-INF/resources/,file:/uploads
+      static-locations: classpath:/static/,classpath:/public/,classpath:/resources/,classpath:/META-INF/resources/,file:./uploads/
 # Audit log parameters
 audit-log:
   # Enable/disable audit log functionality.

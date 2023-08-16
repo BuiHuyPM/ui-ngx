@@ -18,7 +18,7 @@
                    [readAsBinary]="true"
                    [contentConvertFunction]="convertToBase64File"
                    [multipleFile]="true"
-                   [allowedExtensions]="'png,jpg,svg,webp,gif,doc,docx,json,pdf,css,js,html,md,xlsx,xls,ttf,woff,otf,woff2,txt'"
+                   [allowedExtensions]="'png,jpg,jpg,svg,webp,gif,doc,docx,json,pdf,css,js,html,md,xlsx,xls,ttf,woff,otf,woff2,txt'"
                    dropLabel="{{'resource.drop-file' | translate}}"
                    [existingFileName]="assetFileFormGroup.get('fileName')?.value"
                    (fileNameChanged)="assetFileFormGroup?.get('fileName').patchValue($event)">
