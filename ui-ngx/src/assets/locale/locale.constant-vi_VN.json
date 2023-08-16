@@ -3466,6 +3466,7 @@
         "noEntities": "Không có thư mục hay file nào",
         "selectFiles": "Bạn đã chọn {{count}} thư mục và file",
         "create-folder-successful": "Tạo folder thành công",
-        "upload-file-successful": "Tải file lên thành công"
+        "upload-file-successful": "Tải file lên thành công",
+        "delete-successful": "Xóa thành công"
     }
 }

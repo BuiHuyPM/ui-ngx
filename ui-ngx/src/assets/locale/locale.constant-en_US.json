@@ -4821,6 +4821,7 @@
         "noEntities": "No file or folder",
         "selectFiles": "you have selected {{count}} files and folders",
         "create-folder-successful": "Folder creation successful",
-        "upload-file-successful": "File upload successful"
+        "upload-file-successful": "File upload successful",
+        "delete-successful": "Delete successful"
     }
 }

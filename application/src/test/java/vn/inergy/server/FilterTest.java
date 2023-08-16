@@ -27,5 +27,9 @@ public class FilterTest {
         String uri = "/api/v1/dasdas";
         boolean isMatch = uri.matches(regex);
         assertThat(isMatch).isFalse();
+    }  @Test
+    public void dotdot() {
+        boolean isMatch = "file/file.jsx".matches(".*\\.\\./.*");
+        assertThat(isMatch).isTrue();
     }
 }

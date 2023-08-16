@@ -115,7 +115,16 @@ public class AssetFileServiceImpl implements AssetFileService {
             throw new Exception("Folder is not exists:" + root + folder);
         }
         File file = resource.getFile();
-        Files.walk(Paths.get(file.getPath())).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+        List<String> errors = new ArrayList<>();
+        Files.walk(Paths.get(file.getPath())).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(file1 -> {
+            boolean isDelete = file1.delete();
+            if (!isDelete){
+                errors.add(file1.getName());
+            }
+        });
+        if (!errors.isEmpty()) {
+            throw new ThingsboardException("Cannot delete file: - " + String.join(", - ", errors), ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+        }
     }
 
     public String beautify(String folder) throws Exception {

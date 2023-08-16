@@ -13,6 +13,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {forkJoin, Subscription} from 'rxjs';
 import {FormCreateComponent} from '@home/pages/admin/asset-files/form-create/form-create.component';
 import {MatDialog} from '@angular/material/dialog';
+import {ActionNotificationShow} from '@core/notification/notification.actions';
 
 @Component({
   selector: 'tb-asset-files',
@@ -115,6 +116,11 @@ export class AssetFilesComponent extends PageComponent implements OnInit, OnDest
     ).subscribe((result) => {
       if (result) {
         this.assetFilesService.delete(element.path).subscribe(() => {
+          this.store.dispatch(new ActionNotificationShow({
+              message: this.translate.instant('delete-successful'),
+              type: 'success',
+              duration: 750,
+            }));
           this.fetchFolder();
         });
       }
@@ -144,7 +150,6 @@ export class AssetFilesComponent extends PageComponent implements OnInit, OnDest
       });
     }
   }
-
 
   openAddNew($event: MouseEvent, isFolder: boolean) {
     const routeParams = this.route.snapshot.paramMap;
