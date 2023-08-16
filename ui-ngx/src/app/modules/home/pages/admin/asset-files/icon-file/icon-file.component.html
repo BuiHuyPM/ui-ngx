@@ -7,3 +7,4 @@
 <mat-icon *ngIf="isPdf()">picture_as_pdf</mat-icon>
 <mat-icon *ngIf="isFont()">text_fields</mat-icon>
 <mat-icon *ngIf="isGif()">gif</mat-icon>
+<mat-icon *ngIf="!isFolder && !isImage() && !isDoc()&& !isCss()&& !isJs()&& !isHtml()&& !isPdf()&& !isFont()&& !isGif()">attach_file</mat-icon>
