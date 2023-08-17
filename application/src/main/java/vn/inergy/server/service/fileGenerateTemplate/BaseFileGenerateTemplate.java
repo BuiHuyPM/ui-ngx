@@ -66,7 +66,7 @@ public class BaseFileGenerateTemplate implements FileGenerateTemplate {
     }
 
     public File getFile(String path) throws Exception {
-        String uploadPath = AssetConfig.folderPath + AssetConfig.assetFiles;
+        String uploadPath = AssetConfig.folderPath;
         String local = ResourceUtils.FILE_URL_PREFIX + uploadPath;
         if (!path.startsWith("/")) {
             local += "/";
