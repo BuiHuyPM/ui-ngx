@@ -86,6 +86,7 @@ public class BaseFileGenerateTemplate implements FileGenerateTemplate {
         }
         InputStream inputStream = new FileInputStream(file);
         JxlsHelper.getInstance().processTemplate(inputStream, os, context);
+        inputStream.close();
         return os.toByteArray();
     }
 
@@ -108,6 +109,7 @@ public class BaseFileGenerateTemplate implements FileGenerateTemplate {
         renderer.setDocumentFromString(html);
         renderer.layout();
         renderer.createPDF(os);
+        stream.close();
         return os.toByteArray();
     }
 }

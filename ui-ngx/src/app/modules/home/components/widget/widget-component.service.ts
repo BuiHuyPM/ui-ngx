@@ -47,6 +47,7 @@ import moment from 'moment';
 import { IModulesMap } from '@modules/common/modules-map.models';
 import { HOME_COMPONENTS_MODULE_TOKEN } from '@home/components/tokens';
 import { widgetSettingsComponentsMap } from '@home/components/widget/lib/settings/widget-settings.module';
+import {AmiChartGroup} from '@home/components/widget/lib/AmiChartGroup';
 
 const tinycolor = tinycolor_;
 
@@ -137,6 +138,11 @@ export class WidgetComponentService {
       widgetModulesTasks.push(from(import('@home/components/widget/lib/flot-widget')).pipe(
         tap((mod) => {
           (window as any).TbFlot = mod.TbFlot;
+        }))
+      );
+      widgetModulesTasks.push(from(import('@home/components/widget/lib/AmiChartGroup')).pipe(
+        tap((mod) => {
+          (window as any).AmiChartGroup = mod.AmiChartGroup;
         }))
       );
       widgetModulesTasks.push(from(import('@home/components/widget/lib/analogue-compass')).pipe(
