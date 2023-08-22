@@ -48,15 +48,26 @@ export class AmiChartGroup {
         enabled: false
       },
       xAxis: {
-        type: 'datetime',
+        title: {
+          text: settings?.xAxis?.title || ''
+        },
+        type: settings?.xAxis?.type || 'datetime',
+        labels: {
+          format: settings?.xAxis?.labelFormat || null
+        },
+        reversed: settings?.xAxis?.reversed || false,
+        opposite: settings?.xAxis?.opposite || false,
       },
       yAxis: {
+        type: settings?.yAxis?.type || 'linear',
         title: {
           text: settings?.yAxis?.title || ''
         },
         labels: {
-          format: settings?.yAxis?.labelFormat || '{value:.2f}'
-        }
+          format: settings?.yAxis?.labelFormat || null
+        },
+        reversed: settings?.yAxis?.reversed || false,
+        opposite: settings?.yAxis?.opposite || false,
       },
       plotOptions: {
         series: {
@@ -74,7 +85,6 @@ export class AmiChartGroup {
     // @ts-ignore
     this.chart = Highcharts.chart(id, chartOptions);
   }
-
   public series(ctx: WidgetContext, chartType: ChartType): any {
     switch (chartType) {
       case 'line':

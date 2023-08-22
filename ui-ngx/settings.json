@@ -1,65 +1,116 @@
 {
-  "form": [
-    "dataLabels",
-    "pointFormat",
-    "yAxis",
-    {
-      "key": "colors",
-      "add": "New",
-      "style": {
-        "add": "btn-success"
-      },
-      "items": [
+    "form": [
+        "dataLabels",
+        "pointFormat",
+        "xAxis",
+        "yAxis",
         {
-          "key": "colors[]",
-          "type": "color"
+            "key": "colors",
+            "add": "New",
+            "style": {
+                "add": "btn-success"
+            },
+            "items": [
+                {
+                    "key": "colors[]",
+                    "type": "color"
+                }
+            ]
         }
-      ]
-    }
-  ],
-  "schema": {
-    "type": "object",
-    "title": "Comment",
-    "properties": {
-      "dataLabels": {
+    ],
+    "schema": {
         "type": "object",
-        "title": "DataLabels",
+        "title": "Comment",
         "properties": {
-          "enabled": {
-            "type": "boolean",
-            "title": "enabled"
-          },
-          "format": {
-            "type": "string",
-            "title": "Format"
-          }
+            "dataLabels": {
+                "type": "object",
+                "title": "DataLabels",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean",
+                        "title": "enabled"
+                    },
+                    "format": {
+                        "type": "string",
+                        "title": "Format"
+                    }
+                }
+            },
+            "xAxis": {
+                "type": "object",
+                "title": "XAxis",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "type": {
+                        "title": "Type",
+                        "type": "string",
+                        "enum": [
+                            "linear",
+                            "datetime",
+                            "category",
+                            "logarithmic"
+                        ]
+                    },
+                    "labelFormat": {
+                        "type": "string",
+                        "title": "LabelFormat"
+                    },
+                    "reversed":{
+                        "type": "boolean",
+                        "title": "Reversed"
+                    },
+                    "opposite":{
+                        "type": "boolean",
+                        "title": "Opposite"
+                    }
+                }
+            },
+            "yAxis": {
+                "type": "object",
+                "title": "YAxis",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "type": {
+                        "title": "Type",
+                        "type": "string",
+                        "enum": [
+                            "linear",
+                            "datetime",
+                            "category",
+                            "logarithmic"
+                        ]
+                    },
+                    "labelFormat": {
+                        "type": "string",
+                        "title": "LabelFormat"
+                    },
+                    "reversed":{
+                        "type": "boolean",
+                        "title": "Reversed"
+                    },
+                    "opposite":{
+                        "type": "boolean",
+                        "title": "Opposite"
+                    }
+                }
+            },
+            "pointFormat": {
+                "title": "PointFormat",
+                "type": "string"
+            },
+            "colors": {
+                "type": "array",
+                "title": "Colors",
+                "items": {
+                    "type": "string"
+                }
+            }
         }
-      },
-      "yAxis": {
-        "type": "object",
-        "title": "YAxis",
-        "properties": {
-          "title": {
-            "type": "string",
-            "title": "Title"
-          },
-          "labelFormat": {
-            "type": "string",
-            "title": "LabelFormat"
-          }
-        }
-      },
-      "pointFormat": {
-        "title": "PointFormat",
-        "type": "string"
-      },
-      "colors": {
-        "type": "array",
-        "title": "Colors",
-        "items": {
-          "type": "string"
-        }
-      }
     }
-  }
 }
