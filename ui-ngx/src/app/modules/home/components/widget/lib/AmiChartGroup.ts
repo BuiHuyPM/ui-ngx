@@ -158,7 +158,8 @@ export class AmiChartGroup {
   }
 
   public update() {
-    if (this.lastUpdateAt + TIME_UPDATE > new Date().getTime()) {
+    // @ts-ignore
+    if (this.lastUpdateAt + TIME_UPDATE > new Date().getTime() && (this.ctx?.widget?.config?.useDashboardTimewindow || this.ctx?.widget?.config?.timewindow?.realtime)) {
       return;
     }
     const newSeries = this.series(this.ctx, this.chartType);

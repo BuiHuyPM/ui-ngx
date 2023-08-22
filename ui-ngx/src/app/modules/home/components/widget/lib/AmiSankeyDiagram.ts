@@ -130,8 +130,9 @@ export class AmiSankeyDiagram {
   }
 
   public update() {
-    if (this.lastUpdateAt + TIME_UPDATE > new Date().getTime()) {
-      // return;
+    // @ts-ignore
+    if (this.lastUpdateAt + TIME_UPDATE > new Date().getTime() && (this.ctx?.widget?.config?.useDashboardTimewindow || this.ctx?.widget?.config?.timewindow?.realtime)) {
+      return;
     }
     const newSeries = this.series(this.ctx);
     if (newSeries.length > 0 && newSeries[0].data.length > 0) {
