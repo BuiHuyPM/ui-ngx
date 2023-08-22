@@ -1,0 +1,65 @@
+{
+  "form": [
+    "dataLabels",
+    "pointFormat",
+    "yAxis",
+    {
+      "key": "colors",
+      "add": "New",
+      "style": {
+        "add": "btn-success"
+      },
+      "items": [
+        {
+          "key": "colors[]",
+          "type": "color"
+        }
+      ]
+    }
+  ],
+  "schema": {
+    "type": "object",
+    "title": "Comment",
+    "properties": {
+      "dataLabels": {
+        "type": "object",
+        "title": "DataLabels",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "enabled"
+          },
+          "format": {
+            "type": "string",
+            "title": "Format"
+          }
+        }
+      },
+      "yAxis": {
+        "type": "object",
+        "title": "YAxis",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "labelFormat": {
+            "type": "string",
+            "title": "LabelFormat"
+          }
+        }
+      },
+      "pointFormat": {
+        "title": "PointFormat",
+        "type": "string"
+      },
+      "colors": {
+        "type": "array",
+        "title": "Colors",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

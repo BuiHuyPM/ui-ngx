@@ -111,6 +111,7 @@
     "@types/ace-diff": "^2.1.1",
     "@types/canvas-gauges": "^2.1.4",
     "@types/flot": "^0.0.32",
+    "@types/highcharts": "^7.0.0",
     "@types/jasmine": "~3.10.2",
     "@types/jasminewd2": "^2.0.10",
     "@types/jquery": "^3.5.9",

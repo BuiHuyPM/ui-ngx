@@ -475,7 +475,9 @@ export class DataAggregator {
         const aggTimestamp = noAggregation ? timestamp : (this.startTs +
           Math.floor((timestamp - this.startTs) / this.subsTw.aggregation.interval) *
           this.subsTw.aggregation.interval + this.subsTw.aggregation.interval / 2);
+
         let aggData = aggKeyData.get(aggTimestamp);
+
         if (minMaxAggregation) {
           minMax(aggKeyData, value);
         } else if (deltaAggregation) {
