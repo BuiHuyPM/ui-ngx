@@ -12,6 +12,14 @@ accessibility(Highcharts);
 
 type ChartType = 'line' | 'spline' | 'pie' | 'bar' | 'column';
 const TIME_UPDATE = 2000;
+
+function nullOrEmpty(value: string | string[] | null | undefined, defaultValue: string | string[]): string | string[] {
+  if (!value || value.length === 0) {
+    return defaultValue;
+  }
+  return value;
+}
+
 export class AmiChartGroup {
   private readonly ctx: WidgetContext;
   private readonly chartType: ChartType;
@@ -40,20 +48,30 @@ export class AmiChartGroup {
       title: {
         text: '',
       },
-      tooltip: {
-        pointFormat: settings?.pointFormat || Highcharts.getOptions().tooltip.pointFormat
+      legend: {
+        enabled: settings?.legend?.enabled || false,
+        align: settings?.legend?.align || 'center',
+        verticalAlign: settings?.legend?.verticalAlign || 'bottom',
+        layout: settings?.legend?.layout || 'horizontal',
       },
-      colors: settings?.colors || Highcharts.getOptions().colors,
+      tooltip: {
+        format: nullOrEmpty(settings?.tooltip?.format, Highcharts.getOptions().tooltip.format),
+        headerFormat: nullOrEmpty(settings?.tooltip?.headerFormat, Highcharts.getOptions().tooltip.headerFormat),
+        pointFormat: nullOrEmpty(settings?.tooltip?.pointFormat, Highcharts.getOptions().tooltip.pointFormat),
+        footerFormat: nullOrEmpty(settings?.tooltip?.footerFormat, Highcharts.getOptions().tooltip.footerFormat),
+        shared: true
+      },
+      colors: settings?.colors && settings?.colors.length > 0 ? settings?.colors :  Highcharts.getOptions().colors,
       credits: {
         enabled: false
       },
       xAxis: {
         title: {
-          text: settings?.xAxis?.title || ''
+          text: settings?.xAxis?.title?.text || ''
         },
         type: settings?.xAxis?.type || 'datetime',
         labels: {
-          format: settings?.xAxis?.labelFormat || null
+          format: settings?.xAxis?.labels?.format || null
         },
         reversed: settings?.xAxis?.reversed || false,
         opposite: settings?.xAxis?.opposite || false,
@@ -61,22 +79,26 @@ export class AmiChartGroup {
       yAxis: {
         type: settings?.yAxis?.type || 'linear',
         title: {
-          text: settings?.yAxis?.title || ''
+          text: settings?.yAxis?.title?.text || ''
         },
         labels: {
-          format: settings?.yAxis?.labelFormat || null
+          format: settings?.yAxis?.labels?.format || null
         },
         reversed: settings?.yAxis?.reversed || false,
         opposite: settings?.yAxis?.opposite || false,
       },
       plotOptions: {
         series: {
+          innerSize: settings?.series?.innerSize,
+          dataLabels: {
+            enabled: settings?.series?.dataLabels?.enabled || false,
+            format: settings?.series?.dataLabels?.format || '{y}'
+          }
+        },
+        pie: {
           allowPointSelect: true,
           cursor: 'pointer',
-          dataLabels: {
-            enabled: settings?.dataLabels?.enabled || false,
-            format: settings?.dataLabels?.format || '{y}'
-          }
+          showInLegend: true
         }
       },
       series: []
@@ -85,6 +107,7 @@ export class AmiChartGroup {
     // @ts-ignore
     this.chart = Highcharts.chart(id, chartOptions);
   }
+
   public series(ctx: WidgetContext, chartType: ChartType): any {
     switch (chartType) {
       case 'line':
@@ -164,7 +187,7 @@ export class AmiChartGroup {
     }
     const newSeries = this.series(this.ctx, this.chartType);
 
-    if (newSeries.length > 0 && newSeries[0].data.length > 0){
+    if (newSeries.length > 0 && newSeries[0].data.length > 0) {
       this.lastUpdateAt = new Date().getTime();
     }
 
@@ -185,7 +208,6 @@ export class AmiChartGroup {
   }
 
   public checkMouseEvents() {
-    console.log('sss');
   }
 
   public destroy() {

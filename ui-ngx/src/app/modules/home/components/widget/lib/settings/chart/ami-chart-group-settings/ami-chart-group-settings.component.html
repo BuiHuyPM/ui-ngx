@@ -1,0 +1,181 @@
+<section class="tb-widget-settings" [formGroup]="widgetSettingsForm" fxLayout="column">
+  <fieldset class="fields-group" formGroupName="legend">
+    <legend class="group-title" translate>widgets.chart.legend</legend>
+    <div class="mat-block" fxFlex>
+      <mat-slide-toggle class="root-state-entity-switch" fxFlex formControlName="enabled">
+        {{ 'widgets.chart.legend-enabled' | translate }}
+      </mat-slide-toggle>
+    </div>
+    <div class="mat-block" fxLayout="row" fxLayoutGap="30px">
+      <div fxLayout="column">
+        <mat-label translate>widgets.chart.legend-align</mat-label>
+        <mat-radio-group formControlName="align" fxLayout="column" fxLayoutAlign="space-around">
+          <mat-radio-button value="left">Left</mat-radio-button>
+          <mat-radio-button value="center">Center</mat-radio-button>
+          <mat-radio-button value="right">Right</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div fxLayout="column">
+        <mat-label translate>widgets.chart.legend-verticalAlign</mat-label>
+        <mat-radio-group formControlName="verticalAlign" fxLayout="column" fxLayoutAlign="space-around">
+          <mat-radio-button value="top">Top</mat-radio-button>
+          <mat-radio-button value="middle">Middle</mat-radio-button>
+          <mat-radio-button value="bottom">Bottom</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div fxLayout="column">
+        <mat-label translate>widgets.chart.legend-layout</mat-label>
+        <mat-radio-group formControlName="layout" fxLayout="column" fxLayoutAlign="space-around">
+          <mat-radio-button value="horizontal">Horizontal</mat-radio-button>
+          <mat-radio-button value="vertical">Vertical</mat-radio-button>
+          <mat-radio-button value="proximate">Proximate</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset class="fields-group" formGroupName="xAxis">
+    <legend class="group-title" translate>widgets.chart.xaxis-settings</legend>
+    <div fxLayout="row" formGroupName="title">
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label translate>widgets.chart.axis-title</mat-label>
+        <input matInput type="text" formControlName="text">
+      </mat-form-field>
+    </div>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label translate>widgets.chart.axis-type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="linear">Linear</mat-option>
+        <mat-option value="datetime">datetime</mat-option>
+        <mat-option value="category">category</mat-option>
+        <mat-option value="logarithmic">logarithmic</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="mat-block" fxFlex formGroupName="labels">
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label translate>widgets.chart.axis-labels-format</mat-label>
+        <input matInput type="text" placeholder="{value}" formControlName="format">
+        <mat-hint align="end">
+          <code>{{text} ,{value}, {value:.1f}</code>
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="mat-block" fxFlex>
+      <mat-slide-toggle class="root-state-entity-switch" formControlName="reversed">
+        {{ 'widgets.chart.axis-reversed' | translate }}
+      </mat-slide-toggle>
+    </div>
+    <div class="mat-block" fxFlex>
+      <mat-slide-toggle class="root-state-entity-switch" fxFlex formControlName="opposite">
+        {{ 'widgets.chart.axis-opposite' | translate }}
+      </mat-slide-toggle>
+    </div>
+  </fieldset>
+  <fieldset class="fields-group" formGroupName="yAxis">
+    <legend class="group-title" translate>widgets.chart.yaxis-settings</legend>
+    <div fxLayout="row" formGroupName="title">
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label translate>widgets.chart.axis-title</mat-label>
+        <input matInput type="text" formControlName="text">
+      </mat-form-field>
+    </div>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label translate>widgets.chart.axis-type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="linear">Linear</mat-option>
+        <mat-option value="datetime">datetime</mat-option>
+        <mat-option value="category">category</mat-option>
+        <mat-option value="logarithmic">logarithmic</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="mat-block" fxFlex formGroupName="labels">
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label translate>widgets.chart.axis-labels-format</mat-label>
+        <input matInput type="text" placeholder="{value}" formControlName="format">
+        <mat-hint align="end">
+          <code>{{text} ,{value}, {value:.1f}</code>
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="mat-block" fxFlex>
+      <mat-slide-toggle class="root-state-entity-switch" formControlName="reversed">
+        {{ 'widgets.chart.axis-reversed' | translate }}
+      </mat-slide-toggle>
+    </div>
+    <div class="mat-block" fxFlex>
+      <mat-slide-toggle class="root-state-entity-switch" fxFlex formControlName="opposite">
+        {{ 'widgets.chart.axis-opposite' | translate }}
+      </mat-slide-toggle>
+    </div>
+  </fieldset>
+  <fieldset class="fields-group" formGroupName="tooltip">
+    <legend class="group-title" translate>widgets.chart.tooltip-settings</legend>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label translate>widgets.chart.tooltip-value-format-function</mat-label>
+      <input matInput type="text"
+             placeholder='<span style="font-size: 0.8em">{key}</span><br/> {#each points} <span style="color:{color}">\u25CF</span>  {series.name}: <b>{y}</b><br/> {/each}'
+             formControlName="format">
+    </mat-form-field>
+    <div fxLayout="row">
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label translate>widgets.chart.tooltip-format-header</mat-label>
+        <input matInput type="text" placeholder="'<p>{point.key}</p>'" formControlName="headerFormat">
+      </mat-form-field>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label translate>widgets.chart.tooltip-format-point</mat-label>
+        <input matInput type="text" placeholder="{series.name}:{point.y}" formControlName="pointFormat">
+      </mat-form-field>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label translate>widgets.chart.tooltip-format-footer</mat-label>
+        <input matInput type="text" formControlName="footerFormat">
+      </mat-form-field>
+    </div>
+    <mat-hint align="end">
+      <code>{{point.x}, {point.y}, {series.name} and {series.color}</code>
+    </mat-hint>
+  </fieldset>
+  <fieldset class="fields-group" formArrayName="colors">
+    <legend class="group-title" translate>widgets.chart.color</legend>
+    <div fxFlex class="mat-block" *ngFor="let color of colors.controls; let i=index" fxLayout="row">
+      <tb-color-input label="{{'widgets.chart.color' | translate}}"
+                      icon="format_color_fill"
+                      openOnInput
+                      [formControlName]="i">
+      </tb-color-input>
+      <button mat-button mat-icon-button color="primary"
+              type="button"
+              (click)="removeColors(i)"
+              matTooltip="{{ 'key-val.remove-entry' | translate }}"
+              matTooltipPosition="above">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <button mat-button mat-raised-button color="primary"
+            (click)="addColors()"
+            type="button"
+            matTooltip="{{ 'key-val.add-entry' | translate }}"
+            matTooltipPosition="above">
+      {{ 'action.add' | translate }}
+    </button>
+  </fieldset>
+  <fieldset class="fields-group" formGroupName="series">
+    <legend class="group-title" translate>widgets.chart.series</legend>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label translate>widgets.chart.series-innerSize</mat-label>
+      <input matInput type="text" placeholder="10%" formControlName="innerSize">
+    </mat-form-field>
+    <div formGroupName="dataLabels">
+      <div class="mat-block" fxFlex>
+        <mat-slide-toggle class="root-state-entity-switch" fxFlex formControlName="enabled">
+          {{ 'widgets.chart.dataLabels-enabled' | translate }}
+        </mat-slide-toggle>
+      </div>
+      <mat-form-field fxFlex class="mat-block">
+        <mat-label translate>widgets.chart.dataLabels-format</mat-label>
+        <input matInput type="text" placeholder="{value}" formControlName="format">
+        <mat-hint align="end">
+          <code>{{point.y}, {point.name}, {point.percentage:.1f}%</code>
+        </mat-hint>
+      </mat-form-field>
+    </div>
+  </fieldset>
+</section>

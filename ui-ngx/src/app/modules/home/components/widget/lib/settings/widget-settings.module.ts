@@ -259,6 +259,9 @@ import {
 import {
   TripAnimationPointSettingsComponent
 } from '@home/components/widget/lib/settings/map/trip-animation-point-settings.component';
+import {
+  AmiChartGroupSettingsComponent
+} from '@home/components/widget/lib/settings/chart/ami-chart-group-settings/ami-chart-group-settings.component';
 
 @NgModule({
   declarations: [
@@ -357,7 +360,8 @@ import {
     TripAnimationPointSettingsComponent,
     MapWidgetSettingsComponent,
     RouteMapWidgetSettingsComponent,
-    TripAnimationWidgetSettingsComponent
+    TripAnimationWidgetSettingsComponent,
+    AmiChartGroupSettingsComponent
   ],
   imports: [
     CommonModule,
@@ -460,7 +464,8 @@ import {
     TripAnimationPointSettingsComponent,
     MapWidgetSettingsComponent,
     RouteMapWidgetSettingsComponent,
-    TripAnimationWidgetSettingsComponent
+    TripAnimationWidgetSettingsComponent,
+    AmiChartGroupSettingsComponent
   ]
 })
 export class WidgetSettingsModule {
@@ -527,5 +532,6 @@ export const widgetSettingsComponentsMap: {[key: string]: Type<IWidgetSettingsCo
   'tb-update-multiple-attributes-key-settings': UpdateMultipleAttributesKeySettingsComponent,
   'tb-map-widget-settings': MapWidgetSettingsComponent,
   'tb-route-map-widget-settings': RouteMapWidgetSettingsComponent,
-  'tb-trip-animation-widget-settings': TripAnimationWidgetSettingsComponent
+  'tb-trip-animation-widget-settings': TripAnimationWidgetSettingsComponent,
+  'tb-ami-chart-group-settings': AmiChartGroupSettingsComponent,
 };
