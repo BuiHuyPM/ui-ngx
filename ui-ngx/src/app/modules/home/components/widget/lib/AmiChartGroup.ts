@@ -4,12 +4,10 @@ import seriesLabel from 'highcharts/modules/series-label';
 import exporting from 'highcharts/modules/exporting';
 import exportData from 'highcharts/modules/export-data';
 import accessibility from 'highcharts/modules/accessibility';
-
 seriesLabel(Highcharts);
 exporting(Highcharts);
 exportData(Highcharts);
 accessibility(Highcharts);
-
 type ChartType = 'line' | 'spline' | 'pie' | 'bar' | 'column';
 const TIME_UPDATE = 2000;
 
@@ -44,6 +42,9 @@ export class AmiChartGroup {
     const chartOptions = {
       chart: {
         type: chartType
+      },
+      exporting: {
+        enabled: settings?.general?.tool || false
       },
       title: {
         text: '',

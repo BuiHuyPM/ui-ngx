@@ -19,6 +19,9 @@ export class AmiChartGroupSettingsComponent extends WidgetSettingsComponent {
 
   protected onSettingsSet(settings: WidgetSettings) {
     this.widgetSettingsForm = this.fb.group({
+      general: this.fb.group({
+        tool: [true]
+      }),
       legend: this.fb.group({
         enabled: [true],
         align: ['center'],
@@ -62,6 +65,8 @@ export class AmiChartGroupSettingsComponent extends WidgetSettingsComponent {
           })
         }),
     });
+
+    this.widgetSettingsForm.get('general.tool').setValue(settings?.general?.tool || true);
 
     this.widgetSettingsForm.get('legend.enabled').setValue(settings?.legend?.enabled || true);
     this.widgetSettingsForm.get('legend.align').setValue(settings?.legend?.align || 'center');
@@ -112,6 +117,9 @@ export class AmiChartGroupSettingsComponent extends WidgetSettingsComponent {
 
   protected defaultSettings(): WidgetSettings {
     return {
+      general: {
+        tool: true
+      },
       legend: {
         enabled: true,
         align: 'center',

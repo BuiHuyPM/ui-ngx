@@ -3783,6 +3783,9 @@
     },
     "widgets": {
         "chart": {
+            "general": "General",
+            "general-tool": "Tool",
+
             "legend": "Legend",
             "legend-enabled": "Enabled",
             "legend-align": "Align",

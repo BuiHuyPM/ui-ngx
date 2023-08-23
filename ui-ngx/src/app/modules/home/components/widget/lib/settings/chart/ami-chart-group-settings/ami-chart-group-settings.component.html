@@ -1,4 +1,12 @@
 <section class="tb-widget-settings" [formGroup]="widgetSettingsForm" fxLayout="column">
+  <fieldset class="fields-group" formGroupName="general">
+    <legend class="group-title" translate>widgets.chart.general</legend>
+    <div class="mat-block" fxFlex>
+      <mat-slide-toggle class="root-state-entity-switch" fxFlex formControlName="tool">
+        {{ 'widgets.chart.general-tool' | translate }}
+      </mat-slide-toggle>
+    </div>
+  </fieldset>
   <fieldset class="fields-group" formGroupName="legend">
     <legend class="group-title" translate>widgets.chart.legend</legend>
     <div class="mat-block" fxFlex>
