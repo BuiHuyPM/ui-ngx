@@ -41,7 +41,8 @@ export class AmiChartGroup {
     const id = crypto.randomUUID();
     const chartOptions = {
       chart: {
-        type: chartType
+        type: chartType,
+        animation: true
       },
       exporting: {
         enabled: settings?.general?.tool || false
@@ -93,7 +94,7 @@ export class AmiChartGroup {
           innerSize: settings?.series?.innerSize,
           dataLabels: {
             enabled: settings?.series?.dataLabels?.enabled || false,
-            format: settings?.series?.dataLabels?.format || '{y}'
+            format: settings?.series?.dataLabels?.format || null
           }
         },
         pie: {
@@ -102,7 +103,10 @@ export class AmiChartGroup {
           showInLegend: true
         }
       },
-      series: []
+      series: [{
+        name: 'Data',
+        data: []
+      }]
     };
     ctx.$container.append(`<div id="${id}" style="display: block;width: 100%;height: 100%;"></div>`);
     // @ts-ignore
@@ -130,29 +134,25 @@ export class AmiChartGroup {
     const seriesData: Array<{ name: string, data: number[][] }> = [];
     data.forEach((value, index, array) => {
       value.data.forEach(value1 => {
-        const aggTimestamp = Math.floor(timeWindow.minTime +
-          Math.floor((value1[0] - timeWindow.minTime) / timeWindow.interval) * timeWindow.interval +
-          timeWindow.interval / 2);
         const groupName = (latestData?.[index]?.data?.[0]?.[1] || '') + '';
         const preIndex = seriesData.findIndex(value2 => {
           return value2.name === groupName;
         });
         if (preIndex > -1) {
-          const dataIndex = seriesData[preIndex].data.findIndex(value2 => value2[0] === aggTimestamp);
+          const dataIndex = seriesData[preIndex].data.findIndex(value2 => value2[0] === value1[0]);
           if (dataIndex > -1) {
             seriesData[preIndex].data[dataIndex][1] += value1[1];
           } else {
-            seriesData[preIndex].data.push([aggTimestamp, value1[1]]);
+            seriesData[preIndex].data.push([value1[0], value1[1]]);
           }
         } else {
           seriesData.push({
             name: groupName,
-            data: [[aggTimestamp, value1[1]]],
+            data: [[value1[0], value1[1]]],
           });
         }
       });
     });
-
     return seriesData;
   }
 

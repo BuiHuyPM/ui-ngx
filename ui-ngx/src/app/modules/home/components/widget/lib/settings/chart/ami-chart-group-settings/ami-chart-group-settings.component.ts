@@ -66,7 +66,7 @@ export class AmiChartGroupSettingsComponent extends WidgetSettingsComponent {
         }),
     });
 
-    this.widgetSettingsForm.get('general.tool').setValue(settings?.general?.tool || true);
+    this.widgetSettingsForm.get('general.tool').setValue(settings?.general?.tool === true);
 
     this.widgetSettingsForm.get('legend.enabled').setValue(settings?.legend?.enabled || true);
     this.widgetSettingsForm.get('legend.align').setValue(settings?.legend?.align || 'center');
@@ -94,9 +94,9 @@ export class AmiChartGroupSettingsComponent extends WidgetSettingsComponent {
       this.colors.push(this.fb.control(color));
     }
 
-    this.widgetSettingsForm.get('series.innerSize').setValue(settings?.plotOptions.series.innerSize || null);
-    this.widgetSettingsForm.get('series.dataLabels.enabled').setValue(settings?.plotOptions.series.dataLabels.enabled || true);
-    this.widgetSettingsForm.get('series.dataLabels.format').setValue(settings?.plotOptions.series.dataLabels.format || '');
+    this.widgetSettingsForm.get('series.innerSize').setValue(settings?.series?.innerSize || null);
+    this.widgetSettingsForm.get('series.dataLabels.enabled').setValue(settings?.series?.dataLabels?.enabled === true);
+    this.widgetSettingsForm.get('series.dataLabels.format').setValue(settings?.series?.dataLabels?.format || '');
   }
 
   addColors() {
@@ -141,7 +141,7 @@ export class AmiChartGroupSettingsComponent extends WidgetSettingsComponent {
         title: {
           text: ''
         },
-        type: 'datetime',
+        type: 'linear',
         labels: {
           format: ''
         },
@@ -155,13 +155,12 @@ export class AmiChartGroupSettingsComponent extends WidgetSettingsComponent {
         pointFormat: '',
       },
       colors: [],
-      plotOptions: {
-        series: {
-          dataLabels: {
-            enabled: false,
-            format: ''
-          }
-        },
+      series: {
+        innerSize: '',
+        dataLabels: {
+          enabled: false,
+          format: ''
+        }
       },
     };
   }
