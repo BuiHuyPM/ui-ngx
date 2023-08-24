@@ -3785,6 +3785,7 @@
         "chart": {
             "general": "General",
             "general-tool": "Tool",
+            "general-showLastValue": "Show last value",
 
             "legend": "Legend",
             "legend-enabled": "Enabled",
@@ -3820,6 +3821,7 @@
             "tooltip-format-header": "Header format",
             "tooltip-format-point": "Point format",
             "tooltip-format-footer": "Footer format",
+            "tooltip-format-node": "Node format",
             "grid-settings": "Grid settings",
             "show-vertical-lines": "Show vertical lines",
             "show-horizontal-lines": "Show horizontal lines",

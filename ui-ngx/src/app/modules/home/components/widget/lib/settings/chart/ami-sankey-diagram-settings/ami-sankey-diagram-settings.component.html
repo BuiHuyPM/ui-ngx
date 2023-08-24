@@ -1,0 +1,57 @@
+<section class="tb-widget-settings" [formGroup]="widgetSettingsForm" fxLayout="column">
+  <fieldset class="fields-group" formGroupName="general">
+    <legend class="group-title" translate>widgets.chart.general</legend>
+    <div class="mat-block" fxFlex>
+      <mat-slide-toggle class="root-state-entity-switch" fxFlex formControlName="tool">
+        {{ 'widgets.chart.general-tool' | translate }}
+      </mat-slide-toggle>
+    </div>
+    <div class="mat-block" fxFlex>
+      <mat-slide-toggle class="root-state-entity-switch" fxFlex formControlName="showLastValue">
+        {{ 'widgets.chart.general-showLastValue' | translate }}
+      </mat-slide-toggle>
+    </div>
+  </fieldset>
+  <fieldset class="fields-group" formGroupName="tooltip">
+    <legend class="group-title" translate>widgets.chart.tooltip-settings</legend>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label translate>widgets.chart.tooltip-format-header</mat-label>
+      <input matInput type="text" formControlName="headerFormat">
+    </mat-form-field>
+    <mat-form-field fxFlex class="mat-block">
+      <mat-label translate>widgets.chart.tooltip-format-point</mat-label>
+      <input matInput type="text" placeholder="{point.fromNode.name} \u2192 {point.toNode.name}: {point.weight:.2f}" formControlName="pointFormat">
+    </mat-form-field>
+    <mat-form-field fxFlex class="mat-block">
+        <mat-label translate>widgets.chart.tooltip-format-node</mat-label>
+        <input matInput type="text" placeholder="{point.name}: {point.sum:.2f}" formControlName="nodeFormat">
+      </mat-form-field>
+    <mat-hint align="end">
+      <code>{{point.fromNode.name}, {point.x}, {point.y}, {series.name} and {series.color}</code>
+    </mat-hint>
+  </fieldset>
+  <fieldset class="fields-group" formArrayName="colors">
+    <legend class="group-title" translate>widgets.chart.color</legend>
+    <div fxFlex class="mat-block" *ngFor="let color of colors.controls; let i=index" fxLayout="row">
+      <tb-color-input label="{{'widgets.chart.color' | translate}}"
+                      icon="format_color_fill"
+                      openOnInput
+                      [formControlName]="i">
+      </tb-color-input>
+      <button mat-button mat-icon-button color="primary"
+              type="button"
+              (click)="removeColors(i)"
+              matTooltip="{{ 'key-val.remove-entry' | translate }}"
+              matTooltipPosition="above">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <button mat-button mat-raised-button color="primary"
+            (click)="addColors()"
+            type="button"
+            matTooltip="{{ 'key-val.add-entry' | translate }}"
+            matTooltipPosition="above">
+      {{ 'action.add' | translate }}
+    </button>
+  </fieldset>
+</section>

@@ -23,8 +23,10 @@ export class AmiChartGroup {
   private readonly chartType: ChartType;
   private chart: Highcharts.Chart;
   private lastUpdateAt: number;
+  private updateTimes: number;
 
   constructor(ctx: WidgetContext, chartType: ChartType | null) {
+    this.updateTimes = -1;
     this.lastUpdateAt = new Date().getTime() - TIME_UPDATE;
     this.ctx = ctx;
     if (chartType == null) {
@@ -103,10 +105,7 @@ export class AmiChartGroup {
           showInLegend: true
         }
       },
-      series: [{
-        name: 'Data',
-        data: []
-      }]
+      series: []
     };
     ctx.$container.append(`<div id="${id}" style="display: block;width: 100%;height: 100%;"></div>`);
     // @ts-ignore
@@ -129,7 +128,6 @@ export class AmiChartGroup {
 
   public seriesLine(ctx: WidgetContext): any {
     const data = ctx.data;
-    const timeWindow = ctx.timeWindow;
     const latestData = ctx.latestData;
     const seriesData: Array<{ name: string, data: number[][] }> = [];
     data.forEach((value, index, array) => {
@@ -183,15 +181,15 @@ export class AmiChartGroup {
 
   public update() {
     // @ts-ignore
-    if (this.lastUpdateAt + TIME_UPDATE > new Date().getTime() && (this.ctx?.widget?.config?.useDashboardTimewindow || this.ctx?.widget?.config?.timewindow?.realtime)) {
+    if (this.lastUpdateAt + TIME_UPDATE > new Date().getTime() && (this.ctx?.widget?.config?.useDashboardTimewindow || this.ctx?.widget?.config?.timewindow?.realtime) && this.updateTimes > 1) {
       return;
     }
     const newSeries = this.series(this.ctx, this.chartType);
 
     if (newSeries.length > 0 && newSeries[0].data.length > 0) {
       this.lastUpdateAt = new Date().getTime();
+      this.updateTimes += 1;
     }
-
     newSeries.forEach((newSery, index) => {
       const oldSeries = this.chart.series[index];
       if (oldSeries) {

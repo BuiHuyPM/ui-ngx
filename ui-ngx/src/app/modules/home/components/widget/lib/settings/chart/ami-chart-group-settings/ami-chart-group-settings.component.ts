@@ -68,7 +68,7 @@ export class AmiChartGroupSettingsComponent extends WidgetSettingsComponent {
 
     this.widgetSettingsForm.get('general.tool').setValue(settings?.general?.tool === true);
 
-    this.widgetSettingsForm.get('legend.enabled').setValue(settings?.legend?.enabled || true);
+    this.widgetSettingsForm.get('legend.enabled').setValue(settings?.legend?.enabled === true);
     this.widgetSettingsForm.get('legend.align').setValue(settings?.legend?.align || 'center');
     this.widgetSettingsForm.get('legend.verticalAlign').setValue(settings?.legend?.verticalAlign || 'bottom');
     this.widgetSettingsForm.get('legend.layout').setValue(settings?.legend?.layout || 'horizontal');

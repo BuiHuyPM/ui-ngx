@@ -262,6 +262,7 @@ import {
 import {
   AmiChartGroupSettingsComponent
 } from '@home/components/widget/lib/settings/chart/ami-chart-group-settings/ami-chart-group-settings.component';
+import { AmiSankeyDiagramSettingsComponent } from './chart/ami-sankey-diagram-settings/ami-sankey-diagram-settings.component';
 
 @NgModule({
   declarations: [
@@ -361,7 +362,8 @@ import {
     MapWidgetSettingsComponent,
     RouteMapWidgetSettingsComponent,
     TripAnimationWidgetSettingsComponent,
-    AmiChartGroupSettingsComponent
+    AmiChartGroupSettingsComponent,
+    AmiSankeyDiagramSettingsComponent
   ],
   imports: [
     CommonModule,
@@ -465,7 +467,8 @@ import {
     MapWidgetSettingsComponent,
     RouteMapWidgetSettingsComponent,
     TripAnimationWidgetSettingsComponent,
-    AmiChartGroupSettingsComponent
+    AmiChartGroupSettingsComponent,
+    AmiSankeyDiagramSettingsComponent
   ]
 })
 export class WidgetSettingsModule {
@@ -534,4 +537,5 @@ export const widgetSettingsComponentsMap: {[key: string]: Type<IWidgetSettingsCo
   'tb-route-map-widget-settings': RouteMapWidgetSettingsComponent,
   'tb-trip-animation-widget-settings': TripAnimationWidgetSettingsComponent,
   'tb-ami-chart-group-settings': AmiChartGroupSettingsComponent,
+  'tb-ami-sankey-diagram-settings': AmiSankeyDiagramSettingsComponent,
 };
